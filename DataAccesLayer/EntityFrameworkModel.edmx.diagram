@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cf232c1da9b4435c9920352898533d71" Name="Diagram1" ZoomLevel="152">
+        <EntityTypeShape EntityType="uruguay_busModel.admin" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.conductor" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.horario" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.linea" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.parada" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.parametro" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.pasaje" Width="1.5" PointX="9.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.persona" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.precio" Width="1.5" PointX="12" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.superadmin" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.tramo" Width="1.5" PointX="9.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.usuario" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.vehiculo" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="uruguay_busModel.viaje" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="uruguay_busModel.FK_admin_persona" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_conductor_persona" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_horario_conductor" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_horario_linea" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_horario_vehiculo" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_viaje_horario" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_tramo_linea" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_pasaje_parada_destino" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_pasaje_parada_origen" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_tramo_parada" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_pasaje_usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_pasaje_viaje" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_superadmin_persona" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_usuario_persona" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_precio_tramo" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

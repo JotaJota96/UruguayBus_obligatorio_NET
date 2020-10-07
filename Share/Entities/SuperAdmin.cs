@@ -8,5 +8,7 @@ namespace Share.Entities
 {
     class SuperAdmin
     {
+        public int id { get; set; }
+        public Persona persona { get; set; }
     }
 }

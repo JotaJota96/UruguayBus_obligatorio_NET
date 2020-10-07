@@ -8,5 +8,7 @@ namespace Share.Entities
 {
     class Parametro
     {
+        public string nombre { get; set; }
+        public decimal valor { get; set; }
     }
 }

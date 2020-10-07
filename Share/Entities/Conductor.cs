@@ -8,5 +8,9 @@ namespace Share.Entities
 {
     class Conductor
     {
+        public int id { get; set; }
+        public DateTime vencimiento_libreta { get; set; }
+        public Persona persona { get; set; }
+        public ICollection<Horario> horarios { get; set; } = new List<Horario>();
     }
 }

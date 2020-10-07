@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Share.Entities
 {
-    class Precio
+    public class Precio
     {
         public int id { get; set; }
         public decimal valor { get; set; }
         public DateTime fecha_validez { get; set; }
-
         public Tramo tramo { get; set; }
     }
 }

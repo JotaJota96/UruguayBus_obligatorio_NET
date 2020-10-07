@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Share.Entities
 {
-    class Tramo
+    public class Tramo
     {
         // no tiene ID
         public int numero { get; set; }

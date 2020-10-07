@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Share.Entities
 {
-    class Parametro
+    public class Parametro
     {
         public string nombre { get; set; }
         public decimal valor { get; set; }

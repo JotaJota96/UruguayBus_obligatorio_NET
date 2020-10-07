@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Share.Entities
 {
-    class Persona
+    public class Persona
     {
         public int id { get; set; }
         public string nombre { get; set; }
@@ -16,7 +16,6 @@ namespace Share.Entities
         public string contrasenia { get; set; }
         public TipoDocumento tipo_documento { get; set; }
         public string documento { get; set; }
-
         public Admin admin { get; set; }
         public Conductor conductor { get; set; }
         public SuperAdmin superadmin { get; set; }

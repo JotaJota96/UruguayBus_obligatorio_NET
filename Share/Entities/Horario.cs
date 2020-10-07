@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Share.Entities
 {
-    class Horario
+    public class Horario
     {
         public int id { get; set; }
         public TimeSpan hora { get; set; }

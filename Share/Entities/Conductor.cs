@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Share.Entities
 {
-    class Conductor
+    public class Conductor
     {
         public int id { get; set; }
         public DateTime vencimiento_libreta { get; set; }

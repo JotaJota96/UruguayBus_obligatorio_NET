@@ -55,11 +55,11 @@
     <Compile Include="Entities\Usuario.cs" />
     <Compile Include="Entities\Vehiculo.cs" />
     <Compile Include="Entities\Viaje.cs" />
+    <Compile Include="Enums\TipoDocumento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\" />
-    <Folder Include="Enums\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,7 +16,7 @@ namespace DataAccesLayer
     public partial class uruguay_busEntities : DbContext
     {
         public uruguay_busEntities()
-            : base("name=uruguay_busEntities")
+            : base("uruguay_busEntities")
         {
         }
     

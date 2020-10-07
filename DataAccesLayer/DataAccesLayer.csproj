@@ -56,7 +56,12 @@
     <Compile Include="conductor.cs">
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AdminConverter.cs" />
+    <Compile Include="Converters\ConductorConverter.cs" />
     <Compile Include="Converters\HorarioConverter.cs" />
+    <Compile Include="Converters\LineaConverter.cs" />
+    <Compile Include="Converters\ParadaConverter.cs" />
+    <Compile Include="Converters\UsuarioConverter.cs" />
     <Compile Include="EntityFrameworkModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

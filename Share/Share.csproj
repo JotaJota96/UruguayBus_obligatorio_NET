@@ -43,6 +43,18 @@
   <ItemGroup>
     <Compile Include="Entities\Admin.cs" />
     <Compile Include="Entities\Conductor.cs" />
+    <Compile Include="Entities\Horario.cs" />
+    <Compile Include="Entities\Linea.cs" />
+    <Compile Include="Entities\Parada.cs" />
+    <Compile Include="Entities\Parametro.cs" />
+    <Compile Include="Entities\Pasaje.cs" />
+    <Compile Include="Entities\Persona.cs" />
+    <Compile Include="Entities\Precio.cs" />
+    <Compile Include="Entities\SuperAdmin.cs" />
+    <Compile Include="Entities\Tramo.cs" />
+    <Compile Include="Entities\Usuario.cs" />
+    <Compile Include="Entities\Vehiculo.cs" />
+    <Compile Include="Entities\Viaje.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

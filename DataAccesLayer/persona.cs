@@ -19,7 +19,7 @@ namespace DataAccesLayer
         public string apellido { get; set; }
         public string correo { get; set; }
         public string contrasenia { get; set; }
-        public string tipo_documento { get; set; }
+        public int tipo_documento { get; set; }
         public string documento { get; set; }
     
         public virtual admin admin { get; set; }

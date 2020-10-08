@@ -1,4 +1,5 @@
 ﻿using Share.Entities;
+using Share.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace DataAccesLayer.Converters
                 asiento = p.asiento,
                 usado = p.usado,
                 documento = p.documento,
-                //tipo_documento = p.tipo_documento,
+                tipo_documento = (TipoDocumento) p.tipo_documento,
             };
             return ret;
         }
@@ -31,7 +32,7 @@ namespace DataAccesLayer.Converters
                 asiento = p.asiento,
                 usado = p.usado,
                 documento = p.documento,
-                //tipo_documento = p.tipo_documento,
+                tipo_documento = (int) p.tipo_documento,
             };
             return ret;
         }

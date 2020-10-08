@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="uruguay_busModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="uruguay_busModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="admin">
           <Key>
             <PropertyRef Name="id" />
@@ -58,7 +58,7 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="asiento" Type="int" />
           <Property Name="usado" Type="bit" Nullable="false" />
-          <Property Name="tipo_documento" Type="varchar" MaxLength="50" />
+          <Property Name="tipo_documento" Type="int" />
           <Property Name="documento" Type="varchar" MaxLength="50" />
           <Property Name="usuario_id" Type="int" />
           <Property Name="viaje_id" Type="int" Nullable="false" />
@@ -74,7 +74,7 @@
           <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="contrasenia" Type="text" Nullable="false" />
-          <Property Name="tipo_documento" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tipo_documento" Type="int" Nullable="false" />
           <Property Name="documento" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="precio">
@@ -180,13 +180,13 @@
         </Association>
         <Association Name="FK_horario_vehiculo">
           <End Role="vehiculo" Type="Self.vehiculo" Multiplicity="1" />
-          <End Role="horario" Type="Self.horario" Multiplicity="0..1" />
+          <End Role="horario" Type="Self.horario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="vehiculo">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="horario">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="vehiculo_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -388,8 +388,7 @@
             <End Role="viaje" EntitySet="viaje" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="uruguay_busModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -420,8 +419,8 @@
           <Property Name="linea_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="conductor" Relationship="Self.FK_horario_conductor" FromRole="horario" ToRole="conductor" />
           <NavigationProperty Name="linea" Relationship="Self.FK_horario_linea" FromRole="horario" ToRole="linea" />
-          <NavigationProperty Name="vehiculo" Relationship="Self.FK_horario_vehiculo" FromRole="horario" ToRole="vehiculo" />
           <NavigationProperty Name="viaje" Relationship="Self.FK_viaje_horario" FromRole="horario" ToRole="viaje" />
+          <NavigationProperty Name="vehiculo" Relationship="uruguay_busModel.FK_horario_vehiculo" FromRole="horario" ToRole="vehiculo" />
         </EntityType>
         <EntityType Name="linea">
           <Key>
@@ -458,7 +457,7 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="asiento" Type="Int32" />
           <Property Name="usado" Type="Boolean" Nullable="false" />
-          <Property Name="tipo_documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_documento" Type="Int32" />
           <Property Name="documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="usuario_id" Type="Int32" />
           <Property Name="viaje_id" Type="Int32" Nullable="false" />
@@ -478,7 +477,7 @@
           <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="contrasenia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tipo_documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipo_documento" Type="Int32" Nullable="false" />
           <Property Name="documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="admin" Relationship="Self.FK_admin_persona" FromRole="persona" ToRole="admin" />
           <NavigationProperty Name="conductor" Relationship="Self.FK_conductor_persona" FromRole="persona" ToRole="conductor" />
@@ -535,7 +534,7 @@
           <Property Name="cant_asientos" Type="Int32" Nullable="false" />
           <Property Name="latitud" Type="Decimal" Precision="8" Scale="6" />
           <Property Name="longitud" Type="Decimal" Precision="9" Scale="6" />
-          <NavigationProperty Name="horario" Relationship="Self.FK_horario_vehiculo" FromRole="vehiculo" ToRole="horario" />
+          <NavigationProperty Name="horario" Relationship="uruguay_busModel.FK_horario_vehiculo" FromRole="vehiculo" ToRole="horario" />
         </EntityType>
         <EntityType Name="viaje">
           <Key>
@@ -593,18 +592,6 @@
             </Principal>
             <Dependent Role="horario">
               <PropertyRef Name="linea_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_horario_vehiculo">
-          <End Role="vehiculo" Type="Self.vehiculo" Multiplicity="1" />
-          <End Role="horario" Type="Self.horario" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="vehiculo">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="horario">
-              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -761,10 +748,6 @@
             <End Role="linea" EntitySet="linea" />
             <End Role="horario" EntitySet="horario" />
           </AssociationSet>
-          <AssociationSet Name="FK_horario_vehiculo" Association="Self.FK_horario_vehiculo">
-            <End Role="vehiculo" EntitySet="vehiculo" />
-            <End Role="horario" EntitySet="horario" />
-          </AssociationSet>
           <AssociationSet Name="FK_viaje_horario" Association="Self.FK_viaje_horario">
             <End Role="horario" EntitySet="horario" />
             <End Role="viaje" EntitySet="viaje" />
@@ -805,7 +788,23 @@
             <End Role="tramo" EntitySet="tramo" />
             <End Role="precio" EntitySet="precio" />
           </AssociationSet>
+          <AssociationSet Name="FK_horario_vehiculo" Association="uruguay_busModel.FK_horario_vehiculo">
+            <End Role="vehiculo" EntitySet="vehiculo" />
+            <End Role="horario" EntitySet="horario" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_horario_vehiculo">
+          <End Type="uruguay_busModel.vehiculo" Role="vehiculo" Multiplicity="1" />
+          <End Type="uruguay_busModel.horario" Role="horario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vehiculo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="horario">
+              <PropertyRef Name="vehiculo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

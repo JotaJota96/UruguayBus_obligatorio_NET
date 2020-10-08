@@ -23,7 +23,6 @@
         <AssociationConnector Association="uruguay_busModel.FK_conductor_persona" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_horario_conductor" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_horario_linea" ManuallyRouted="false" />
-        <AssociationConnector Association="uruguay_busModel.FK_horario_vehiculo" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_viaje_horario" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_tramo_linea" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_pasaje_parada_destino" ManuallyRouted="false" />
@@ -34,6 +33,7 @@
         <AssociationConnector Association="uruguay_busModel.FK_superadmin_persona" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_usuario_persona" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_precio_tramo" ManuallyRouted="false" />
+        <AssociationConnector Association="uruguay_busModel.FK_horario_vehiculo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

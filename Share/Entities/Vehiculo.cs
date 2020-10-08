@@ -15,6 +15,7 @@ namespace Share.Entities
         public int cant_asientos { get; set; }
         public decimal? latitud { get; set; }
         public decimal? longitud { get; set; }
-        public Horario horario { get; set; }
+        public ICollection<Horario> horario { get; set; } = new List<Horario>();
+
     }
 }

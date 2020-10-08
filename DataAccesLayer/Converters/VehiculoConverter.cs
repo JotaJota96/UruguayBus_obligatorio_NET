@@ -63,11 +63,20 @@ namespace DataAccesLayer.Converters
         /** Vinculacion de colecciones ****************************************/
         public static void asociarViajes(Vehiculo v, ICollection<Horario> h)
         {
-            throw new NotImplementedException("Esta funcion no se ha implementado porque hay que corregir una cosa en la estrutura de la base de datos primero");
+            foreach (var item in h)
+            {
+                item.vehiculo = v;
+                v.horario.Add(item);
+            }
         }
         public static void asociarViajes(vehiculo v, ICollection<horario> h)
         {
-            throw new NotImplementedException("Esta funcion no se ha implementado porque hay que corregir una cosa en la estrutura de la base de datos primero");
+            foreach (var item in h)
+            {
+                item.vehiculo = v;
+                item.vehiculo_id = v.id;
+                v.horario.Add(item);
+            }
         }
     }
 }

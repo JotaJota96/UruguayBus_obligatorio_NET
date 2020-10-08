@@ -1,4 +1,5 @@
 ﻿using Share.Entities;
+using Share.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace DataAccesLayer.Converters
                 id = p.id,
                 correo = p.correo,
                 documento = p.documento,
-                //tipo_documento = p.tipo_documento,
+                tipo_documento = (TipoDocumento) p.tipo_documento,
                 nombre = p.nombre,
                 apellido = p.apellido,
                 contrasenia = p.contrasenia,
@@ -32,7 +33,7 @@ namespace DataAccesLayer.Converters
                 id = p.id,
                 correo = p.correo,
                 documento = p.documento,
-                //tipo_documento = p.tipo_documento,
+                tipo_documento = (int) p.tipo_documento,
                 nombre = p.nombre,
                 apellido = p.apellido,
                 contrasenia = p.contrasenia,

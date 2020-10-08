@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccesLayer.Converters
 {
-    public class HorarioConverter
+    class HorarioConverter
     {
         /** Conversion de objetos simples *************************************/
         public static Horario convert(horario h)

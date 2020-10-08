@@ -12,8 +12,8 @@ namespace Share.Entities
         public string nombre { get; set; }
         public decimal latitud { get; set; }
         public decimal longitud { get; set; }
-        public ICollection<Pasaje> pasajes_desde { get; set; } = new List<Pasaje>();
-        public ICollection<Pasaje> pasajes_hacia { get; set; } = new List<Pasaje>();
+        public ICollection<Pasaje> pasajes_origen { get; set; } = new List<Pasaje>();
+        public ICollection<Pasaje> pasajes_destino { get; set; } = new List<Pasaje>();
         public ICollection<Tramo> tramos { get; set; } = new List<Tramo>();
     }
 }

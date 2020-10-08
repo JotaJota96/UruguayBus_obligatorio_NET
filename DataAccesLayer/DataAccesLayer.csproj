@@ -57,6 +57,13 @@
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Converters\HorarioConverter.cs" />
+    <Compile Include="Converters\PasajeConverter.cs" />
+    <Compile Include="Converters\PersonaConverter.cs" />
+    <Compile Include="Converters\PrecioConverter.cs" />
+    <Compile Include="Converters\SuperAdminConverter.cs" />
+    <Compile Include="Converters\TramoConverter.cs" />
+    <Compile Include="Converters\VehiculoConverter.cs" />
+    <Compile Include="Converters\ViajeConverter.cs" />
     <Compile Include="EntityFrameworkModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

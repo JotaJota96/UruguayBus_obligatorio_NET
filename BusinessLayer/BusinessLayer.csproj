@@ -41,6 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementations\BL_Admin.cs" />
+    <Compile Include="Implementations\BL_Conductor.cs" />
+    <Compile Include="Implementations\BL_Superadmin.cs" />
+    <Compile Include="Implementations\BL_Usuario.cs" />
+    <Compile Include="Interfaces\IBL_Admin.cs" />
+    <Compile Include="Interfaces\IBL_Conductor.cs" />
+    <Compile Include="Interfaces\IBL_Superadmin.cs" />
+    <Compile Include="Interfaces\IBL_Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,9 +61,6 @@
       <Name>Share</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementations\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

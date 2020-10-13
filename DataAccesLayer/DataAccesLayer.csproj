@@ -56,6 +56,20 @@
     <Compile Include="conductor.cs">
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AdminConverter.cs" />
+    <Compile Include="Converters\ConductorConverter.cs" />
+    <Compile Include="Converters\HorarioConverter.cs" />
+    <Compile Include="Converters\PasajeConverter.cs" />
+    <Compile Include="Converters\PasoPorParadaConverter.cs" />
+    <Compile Include="Converters\PersonaConverter.cs" />
+    <Compile Include="Converters\PrecioConverter.cs" />
+    <Compile Include="Converters\SuperAdminConverter.cs" />
+    <Compile Include="Converters\TramoConverter.cs" />
+    <Compile Include="Converters\VehiculoConverter.cs" />
+    <Compile Include="Converters\ViajeConverter.cs" />
+    <Compile Include="Converters\LineaConverter.cs" />
+    <Compile Include="Converters\ParadaConverter.cs" />
+    <Compile Include="Converters\UsuarioConverter.cs" />
     <Compile Include="EntityFrameworkModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -84,6 +98,9 @@
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="pasaje.cs">
+      <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="paso_por_parada.cs">
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="persona.cs">

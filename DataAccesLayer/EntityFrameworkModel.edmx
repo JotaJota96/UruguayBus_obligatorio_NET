@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="uruguay_busModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="uruguay_busModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="admin">
           <Key>
             <PropertyRef Name="id" />
@@ -58,12 +58,21 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="asiento" Type="int" />
           <Property Name="usado" Type="bit" Nullable="false" />
-          <Property Name="tipo_documento" Type="varchar" MaxLength="50" />
+          <Property Name="tipo_documento" Type="int" />
           <Property Name="documento" Type="varchar" MaxLength="50" />
           <Property Name="usuario_id" Type="int" />
           <Property Name="viaje_id" Type="int" Nullable="false" />
           <Property Name="parada_id_origen" Type="int" Nullable="false" />
           <Property Name="parada_id_destino" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="paso_por_parada">
+          <Key>
+            <PropertyRef Name="viaje_id" />
+            <PropertyRef Name="parada_id" />
+          </Key>
+          <Property Name="viaje_id" Type="int" Nullable="false" />
+          <Property Name="parada_id" Type="int" Nullable="false" />
+          <Property Name="fecha_hora" Type="datetime" />
         </EntityType>
         <EntityType Name="persona">
           <Key>
@@ -74,14 +83,14 @@
           <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="contrasenia" Type="text" Nullable="false" />
-          <Property Name="tipo_documento" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tipo_documento" Type="int" Nullable="false" />
           <Property Name="documento" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="precio">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="valor" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="fecha_validez" Type="date" Nullable="false" />
           <Property Name="parada_id" Type="int" Nullable="false" />
@@ -180,13 +189,13 @@
         </Association>
         <Association Name="FK_horario_vehiculo">
           <End Role="vehiculo" Type="Self.vehiculo" Multiplicity="1" />
-          <End Role="horario" Type="Self.horario" Multiplicity="0..1" />
+          <End Role="horario" Type="Self.horario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="vehiculo">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="horario">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="vehiculo_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -234,6 +243,30 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="pasaje">
+              <PropertyRef Name="viaje_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_paso_por_parada_parada">
+          <End Role="parada" Type="Self.parada" Multiplicity="1" />
+          <End Role="paso_por_parada" Type="Self.paso_por_parada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="parada">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="paso_por_parada">
+              <PropertyRef Name="parada_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_paso_por_parada_viaje">
+          <End Role="viaje" Type="Self.viaje" Multiplicity="1" />
+          <End Role="paso_por_parada" Type="Self.paso_por_parada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viaje">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="paso_por_parada">
               <PropertyRef Name="viaje_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -320,6 +353,7 @@
           <EntitySet Name="parada" EntityType="Self.parada" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="parametro" EntityType="Self.parametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pasaje" EntityType="Self.pasaje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="paso_por_parada" EntityType="Self.paso_por_parada" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="persona" EntityType="Self.persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="precio" EntityType="Self.precio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="superadmin" EntityType="Self.superadmin" Schema="dbo" store:Type="Tables" />
@@ -363,6 +397,14 @@
             <End Role="viaje" EntitySet="viaje" />
             <End Role="pasaje" EntitySet="pasaje" />
           </AssociationSet>
+          <AssociationSet Name="FK_paso_por_parada_parada" Association="Self.FK_paso_por_parada_parada">
+            <End Role="parada" EntitySet="parada" />
+            <End Role="paso_por_parada" EntitySet="paso_por_parada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_paso_por_parada_viaje" Association="Self.FK_paso_por_parada_viaje">
+            <End Role="viaje" EntitySet="viaje" />
+            <End Role="paso_por_parada" EntitySet="paso_por_parada" />
+          </AssociationSet>
           <AssociationSet Name="FK_precio_tramo" Association="Self.FK_precio_tramo">
             <End Role="tramo" EntitySet="tramo" />
             <End Role="precio" EntitySet="precio" />
@@ -388,8 +430,7 @@
             <End Role="viaje" EntitySet="viaje" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="uruguay_busModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -420,8 +461,8 @@
           <Property Name="linea_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="conductor" Relationship="Self.FK_horario_conductor" FromRole="horario" ToRole="conductor" />
           <NavigationProperty Name="linea" Relationship="Self.FK_horario_linea" FromRole="horario" ToRole="linea" />
-          <NavigationProperty Name="vehiculo" Relationship="Self.FK_horario_vehiculo" FromRole="horario" ToRole="vehiculo" />
           <NavigationProperty Name="viaje" Relationship="Self.FK_viaje_horario" FromRole="horario" ToRole="viaje" />
+          <NavigationProperty Name="vehiculo" Relationship="uruguay_busModel.FK_horario_vehiculo" FromRole="horario" ToRole="vehiculo" />
         </EntityType>
         <EntityType Name="linea">
           <Key>
@@ -443,6 +484,7 @@
           <NavigationProperty Name="pasaje" Relationship="Self.FK_pasaje_parada_destino" FromRole="parada" ToRole="pasaje" />
           <NavigationProperty Name="pasaje1" Relationship="Self.FK_pasaje_parada_origen" FromRole="parada" ToRole="pasaje" />
           <NavigationProperty Name="tramo" Relationship="Self.FK_tramo_parada" FromRole="parada" ToRole="tramo" />
+          <NavigationProperty Name="paso_por_parada" Relationship="uruguay_busModel.FK_paso_por_parada_parada" FromRole="parada" ToRole="paso_por_parada" />
         </EntityType>
         <EntityType Name="parametro">
           <Key>
@@ -458,7 +500,7 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="asiento" Type="Int32" />
           <Property Name="usado" Type="Boolean" Nullable="false" />
-          <Property Name="tipo_documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_documento" Type="Int32" />
           <Property Name="documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="usuario_id" Type="Int32" />
           <Property Name="viaje_id" Type="Int32" Nullable="false" />
@@ -478,7 +520,7 @@
           <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="contrasenia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tipo_documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipo_documento" Type="Int32" Nullable="false" />
           <Property Name="documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="admin" Relationship="Self.FK_admin_persona" FromRole="persona" ToRole="admin" />
           <NavigationProperty Name="conductor" Relationship="Self.FK_conductor_persona" FromRole="persona" ToRole="conductor" />
@@ -535,7 +577,7 @@
           <Property Name="cant_asientos" Type="Int32" Nullable="false" />
           <Property Name="latitud" Type="Decimal" Precision="8" Scale="6" />
           <Property Name="longitud" Type="Decimal" Precision="9" Scale="6" />
-          <NavigationProperty Name="horario" Relationship="Self.FK_horario_vehiculo" FromRole="vehiculo" ToRole="horario" />
+          <NavigationProperty Name="horario" Relationship="uruguay_busModel.FK_horario_vehiculo" FromRole="vehiculo" ToRole="horario" />
         </EntityType>
         <EntityType Name="viaje">
           <Key>
@@ -547,6 +589,7 @@
           <Property Name="horario_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="horario" Relationship="Self.FK_viaje_horario" FromRole="viaje" ToRole="horario" />
           <NavigationProperty Name="pasaje" Relationship="Self.FK_pasaje_viaje" FromRole="viaje" ToRole="pasaje" />
+          <NavigationProperty Name="paso_por_parada" Relationship="uruguay_busModel.FK_paso_por_parada_viaje" FromRole="viaje" ToRole="paso_por_parada" />
         </EntityType>
         <Association Name="FK_admin_persona">
           <End Role="persona" Type="Self.persona" Multiplicity="1" />
@@ -593,18 +636,6 @@
             </Principal>
             <Dependent Role="horario">
               <PropertyRef Name="linea_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_horario_vehiculo">
-          <End Role="vehiculo" Type="Self.vehiculo" Multiplicity="1" />
-          <End Role="horario" Type="Self.horario" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="vehiculo">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="horario">
-              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -761,10 +792,6 @@
             <End Role="linea" EntitySet="linea" />
             <End Role="horario" EntitySet="horario" />
           </AssociationSet>
-          <AssociationSet Name="FK_horario_vehiculo" Association="Self.FK_horario_vehiculo">
-            <End Role="vehiculo" EntitySet="vehiculo" />
-            <End Role="horario" EntitySet="horario" />
-          </AssociationSet>
           <AssociationSet Name="FK_viaje_horario" Association="Self.FK_viaje_horario">
             <End Role="horario" EntitySet="horario" />
             <End Role="viaje" EntitySet="viaje" />
@@ -805,7 +832,67 @@
             <End Role="tramo" EntitySet="tramo" />
             <End Role="precio" EntitySet="precio" />
           </AssociationSet>
+          <AssociationSet Name="FK_horario_vehiculo" Association="uruguay_busModel.FK_horario_vehiculo">
+            <End Role="vehiculo" EntitySet="vehiculo" />
+            <End Role="horario" EntitySet="horario" />
+          </AssociationSet>
+          <EntitySet Name="paso_por_parada" EntityType="uruguay_busModel.paso_por_parada" />
+          <AssociationSet Name="FK_paso_por_parada_parada" Association="uruguay_busModel.FK_paso_por_parada_parada">
+            <End Role="parada" EntitySet="parada" />
+            <End Role="paso_por_parada" EntitySet="paso_por_parada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_paso_por_parada_viaje" Association="uruguay_busModel.FK_paso_por_parada_viaje">
+            <End Role="viaje" EntitySet="viaje" />
+            <End Role="paso_por_parada" EntitySet="paso_por_parada" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_horario_vehiculo">
+          <End Type="uruguay_busModel.vehiculo" Role="vehiculo" Multiplicity="1" />
+          <End Type="uruguay_busModel.horario" Role="horario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vehiculo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="horario">
+              <PropertyRef Name="vehiculo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="paso_por_parada">
+          <Key>
+            <PropertyRef Name="viaje_id" />
+            <PropertyRef Name="parada_id" />
+          </Key>
+          <Property Name="viaje_id" Type="Int32" Nullable="false" />
+          <Property Name="parada_id" Type="Int32" Nullable="false" />
+          <Property Name="fecha_hora" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="parada" Relationship="uruguay_busModel.FK_paso_por_parada_parada" FromRole="paso_por_parada" ToRole="parada" />
+          <NavigationProperty Name="viaje" Relationship="uruguay_busModel.FK_paso_por_parada_viaje" FromRole="paso_por_parada" ToRole="viaje" />
+        </EntityType>
+        <Association Name="FK_paso_por_parada_parada">
+          <End Type="uruguay_busModel.parada" Role="parada" Multiplicity="1" />
+          <End Type="uruguay_busModel.paso_por_parada" Role="paso_por_parada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="parada">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="paso_por_parada">
+              <PropertyRef Name="parada_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_paso_por_parada_viaje">
+          <End Type="uruguay_busModel.viaje" Role="viaje" Multiplicity="1" />
+          <End Type="uruguay_busModel.paso_por_parada" Role="paso_por_parada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="viaje">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="paso_por_parada">
+              <PropertyRef Name="viaje_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -947,6 +1034,15 @@
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="finalizado" ColumnName="finalizado" />
                 <ScalarProperty Name="horario_id" ColumnName="horario_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="paso_por_parada">
+            <EntityTypeMapping TypeName="uruguay_busModel.paso_por_parada">
+              <MappingFragment StoreEntitySet="paso_por_parada">
+                <ScalarProperty Name="fecha_hora" ColumnName="fecha_hora" />
+                <ScalarProperty Name="parada_id" ColumnName="parada_id" />
+                <ScalarProperty Name="viaje_id" ColumnName="viaje_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

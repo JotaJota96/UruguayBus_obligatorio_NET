@@ -14,6 +14,12 @@ namespace DataAccesLayer
     
     public partial class vehiculo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public vehiculo()
+        {
+            this.horario = new HashSet<horario>();
+        }
+    
         public int id { get; set; }
         public string matricula { get; set; }
         public string marca { get; set; }
@@ -22,6 +28,7 @@ namespace DataAccesLayer
         public Nullable<decimal> latitud { get; set; }
         public Nullable<decimal> longitud { get; set; }
     
-        public virtual horario horario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<horario> horario { get; set; }
     }
 }

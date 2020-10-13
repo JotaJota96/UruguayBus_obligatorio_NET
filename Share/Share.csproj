@@ -41,12 +41,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\VehiculoCercanoDTO.cs" />
+    <Compile Include="DTOs\ViajeDisponibleDTO.cs" />
+    <Compile Include="Entities\Admin.cs" />
+    <Compile Include="Entities\Conductor.cs" />
+    <Compile Include="Entities\Horario.cs" />
+    <Compile Include="Entities\Linea.cs" />
+    <Compile Include="Entities\Parada.cs" />
+    <Compile Include="Entities\Parametro.cs" />
+    <Compile Include="Entities\Pasaje.cs" />
+    <Compile Include="Entities\PasoPorParada.cs" />
+    <Compile Include="Entities\Persona.cs" />
+    <Compile Include="Entities\Precio.cs" />
+    <Compile Include="Entities\SuperAdmin.cs" />
+    <Compile Include="Entities\Tramo.cs" />
+    <Compile Include="Entities\Usuario.cs" />
+    <Compile Include="Entities\Vehiculo.cs" />
+    <Compile Include="Entities\Viaje.cs" />
+    <Compile Include="Enums\AgrupacionReporte.cs" />
+    <Compile Include="Enums\DiaSemana.cs" />
+    <Compile Include="Enums\Rol.cs" />
+    <Compile Include="Enums\TipoDocumento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

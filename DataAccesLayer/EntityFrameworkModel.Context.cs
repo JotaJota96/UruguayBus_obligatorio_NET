@@ -16,7 +16,7 @@ namespace DataAccesLayer
     public partial class uruguay_busEntities : DbContext
     {
         public uruguay_busEntities()
-            : base("uruguay_busEntities")
+            : base("name=uruguay_busEntities")
         {
         }
     
@@ -39,5 +39,6 @@ namespace DataAccesLayer
         public virtual DbSet<usuario> usuario { get; set; }
         public virtual DbSet<vehiculo> vehiculo { get; set; }
         public virtual DbSet<viaje> viaje { get; set; }
+        public virtual DbSet<paso_por_parada> paso_por_parada { get; set; }
     }
 }

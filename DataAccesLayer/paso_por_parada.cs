@@ -12,19 +12,13 @@ namespace DataAccesLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class persona
+    public partial class paso_por_parada
     {
-        public int id { get; set; }
-        public string nombre { get; set; }
-        public string apellido { get; set; }
-        public string correo { get; set; }
-        public string contrasenia { get; set; }
-        public int tipo_documento { get; set; }
-        public string documento { get; set; }
+        public int viaje_id { get; set; }
+        public int parada_id { get; set; }
+        public Nullable<System.DateTime> fecha_hora { get; set; }
     
-        public virtual admin admin { get; set; }
-        public virtual conductor conductor { get; set; }
-        public virtual superadmin superadmin { get; set; }
-        public virtual usuario usuario { get; set; }
+        public virtual parada parada { get; set; }
+        public virtual viaje viaje { get; set; }
     }
 }

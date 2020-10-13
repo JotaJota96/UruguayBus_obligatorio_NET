@@ -28,8 +28,8 @@ namespace DataAccesLayer
     
         public virtual conductor conductor { get; set; }
         public virtual linea linea { get; set; }
-        public virtual vehiculo vehiculo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<viaje> viaje { get; set; }
+        public virtual vehiculo vehiculo { get; set; }
     }
 }

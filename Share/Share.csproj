@@ -50,6 +50,7 @@
     <Compile Include="Entities\Parada.cs" />
     <Compile Include="Entities\Parametro.cs" />
     <Compile Include="Entities\Pasaje.cs" />
+    <Compile Include="Entities\PasoPorParada.cs" />
     <Compile Include="Entities\Persona.cs" />
     <Compile Include="Entities\Precio.cs" />
     <Compile Include="Entities\SuperAdmin.cs" />

@@ -20,6 +20,7 @@ namespace DataAccesLayer
             this.pasaje = new HashSet<pasaje>();
             this.pasaje1 = new HashSet<pasaje>();
             this.tramo = new HashSet<tramo>();
+            this.paso_por_parada = new HashSet<paso_por_parada>();
         }
     
         public int id { get; set; }
@@ -33,5 +34,7 @@ namespace DataAccesLayer
         public virtual ICollection<pasaje> pasaje1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tramo> tramo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<paso_por_parada> paso_por_parada { get; set; }
     }
 }

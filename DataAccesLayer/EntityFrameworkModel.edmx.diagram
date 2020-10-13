@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cf232c1da9b4435c9920352898533d71" Name="Diagram1" ZoomLevel="152">
+      <Diagram DiagramId="cf232c1da9b4435c9920352898533d71" Name="Diagram1" ZoomLevel="169">
         <EntityTypeShape EntityType="uruguay_busModel.admin" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="uruguay_busModel.conductor" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="uruguay_busModel.horario" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
@@ -34,6 +34,9 @@
         <AssociationConnector Association="uruguay_busModel.FK_usuario_persona" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_precio_tramo" ManuallyRouted="false" />
         <AssociationConnector Association="uruguay_busModel.FK_horario_vehiculo" />
+        <EntityTypeShape EntityType="uruguay_busModel.paso_por_parada" Width="1.5" PointX="12.75" PointY="6.25" />
+        <AssociationConnector Association="uruguay_busModel.FK_paso_por_parada_parada" />
+        <AssociationConnector Association="uruguay_busModel.FK_paso_por_parada_viaje" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

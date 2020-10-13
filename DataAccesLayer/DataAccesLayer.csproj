@@ -60,6 +60,7 @@
     <Compile Include="Converters\ConductorConverter.cs" />
     <Compile Include="Converters\HorarioConverter.cs" />
     <Compile Include="Converters\PasajeConverter.cs" />
+    <Compile Include="Converters\PasoPorParadaConverter.cs" />
     <Compile Include="Converters\PersonaConverter.cs" />
     <Compile Include="Converters\PrecioConverter.cs" />
     <Compile Include="Converters\SuperAdminConverter.cs" />
@@ -97,6 +98,9 @@
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="pasaje.cs">
+      <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="paso_por_parada.cs">
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="persona.cs">

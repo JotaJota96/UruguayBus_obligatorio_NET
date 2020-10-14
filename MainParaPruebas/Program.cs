@@ -18,7 +18,12 @@ namespace MainParaPruebas
             IBL_Usuario blu = new BL_Usuario();
             IBL_Conductor blc = new BL_Conductor();
 
-            blc.IniciarViaje(1);
+            ICollection<Viaje> v = blc.ListarViajesDelDia(9);
+
+            foreach (var item in v)
+            {
+                Console.WriteLine(item.fecha);
+            }
 
             Console.WriteLine("");
         }

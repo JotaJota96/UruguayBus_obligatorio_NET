@@ -47,7 +47,14 @@ namespace BusinessLayer.Implementations
 
         public ICollection<Viaje> ListarViajesDelDia(int idConductor)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.ListarViajesDelDia(idConductor);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo listar los viajes del condutor. " + e.Message);
+            }
         }
 
         public ICollection<Usuario> RegistrarPasoPorParada(int idParada, int idViaje)

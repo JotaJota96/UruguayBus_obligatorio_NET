@@ -1,4 +1,6 @@
-﻿using DataAccesLayer.Interfaces;
+﻿using DataAccesLayer.Converters;
+using DataAccesLayer.Interfaces;
+using Share.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +53,40 @@ namespace DataAccesLayer.Implementations
             }
         }
 
+        public ICollection<Viaje> ListarViajesDelDia(int idConductor)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    ICollection<viaje> ret = new List<viaje>();
+                    conductor c = db.conductor.Find(idConductor);
+
+                    if (c.Equals(null))
+                    {
+                        throw new Exception("No se pudo encontrar el conductor.");
+                    }
+
+                    foreach (var h in c.horario)
+                    {
+
+                        foreach (var v in h.viaje)
+                        {
+                            if(v.fecha.Equals(DateTime.Today))
+                            {
+                                ret.Add(v);
+                            }
+                        }
+                    }
+
+                    return ViajeConverter.convert(ret);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
     }
 
 }

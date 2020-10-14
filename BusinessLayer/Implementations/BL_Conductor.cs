@@ -23,12 +23,26 @@ namespace BusinessLayer.Implementations
 
         public void FinalizarViaje(int idViaje)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dal.FinalizarViaje(idViaje);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo dar por finalizado el viaje. " + e.Message);
+            }
         }
 
         public void IniciarViaje(int idViaje)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dal.IniciarViaje(idViaje);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo dar por iniciado el viaje. " + e.Message);
+            }
         }
 
         public ICollection<Viaje> ListarViajesDelDia(int idConductor)

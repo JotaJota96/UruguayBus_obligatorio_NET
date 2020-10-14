@@ -15,7 +15,10 @@ namespace MainParaPruebas
         static void Main(string[] args)
         {
             Console.WriteLine("Area de pruebas");
-            IBL_Usuario bl = new BL_Usuario();
+            IBL_Usuario blu = new BL_Usuario();
+            IBL_Conductor blc = new BL_Conductor();
+
+            blc.IniciarViaje(1);
 
             Console.WriteLine("");
         }

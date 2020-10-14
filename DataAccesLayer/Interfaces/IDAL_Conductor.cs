@@ -8,5 +8,7 @@ namespace DataAccesLayer.Interfaces
 {
     public interface IDAL_Conductor
     {
+        void IniciarViaje(int idViaje);
+        void FinalizarViaje(int idViaje);
     }
 }

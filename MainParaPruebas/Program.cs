@@ -16,8 +16,9 @@ namespace MainParaPruebas
         {
             Console.WriteLine("Area de pruebas");
             IBL_Usuario bl = new BL_Usuario();
-
-            Console.WriteLine("");
+            IBL_Admin bla = new BL_Admin();
+            
+            Console.WriteLine("Fin de area de pruebas");
         }
     }
 }

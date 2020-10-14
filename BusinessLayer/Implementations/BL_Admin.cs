@@ -23,12 +23,26 @@ namespace BusinessLayer.Implementations
 
         public ICollection<Parada> ListarParadas()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.ListarParadas();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar obtener el listado. " + e.Message);
+            }
         }
 
         public Vehiculo ModificarVehiculo(Vehiculo v)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.ModificarVehiculo(v);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar modificar el vehiculo. " + e.Message);
+            }
         }
 
         public Horario RegistrarHorario(Horario h)
@@ -43,12 +57,26 @@ namespace BusinessLayer.Implementations
 
         public Parada RegistrarParada(Parada p)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.RegistrarParada(p);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar registrar la parada. " + e.Message);
+            }
         }
 
         public Vehiculo RegistrarVehiculo(Vehiculo v)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.RegistrarVehiculo(v);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar registrar el vehiculo. " + e.Message);
+            }
         }
 
         public ICollection<Viaje> RegistrarViajes(int idHorario, DateTime fInicio, DateTime fFin, ICollection<DiaSemana> dias)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Share.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace DataAccesLayer.Interfaces
 {
     public interface IDAL_Admin
     {
+        ICollection<Parada> ListarParadas();
+        Vehiculo ModificarVehiculo(Vehiculo v);
+        Parada RegistrarParada(Parada p);
+        Vehiculo RegistrarVehiculo(Vehiculo v);
     }
 }

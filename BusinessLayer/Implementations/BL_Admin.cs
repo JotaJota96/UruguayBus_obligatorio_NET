@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.Interfaces;
+using DataAccesLayer.Implementations;
+using DataAccesLayer.Interfaces;
 using Share.Entities;
 using Share.Enums;
 using System;
@@ -11,6 +13,9 @@ namespace BusinessLayer.Implementations
 {
     public class BL_Admin : IBL_Admin
     {
+        private IDAL_Admin dal = new DAL_Admin();
+        private IDAL_Global dalg = new DAL_Global();
+
         public BL_Admin()
         {
             //

@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.Interfaces;
+using DataAccesLayer.Implementations;
+using DataAccesLayer.Interfaces;
 using Share.DTOs;
 using Share.Entities;
 using Share.Enums;
@@ -12,6 +14,9 @@ namespace BusinessLayer.Implementations
 {
     public class BL_Usuario : IBL_Usuario
     {
+        private IDAL_Usuario dal = new DAL_Usuario();
+        private IDAL_Global dalg = new DAL_Global();
+
         public BL_Usuario()
         {
             //
@@ -39,7 +44,14 @@ namespace BusinessLayer.Implementations
 
         public Usuario RegistrarUsuario(Usuario u)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.RegistrarUsuario(u);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo registrar el usuario. " + e.Message);
+            }
         }
 
         public Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int idUsuario, int? asiento = null)

@@ -1,4 +1,7 @@
+using BusinessLayer.Implementations;
+using BusinessLayer.Interfaces;
 using Share.Entities;
+using Share.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +14,10 @@ namespace MainParaPruebas
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hola mundo");
-            Console.ReadLine();
+            Console.WriteLine("Area de pruebas");
+            IBL_Usuario bl = new BL_Usuario();
+
+            Console.WriteLine("");
         }
     }
 }

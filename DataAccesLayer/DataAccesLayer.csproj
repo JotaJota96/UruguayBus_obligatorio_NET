@@ -88,6 +88,16 @@
     <Compile Include="horario.cs">
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Implementations\DAL_Admin.cs" />
+    <Compile Include="Implementations\DAL_Conductor.cs" />
+    <Compile Include="Implementations\DAL_Global.cs" />
+    <Compile Include="Implementations\DAL_Superadmin.cs" />
+    <Compile Include="Implementations\DAL_Usuario.cs" />
+    <Compile Include="Interfaces\IDAL_Admin.cs" />
+    <Compile Include="Interfaces\IDAL_Conductor.cs" />
+    <Compile Include="Interfaces\IDAL_Global.cs" />
+    <Compile Include="Interfaces\IDAL_Superadmin.cs" />
+    <Compile Include="Interfaces\IDAL_Usuario.cs" />
     <Compile Include="linea.cs">
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
@@ -126,10 +136,7 @@
       <DependentUpon>EntityFrameworkModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementations\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Share\Share.csproj">
       <Project>{619a73c9-6372-450d-9b3d-a85ce18f043b}</Project>

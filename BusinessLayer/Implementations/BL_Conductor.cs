@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.Interfaces;
+using DataAccesLayer.Implementations;
+using DataAccesLayer.Interfaces;
 using Share.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,9 @@ namespace BusinessLayer.Implementations
 {
     public class BL_Conductor : IBL_Conductor
     {
+        private IDAL_Conductor dal = new DAL_Conductor();
+        private IDAL_Global dalg = new DAL_Global();
+
         public BL_Conductor()
         {
             //

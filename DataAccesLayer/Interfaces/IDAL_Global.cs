@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Share.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace DataAccesLayer.Interfaces
 {
     public interface IDAL_Global
     {
+        ICollection<Parada> obtenerParadasDeLinea(int idLinea);
     }
 }

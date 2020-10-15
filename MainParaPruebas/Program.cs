@@ -1,5 +1,7 @@
 using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
+using DataAccesLayer.Implementations;
+using DataAccesLayer.Interfaces;
 using Share.Entities;
 using Share.Enums;
 using System;
@@ -17,15 +19,18 @@ namespace MainParaPruebas
             Console.WriteLine("Area de pruebas");
             IBL_Usuario blu = new BL_Usuario();
             IBL_Conductor blc = new BL_Conductor();
+            IDAL_Global blg = new DAL_Global();
 
-            ICollection<Viaje> v = blc.ListarViajesDelDia(9);
+            ICollection<Usuario> usu = blc.RegistrarPasoPorParada(1,6);
 
-            foreach (var item in v)
+            foreach (var item in usu)
             {
-                Console.WriteLine(item.fecha);
+                Console.WriteLine(item.persona.nombre);
             }
 
+
             Console.WriteLine("");
+
         }
     }
 }

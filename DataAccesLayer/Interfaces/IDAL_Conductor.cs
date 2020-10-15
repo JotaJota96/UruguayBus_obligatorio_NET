@@ -12,5 +12,7 @@ namespace DataAccesLayer.Interfaces
         void IniciarViaje(int idViaje);
         void FinalizarViaje(int idViaje);
         ICollection<Viaje> ListarViajesDelDia(int idConductor);
+        bool ValidarPasaje(int idPasaje, int idViaje, int idParada);
+        ICollection<Usuario> RegistrarPasoPorParada(int idParada, int idViaje);
     }
 }

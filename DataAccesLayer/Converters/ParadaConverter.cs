@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccesLayer.Converters
 {
-    class ParadaConverter
+    public class ParadaConverter
     {
         /** Conversion de objetos simples *************************************/
         public static Parada convert(parada p)

@@ -29,7 +29,7 @@ namespace BusinessLayer.Implementations
             }
             catch (Exception e)
             {
-                throw new Exception("No se pudo dar por finalizado el viaje. " + e.Message);
+                throw new Exception("No se pudo finalizar el viaje: " + e.Message);
             }
         }
 
@@ -41,7 +41,7 @@ namespace BusinessLayer.Implementations
             }
             catch (Exception e)
             {
-                throw new Exception("No se pudo dar por iniciado el viaje. " + e.Message);
+                throw new Exception("No se pudo iniciar el viaje: " + e.Message);
             }
         }
 
@@ -53,18 +53,32 @@ namespace BusinessLayer.Implementations
             }
             catch (Exception e)
             {
-                throw new Exception("No se pudo listar los viajes del condutor. " + e.Message);
+                throw new Exception("No se pudo obtener la lista de viaje: " + e.Message);
             }
         }
 
         public ICollection<Usuario> RegistrarPasoPorParada(int idParada, int idViaje)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.RegistrarPasoPorParada(idParada, idViaje);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo obtener la lista de pasajeros: " + e.Message);
+            }
         }
 
         public bool ValidarPasaje(int idPasaje, int idViaje, int idParada)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.ValidarPasaje(idPasaje, idViaje, idParada);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo validar el pasaje: " + e.Message);
+            }
         }
     }
 }

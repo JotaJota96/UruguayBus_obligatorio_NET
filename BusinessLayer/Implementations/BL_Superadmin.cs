@@ -23,12 +23,26 @@ namespace BusinessLayer.Implementations
 
         public void AsignarRol(int idUsuario, Rol rol, DateTime? fechaVencLibreta = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dal.AsignarRol(idUsuario, rol, fechaVencLibreta);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo asignar el rol: " + e.Message);
+            }
         }
 
         public ICollection<Vehiculo> ListarVehiculos()
         {
-            throw new NotImplementedException();
+            try
+            {
+               return dal.ListarVehiculos();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudieron listar los vheiculos: " + e.Message);
+            }
         }
     }
 }

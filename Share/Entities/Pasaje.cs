@@ -12,7 +12,7 @@ namespace Share.Entities
         public int id { get; set; }
         public int? asiento { get; set; }
         public bool usado { get; set; }
-        public TipoDocumento tipo_documento { get; set; }
+        public TipoDocumento? tipo_documento { get; set; }
         public string documento { get; set; }
         public Parada parada_origen { get; set; }
         public Parada parada_destino { get; set; }

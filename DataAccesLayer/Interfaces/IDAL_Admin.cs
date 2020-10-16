@@ -13,5 +13,7 @@ namespace DataAccesLayer.Interfaces
         Vehiculo ModificarVehiculo(Vehiculo v);
         Parada RegistrarParada(Parada p);
         Vehiculo RegistrarVehiculo(Vehiculo v);
+        Horario RegistrarHorario(Horario h);
+        Linea RegistrarLinea(Linea l);
     }
 }

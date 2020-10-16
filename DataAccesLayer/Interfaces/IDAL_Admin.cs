@@ -15,5 +15,6 @@ namespace DataAccesLayer.Interfaces
         Vehiculo RegistrarVehiculo(Vehiculo v);
         Horario RegistrarHorario(Horario h);
         Linea RegistrarLinea(Linea l);
+        ICollection<Viaje> RegistrarViajes(ICollection<Viaje> viajes, int idHorario);
     }
 }

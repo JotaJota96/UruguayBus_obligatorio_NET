@@ -164,5 +164,31 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
+
+        public ICollection<Viaje> RegistrarViajes(ICollection<Viaje> vs, int idHorario)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    ICollection<viaje> viajes = ViajeConverter.convert(vs);
+                    horario hor = db.horario.Find(idHorario);
+
+                    foreach (var via in viajes)
+                    {
+                        via.horario = hor;
+                        db.viaje.Add(via);
+                    }
+                    db.SaveChanges();
+
+                    return ViajeConverter.convert(viajes);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
     }
 }

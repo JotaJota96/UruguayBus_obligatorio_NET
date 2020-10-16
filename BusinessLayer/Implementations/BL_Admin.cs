@@ -130,7 +130,37 @@ namespace BusinessLayer.Implementations
 
         public ICollection<Viaje> RegistrarViajes(int idHorario, DateTime fInicio, DateTime fFin, ICollection<DiaSemana> dias)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ICollection<Viaje> viajes = new List<Viaje>();
+
+                if (fInicio.CompareTo(fFin) >= 0)
+                {
+                    throw new Exception("La fecha de inicio debe ser anterior que la de fin");
+                }
+                if (dias.Count < 1)
+                {
+                    throw new Exception("Se debe especificar al menos un dia de la semana");
+                }
+
+                for (; fInicio.CompareTo(fFin) <= 0; fInicio = fInicio.AddDays(1))
+                {
+                    if (dias.Contains((DiaSemana)fInicio.DayOfWeek))
+                    {
+                        viajes.Add(new Viaje()
+                        {
+                            fecha = fInicio,
+                            finalizado = null,
+                        });
+                    }
+                }
+
+                return dal.RegistrarViajes(viajes, idHorario);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar registrar los viajes. " + e.Message);
+            }
         }
     }
 }

@@ -24,7 +24,16 @@ namespace BusinessLayer.Implementations
 
         public Usuario IniciarSesion(string correo, string contrasenia)
         {
-            throw new NotImplementedException();
+            {
+                try
+                {
+                    return dal.IniciarSesion(correo, contrasenia);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("No se pudo registrar el usuario. " + e.Message);
+                }
+            }
         }
 
         public ICollection<VehiculoCercanoDTO> ListarVehiculosCercanos(int idParada, int? idUsuario = null)
@@ -39,7 +48,14 @@ namespace BusinessLayer.Implementations
 
         public decimal PrecioParaElegirAsiento()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.PrecioParaElegirAsiento();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo encontrar el dato. " + e.Message);
+            }
         }
 
         public Usuario RegistrarUsuario(Usuario u)

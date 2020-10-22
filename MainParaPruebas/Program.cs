@@ -1,6 +1,7 @@
 using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
 using DataAccesLayer;
+using MainParaPruebas.SoapService;
 using Share.Entities;
 using Share.Enums;
 using System;
@@ -20,6 +21,10 @@ namespace MainParaPruebas
 
             try
             {
+                IService1 s = new Service1Client();
+
+                
+                Console.WriteLine(s.GetData(12));
 
             }
             catch (Exception e)

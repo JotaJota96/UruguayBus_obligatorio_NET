@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Share.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,6 +13,9 @@ namespace ServiceLayerSOAP
     [ServiceContract]
     public interface IService1
     {
+        [OperationContract]
+        ICollection<Parada> ListarParadas();
+
 
         [OperationContract]
         string GetData(int value);

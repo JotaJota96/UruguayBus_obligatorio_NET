@@ -78,6 +78,12 @@ namespace MainParaPruebas.SoapService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SoapService.IService1")]
     public interface IService1 {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListarParadas", ReplyAction="http://tempuri.org/IService1/ListarParadasResponse")]
+        Share.Entities.Parada[] ListarParadas();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ListarParadas", ReplyAction="http://tempuri.org/IService1/ListarParadasResponse")]
+        System.Threading.Tasks.Task<Share.Entities.Parada[]> ListarParadasAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetData", ReplyAction="http://tempuri.org/IService1/GetDataResponse")]
         string GetData(int value);
         
@@ -116,6 +122,14 @@ namespace MainParaPruebas.SoapService {
         
         public Service1Client(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public Share.Entities.Parada[] ListarParadas() {
+            return base.Channel.ListarParadas();
+        }
+        
+        public System.Threading.Tasks.Task<Share.Entities.Parada[]> ListarParadasAsync() {
+            return base.Channel.ListarParadasAsync();
         }
         
         public string GetData(int value) {

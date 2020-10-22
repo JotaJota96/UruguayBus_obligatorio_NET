@@ -21,11 +21,19 @@ namespace MainParaPruebas
 
             try
             {
-                IService1 s = new Service1Client();
-
                 
-                Console.WriteLine(s.GetData(12));
-
+                IService1 s = new Service1Client();
+                foreach (var item in s.ListarParadas())
+                {
+                    Console.WriteLine(item.id + " " + item.nombre);
+                }
+                
+                /*
+                foreach (var item in new BL_Admin().ListarParadas())
+                {
+                    Console.WriteLine(item.id + " " + item.nombre);
+                }
+                */
             }
             catch (Exception e)
             {

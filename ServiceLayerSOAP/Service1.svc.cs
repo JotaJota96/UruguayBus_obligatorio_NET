@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BusinessLayer.Implementations;
+using BusinessLayer.Interfaces;
+using Share.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,6 +15,19 @@ namespace ServiceLayerSOAP
     // NOTE: para iniciar el Cliente de prueba WCF para probar este servicio, seleccione Service1.svc o Service1.svc.cs en el Explorador de soluciones e inicie la depuración.
     public class Service1 : IService1
     {
+        public ICollection<Parada> ListarParadas()
+        {
+            IBL_Admin bla = new BL_Admin();
+            ICollection<Parada> ret = bla.ListarParadas();
+            ret.Add(new Parada()
+                {
+                    id = -1,
+                    nombre = "Hardcodeado (Recordar eliminar)"
+                }
+           );
+            return ret;
+        }
+
         public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);

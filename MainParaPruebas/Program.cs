@@ -1,7 +1,7 @@
 using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
 using DataAccesLayer;
-using MainParaPruebas.SoapService;
+using MainParaPruebas.ServicioSOAP;
 using Share.Entities;
 using Share.Enums;
 using System;
@@ -21,19 +21,8 @@ namespace MainParaPruebas
 
             try
             {
-                
-                IService1 s = new Service1Client();
-                foreach (var item in s.ListarParadas())
-                {
-                    Console.WriteLine(item.id + " " + item.nombre);
-                }
-                
-                /*
-                foreach (var item in new BL_Admin().ListarParadas())
-                {
-                    Console.WriteLine(item.id + " " + item.nombre);
-                }
-                */
+                SL_SoapClient serv = new SL_SoapClient();
+                Console.WriteLine(serv.EchoTest("hola mundo"));
             }
             catch (Exception e)
             {

@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\SoapService\Reference.cs">
+    <Compile Include="Connected Services\ServicioSOAP\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -62,23 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\SoapService\MainParaPruebas.SoapService.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\SoapService\Service1.wsdl" />
-    <None Include="Connected Services\SoapService\Service1.xsd">
+    <None Include="Connected Services\ServicioSOAP\SL_Soap.wsdl" />
+    <None Include="Connected Services\ServicioSOAP\SL_Soap1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\SoapService\Service11.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\SoapService\Service12.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\SoapService\Service13.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\SoapService\Service131.xsd">
+    <None Include="Connected Services\ServicioSOAP\SL_Soap2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
@@ -102,19 +90,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\SoapService\" />
+    <WCFMetadataStorage Include="Connected Services\ServicioSOAP\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\SoapService\Service1.disco" />
+    <None Include="Connected Services\ServicioSOAP\SL_Soap.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\SoapService\configuration91.svcinfo" />
+    <None Include="Connected Services\ServicioSOAP\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\SoapService\configuration.svcinfo" />
+    <None Include="Connected Services\ServicioSOAP\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\SoapService\Reference.svcmap">
+    <None Include="Connected Services\ServicioSOAP\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

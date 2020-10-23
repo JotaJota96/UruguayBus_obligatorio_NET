@@ -10,25 +10,28 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TerminalAutogestion.Ventanas;
 
-namespace TerminalAutogestion
+namespace TerminalAutogestion.Ventanas
 {
     /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
+    /// Lógica de interacción para WinIngresarDinero.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class WinIngresarDinero : Window
     {
-        public MainWindow()
+        public WinIngresarDinero()
         {
             InitializeComponent();
         }
 
+        private void btnVolver_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            new WinIngresarDatosViaje().ShowDialog();
+
         }
     }
 }

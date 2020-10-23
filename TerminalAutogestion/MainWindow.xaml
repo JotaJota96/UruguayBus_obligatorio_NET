@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TerminalAutogestion"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
-    <Grid/>
+        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
+    <Grid>
+        <Button x:Name="btnSiguiente" Content="Reservar pasaje &gt;" Margin="0,627,-0.4,0" Height="93" FontSize="48" Click="btnSiguiente_Click" VerticalAlignment="Bottom"/>
+
+    </Grid>
 </Window>

@@ -20,6 +20,24 @@ namespace MainParaPruebas.ServicioSOAP {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/EchoTest", ReplyAction="http://tempuri.org/ISL_Soap/EchoTestResponse")]
         System.Threading.Tasks.Task<string> EchoTestAsync(string mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/ListarViajesDisponibles", ReplyAction="http://tempuri.org/ISL_Soap/ListarViajesDisponiblesResponse")]
+        Share.DTOs.ViajeDisponibleDTO[] ListarViajesDisponibles(System.DateTime fecha, int idParadaOrigen, int idParadaDestino);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/ListarViajesDisponibles", ReplyAction="http://tempuri.org/ISL_Soap/ListarViajesDisponiblesResponse")]
+        System.Threading.Tasks.Task<Share.DTOs.ViajeDisponibleDTO[]> ListarViajesDisponiblesAsync(System.DateTime fecha, int idParadaOrigen, int idParadaDestino);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/ReservarPasaje", ReplyAction="http://tempuri.org/ISL_Soap/ReservarPasajeResponse")]
+        Share.Entities.Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, Share.Enums.TipoDocumento tipoDocumento, System.Nullable<int> asiento);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/ReservarPasaje", ReplyAction="http://tempuri.org/ISL_Soap/ReservarPasajeResponse")]
+        System.Threading.Tasks.Task<Share.Entities.Pasaje> ReservarPasajeAsync(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, Share.Enums.TipoDocumento tipoDocumento, System.Nullable<int> asiento);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/PrecioParaElegirAsiento", ReplyAction="http://tempuri.org/ISL_Soap/PrecioParaElegirAsientoResponse")]
+        decimal PrecioParaElegirAsiento();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/PrecioParaElegirAsiento", ReplyAction="http://tempuri.org/ISL_Soap/PrecioParaElegirAsientoResponse")]
+        System.Threading.Tasks.Task<decimal> PrecioParaElegirAsientoAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +73,30 @@ namespace MainParaPruebas.ServicioSOAP {
         
         public System.Threading.Tasks.Task<string> EchoTestAsync(string mensaje) {
             return base.Channel.EchoTestAsync(mensaje);
+        }
+        
+        public Share.DTOs.ViajeDisponibleDTO[] ListarViajesDisponibles(System.DateTime fecha, int idParadaOrigen, int idParadaDestino) {
+            return base.Channel.ListarViajesDisponibles(fecha, idParadaOrigen, idParadaDestino);
+        }
+        
+        public System.Threading.Tasks.Task<Share.DTOs.ViajeDisponibleDTO[]> ListarViajesDisponiblesAsync(System.DateTime fecha, int idParadaOrigen, int idParadaDestino) {
+            return base.Channel.ListarViajesDisponiblesAsync(fecha, idParadaOrigen, idParadaDestino);
+        }
+        
+        public Share.Entities.Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, Share.Enums.TipoDocumento tipoDocumento, System.Nullable<int> asiento) {
+            return base.Channel.ReservarPasaje(idViaje, idParadaOrigen, idParadaDestino, documento, tipoDocumento, asiento);
+        }
+        
+        public System.Threading.Tasks.Task<Share.Entities.Pasaje> ReservarPasajeAsync(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, Share.Enums.TipoDocumento tipoDocumento, System.Nullable<int> asiento) {
+            return base.Channel.ReservarPasajeAsync(idViaje, idParadaOrigen, idParadaDestino, documento, tipoDocumento, asiento);
+        }
+        
+        public decimal PrecioParaElegirAsiento() {
+            return base.Channel.PrecioParaElegirAsiento();
+        }
+        
+        public System.Threading.Tasks.Task<decimal> PrecioParaElegirAsientoAsync() {
+            return base.Channel.PrecioParaElegirAsientoAsync();
         }
     }
 }

@@ -4,6 +4,10 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Share.DTOs" />
+      <xsd:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Share.Enums" />
+      <xsd:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Share.Entities" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ISL_Soap_EchoTest_InputMessage">
@@ -12,16 +16,73 @@
   <wsdl:message name="ISL_Soap_EchoTest_OutputMessage">
     <wsdl:part name="parameters" element="tns:EchoTestResponse" />
   </wsdl:message>
+  <wsdl:message name="ISL_Soap_ListarViajesDisponibles_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarViajesDisponibles" />
+  </wsdl:message>
+  <wsdl:message name="ISL_Soap_ListarViajesDisponibles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarViajesDisponiblesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISL_Soap_ReservarPasaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReservarPasaje" />
+  </wsdl:message>
+  <wsdl:message name="ISL_Soap_ReservarPasaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReservarPasajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISL_Soap_PrecioParaElegirAsiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioParaElegirAsiento" />
+  </wsdl:message>
+  <wsdl:message name="ISL_Soap_PrecioParaElegirAsiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioParaElegirAsientoResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISL_Soap">
     <wsdl:operation name="EchoTest">
       <wsdl:input wsaw:Action="http://tempuri.org/ISL_Soap/EchoTest" message="tns:ISL_Soap_EchoTest_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISL_Soap/EchoTestResponse" message="tns:ISL_Soap_EchoTest_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarViajesDisponibles">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISL_Soap/ListarViajesDisponibles" message="tns:ISL_Soap_ListarViajesDisponibles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISL_Soap/ListarViajesDisponiblesResponse" message="tns:ISL_Soap_ListarViajesDisponibles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReservarPasaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISL_Soap/ReservarPasaje" message="tns:ISL_Soap_ReservarPasaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISL_Soap/ReservarPasajeResponse" message="tns:ISL_Soap_ReservarPasaje_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrecioParaElegirAsiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISL_Soap/PrecioParaElegirAsiento" message="tns:ISL_Soap_PrecioParaElegirAsiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISL_Soap/PrecioParaElegirAsientoResponse" message="tns:ISL_Soap_PrecioParaElegirAsiento_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISL_Soap" type="tns:ISL_Soap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="EchoTest">
       <soap:operation soapAction="http://tempuri.org/ISL_Soap/EchoTest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarViajesDisponibles">
+      <soap:operation soapAction="http://tempuri.org/ISL_Soap/ListarViajesDisponibles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReservarPasaje">
+      <soap:operation soapAction="http://tempuri.org/ISL_Soap/ReservarPasaje" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrecioParaElegirAsiento">
+      <soap:operation soapAction="http://tempuri.org/ISL_Soap/PrecioParaElegirAsiento" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

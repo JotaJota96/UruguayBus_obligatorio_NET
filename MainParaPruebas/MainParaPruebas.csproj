@@ -63,14 +63,28 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Connected Services\ServicioSOAP\SL_Soap.wsdl" />
+    <None Include="Connected Services\ServicioSOAP\SL_Soap.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServicioSOAP\SL_Soap1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServicioSOAP\SL_Soap2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServicioSOAP\SL_Soap3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServicioSOAP\SL_Soap4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServicioSOAP\SL_Soap5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Share.DTOs.ViajeDisponibleDTO.datasource" />
     <None Include="Properties\DataSources\Share.Entities.Parada.datasource" />
+    <None Include="Properties\DataSources\Share.Entities.Pasaje.datasource" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

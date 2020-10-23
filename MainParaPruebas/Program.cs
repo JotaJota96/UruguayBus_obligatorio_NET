@@ -1,6 +1,7 @@
 using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
 using DataAccesLayer;
+using MainParaPruebas.ServicioSOAP;
 using Share.Entities;
 using Share.Enums;
 using System;
@@ -20,7 +21,8 @@ namespace MainParaPruebas
 
             try
             {
-
+                SL_SoapClient serv = new SL_SoapClient();
+                Console.WriteLine(serv.EchoTest("hola mundo"));
             }
             catch (Exception e)
             {

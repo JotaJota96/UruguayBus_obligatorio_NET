@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainParaPruebas", "MainParaPruebas\MainParaPruebas.csproj", "{6B101FE0-F656-45DF-BE69-479FABF25CD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalAutogestion", "TerminalAutogestion\TerminalAutogestion.csproj", "{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6B101FE0-F656-45DF-BE69-479FABF25CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B101FE0-F656-45DF-BE69-479FABF25CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B101FE0-F656-45DF-BE69-479FABF25CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

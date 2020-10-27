@@ -23,27 +23,62 @@ namespace BusinessLayer.Implementations
 
         public void FinalizarViaje(int idViaje)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dal.FinalizarViaje(idViaje);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo finalizar el viaje: " + e.Message);
+            }
         }
 
         public void IniciarViaje(int idViaje)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dal.IniciarViaje(idViaje);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo iniciar el viaje: " + e.Message);
+            }
         }
 
         public ICollection<Viaje> ListarViajesDelDia(int idConductor)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.ListarViajesDelDia(idConductor);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo obtener la lista de viaje: " + e.Message);
+            }
         }
 
         public ICollection<Usuario> RegistrarPasoPorParada(int idParada, int idViaje)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.RegistrarPasoPorParada(idParada, idViaje);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo obtener la lista de pasajeros: " + e.Message);
+            }
         }
 
         public bool ValidarPasaje(int idPasaje, int idViaje, int idParada)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return dal.ValidarPasaje(idPasaje, idViaje, idParada);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo validar el pasaje: " + e.Message);
+            }
         }
     }
 }

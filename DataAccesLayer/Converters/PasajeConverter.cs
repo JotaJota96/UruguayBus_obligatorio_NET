@@ -18,9 +18,16 @@ namespace DataAccesLayer.Converters
                 id = p.id,
                 asiento = p.asiento,
                 usado = p.usado,
-                documento = p.documento,
-                tipo_documento = (TipoDocumento) p.tipo_documento,
+                documento = p.documento
             };
+            if (!p.tipo_documento.Equals(null))
+            {
+                ret.tipo_documento = (TipoDocumento)p.tipo_documento;
+            }
+            else
+            {
+                ret.tipo_documento = null;
+            }
             return ret;
         }
 
@@ -32,8 +39,15 @@ namespace DataAccesLayer.Converters
                 asiento = p.asiento,
                 usado = p.usado,
                 documento = p.documento,
-                tipo_documento = (int) p.tipo_documento,
-            };
+            }; 
+            if (!p.tipo_documento.Equals(null))
+            {
+                ret.tipo_documento = (int)p.tipo_documento;
+            }
+            else
+            {
+                ret.tipo_documento = null;
+            }
             return ret;
         }
 

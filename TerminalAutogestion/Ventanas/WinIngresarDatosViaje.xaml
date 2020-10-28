@@ -12,10 +12,13 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" Click="btnVolver_Click" VerticalAlignment="Bottom"/>
-            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Click="btnSiguiente_Click" Grid.Column="1"/>
+            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" Click="btnVolver_Click" VerticalAlignment="Bottom" Background="#FF2C69A5" Foreground="#FFDEE5EE"/>
+            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Click="btnSiguiente_Click" Grid.Column="1" Background="#FF2C69A5" Foreground="#FFDEE5EE"/>
         </Grid>
         <TextBlock Margin="30" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" Text="Ingrese los datos del viaje"/>
+        <ListBox x:Name="lstOrigen" HorizontalAlignment="Right" Height="471" Margin="0,126,30,123" Width="389" VerticalAlignment="Center" FontSize="20"/>
+        <ListBox x:Name="lstDestino" HorizontalAlignment="Center" Height="471" Margin="446,126,445,123" VerticalAlignment="Center" Width="389" FontSize="20"/>
+        <ListBox x:Name="lstFechas" HorizontalAlignment="Left" Height="471" Margin="30,126,861,123" VerticalAlignment="Center" Width="389" FontSize="20"/>
 
     </Grid>
 </Window>

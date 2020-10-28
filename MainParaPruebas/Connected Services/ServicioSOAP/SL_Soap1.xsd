@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Share.DTOs" />
+  <xs:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Share.Enums" />
+  <xs:import schemaLocation="http://localhost:52171/SL_Soap.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Share.Entities" />
+  <xs:element name="EchoTest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="mensaje" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EchoTestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EchoTestResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListarViajesDisponibles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fecha" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="idParadaOrigen" type="xs:int" />
+        <xs:element minOccurs="0" name="idParadaDestino" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListarViajesDisponiblesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Share.DTOs" minOccurs="0" name="ListarViajesDisponiblesResult" nillable="true" type="q1:ArrayOfViajeDisponibleDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReservarPasaje">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idViaje" type="xs:int" />
+        <xs:element minOccurs="0" name="idParadaOrigen" type="xs:int" />
+        <xs:element minOccurs="0" name="idParadaDestino" type="xs:int" />
+        <xs:element minOccurs="0" name="documento" nillable="true" type="xs:string" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Share.Enums" minOccurs="0" name="tipoDocumento" type="q2:TipoDocumento" />
+        <xs:element minOccurs="0" name="asiento" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReservarPasajeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Share.Entities" minOccurs="0" name="ReservarPasajeResult" nillable="true" type="q3:Pasaje" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrecioParaElegirAsiento">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrecioParaElegirAsientoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PrecioParaElegirAsientoResult" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

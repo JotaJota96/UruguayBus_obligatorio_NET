@@ -39,43 +39,172 @@ namespace DataAccesLayer.Implementations
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                //.Where(x => x.fecha.Date == DateTime.Now.Date).ToList()
                 var res = new List<VehiculoCercanoDTO>();
                 var parada = db.parada.FirstOrDefault(x=>x.id==idParada);
-                var Viajes = db.viaje
+                var Res = db.viaje
                     .Where(x => x.finalizado == false).ToList()?
-                    .Where(x=> x.horario.linea.tramo.Any(y=>y.parada_id == idParada))
-                    .ToList();
-                var algo = Viajes
-                    .Where(x =>
+                    .Where(x=> x.horario.linea.tramo.Any(y=>y.parada_id == idParada) &&
                         !x.paso_por_parada.Any(y=>y.parada_id == idParada) &&
-                        !x.paso_por_parada.Any(y => y.parada_id == idParada)
+                        x.paso_por_parada.Any(y => y.parada_id == GetParadaAnterior(x.horario.linea.id, idParada))
+                ).ToList()
+                .Select(x=>
+                    new VehiculoCercanoDTO() {
+                        vehiculo_id = x.horario.vehiculo.id,
+                        pasaje_reservado = idUsuario == null? false : x.pasaje.Any(y=>y.usuario.id == idUsuario)
+                    }
                 ).ToList();
             }
             return null;
         }
 
-        private List<linea> GetLineasParada()
+        private int GetParadaAnterior(int idlinea, int? idParada)
         {
-            return null;
+            DAL_Global DAL_G = new DAL_Global();
+            var paradas = DAL_G.obtenerParadasDeLinea(idlinea).Select(x=> ParadaConverter.convert(x)).ToList();
+            parada ParadaAnterior = null;
+            foreach (var parada in paradas)
+            {
+                if (parada.id != idParada)
+                {
+                    return ParadaAnterior != null ? ParadaAnterior.id : 0;
+                } else
+                {
+                    ParadaAnterior = parada;
+                }
+            }
+            return ParadaAnterior != null ? ParadaAnterior.id : 0;
         }
 
+        private bool ParadasOrdenadas(int idlinea, int idParadaOrigen, int idParadaDestino)
+        {
+
+            DAL_Global DAL_G = new DAL_Global();
+            var paradas = DAL_G.obtenerParadasDeLinea(idlinea).Select(x => ParadaConverter.convert(x)).ToList();
+            bool? encontroParada = null;
+            foreach (var parada in paradas)
+            {
+                if (parada.id == idParadaOrigen && encontroParada == null)
+                {
+                    encontroParada = false;
+                } else if (parada.id == idParadaDestino && encontroParada == false)
+                {
+                    return true;
+                }
+            }
+            return encontroParada?? false;
+        }
+
+        private decimal PrecioRecorrido(int idlinea, int idParadaOrigen, int idParadaDestino, DateTime fecha)
+        {
+            DAL_Global DAL_G = new DAL_Global();
+            var paradas = DAL_G.obtenerParadasDeLinea(idlinea).Select(x => ParadaConverter.convert(x)).ToList();
+            decimal precio = 0;
+            bool EstoyEnRecorrido = false;
+            foreach (var parada in paradas)
+            {
+                if (EstoyEnRecorrido)
+                {
+                    var valor = parada.tramo
+                        .FirstOrDefault(x=>x.linea.id==idlinea)?.precio
+                        .OrderByDescending(x => x.fecha_validez)
+                        .FirstOrDefault(x=>x.fecha_validez.Date <= fecha.Date)?.valor?? 0;
+                    precio += valor;
+                    if (parada.id == idParadaDestino)
+                    {
+                        return precio;
+                    }
+                }
+                else if (parada.id == idParadaOrigen)
+                {
+                    EstoyEnRecorrido = true;
+                }
+            }
+            return precio;
+        }
+
+        private List<int> ParadasIntermedias(int idlinea, int idParadaOrigen, int idParadaDestino)
+        {
+            DAL_Global DAL_G = new DAL_Global();
+            var res = new List<int>();
+            var paradas = DAL_G.obtenerParadasDeLinea(idlinea);
+            bool comienzo = false;
+            foreach (var parada in paradas)
+            {
+                if (parada.id == idParadaOrigen)
+                {
+                    comienzo = true;
+                }
+                if (comienzo)
+                {
+                    res.Add(parada.id);
+                }
+                if (comienzo && parada.id == idParadaDestino)
+                {
+                    return res;
+                }
+            };
+            return res;
+        }
+        private List<int> GetCantAsientosDisponiblies(viaje Viaje, int idParadaOrigen, int idParadaDestino)
+        {
+            DAL_Global DAL_G = new DAL_Global();
+            var paradas = DAL_G.obtenerParadasDeLinea(Viaje.horario.linea.id).Select(x => ParadaConverter.convert(x)).ToList();
+            var res = new List<int>();
+            List<int> ParadasI = ParadasIntermedias(Viaje.horario.linea.id, idParadaOrigen, idParadaDestino);
+            for (int i = 1; i < Viaje.horario.vehiculo.cant_asientos; i++)
+            {
+                var pasajesParaElAsiento = Viaje.pasaje.Where(x=>x.asiento==i).ToList();
+                if (pasajesParaElAsiento.Count() == 0)
+                {
+                    res.Add(i);
+                }
+                else
+                {
+                    var asientoDisponible = true;
+                    foreach (var pasaje in pasajesParaElAsiento)
+                    {
+                        if (ParadasI.Intersect(ParadasIntermedias(Viaje.horario.linea.id, pasaje.parada_id_origen, pasaje.parada_id_destino)).Count() == 0)
+                        {
+                            continue;
+                        }
+                        asientoDisponible = pasaje.parada_id_destino == idParadaOrigen ||
+                            pasaje.parada_id_origen == idParadaDestino;
+                        if (!asientoDisponible)
+                        {
+                            break;
+                        }
+                    }
+                    if (asientoDisponible)
+                    {
+                        res.Add(i);
+                    }
+                }
+            }
+            return res;
+        }
         public ICollection<ViajeDisponibleDTO> ListarViajesDisponibles(DateTime fecha, int idParadaOrigen, int idParadaDestino)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                var res = new List<ViajeDisponibleDTO>();
-                var viajes = db.viaje.Where(x=>x.finalizado == false).ToList();
+                DAL_Global DAL_G = new DAL_Global();
+                var viajes = db.viaje
+                    .Where(x => x.finalizado != true &&
+                        x.horario.linea.tramo.Any(y => y.parada_id == idParadaOrigen) &&
+                        x.horario.linea.tramo.Any(y => y.parada_id == idParadaDestino) &&
+                        !x.paso_por_parada.Any(y => y.parada_id == idParadaOrigen)).ToList();
                 viajes = viajes
                     .Where(x =>
-                        x.paso_por_parada.Any(y => y.parada_id == idParadaDestino || y.parada_id == idParadaOrigen) &&
+                        ParadasOrdenadas(x.horario.linea.id, idParadaOrigen, idParadaDestino) &&
                         x.fecha.Date == fecha.Date)
                     .ToList();
-                res = viajes.Select(x => new ViajeDisponibleDTO() {
+
+                var res = viajes.Select(x => new ViajeDisponibleDTO() {
                     viaje_id = x.id,
                     parada_id_destino = idParadaDestino,
                     parada_id_origen = idParadaOrigen,
                     hora = x.horario.hora,
+                    precio = PrecioRecorrido(x.horario.linea.id, idParadaOrigen, idParadaDestino, fecha),
+                    asientos_disponibles = GetCantAsientosDisponiblies(x,idParadaOrigen, idParadaDestino)
                 }).ToList();
                 return res;
             }
@@ -138,16 +267,16 @@ namespace DataAccesLayer.Implementations
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                var viaje = db.viaje.FirstOrDefault(x => x.id == idViaje);
-                var parada = db.parada.FirstOrDefault(x => x.id == idParadaOrigen);
-                var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
-                var usuario = db.usuario.FirstOrDefault(x => x.id == idUsuario);
-                if (viaje != null)
+                try
                 {
+                    var viaje = db.viaje.FirstOrDefault(x => x.id == idViaje);
+                    var parada = db.parada.FirstOrDefault(x => x.id == idParadaOrigen);
+                    var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
+                    var usuario = db.usuario.FirstOrDefault(x => x.id == idUsuario);
                     var pasaje = new pasaje()
                     {
-                        parada_id_destino = idParadaDestino,
                         parada = parada,
+                        parada_id_destino = idParadaDestino,
                         parada_id_origen = idParadaOrigen,
                         parada1 = parada1,
                         viaje_id = idViaje,
@@ -155,11 +284,15 @@ namespace DataAccesLayer.Implementations
                         usuario_id = idUsuario,
                         usuario = usuario,
                         asiento = asiento,
-                        //tipo_documento = usuario.persona.tipo_documento,
-                        //documento = usuario.persona.documento,
                     };
+                    db.pasaje.Add(pasaje);
+                    db.SaveChanges();
+                    return PasajeConverter.convert(pasaje);
                 }
-                return null;
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
         }
 
@@ -167,24 +300,31 @@ namespace DataAccesLayer.Implementations
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                var viaje = db.viaje.FirstOrDefault(x=>x.id==idViaje);
-                var parada = db.parada.FirstOrDefault(x=> x.id == idParadaOrigen);
-                var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
-                if (viaje != null)
+                try
                 {
+                    var viaje = db.viaje.FirstOrDefault(x=>x.id==idViaje);
+                    var parada = db.parada.FirstOrDefault(x=> x.id == idParadaOrigen);
+                    var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var pasaje = new pasaje() {
-                    parada_id_destino = idParadaDestino,
-                    parada = parada,
-                    parada_id_origen = idParadaOrigen,
-                    parada1 = parada1,
-                    viaje_id = idViaje,
-                    viaje = viaje,
-                    tipo_documento = tipoDocumento == TipoDocumento.CI ? 0:1,
-                    documento = documento,
-                    asiento = asiento,
+                        parada_id_destino = idParadaDestino,
+                        parada = parada,
+                        parada_id_origen = idParadaOrigen,
+                        parada1 = parada1,
+                        viaje_id = idViaje,
+                        viaje = viaje,
+                        tipo_documento = tipoDocumento == TipoDocumento.CI ? 0:1,
+                        documento = documento,
+                        asiento = asiento,
                     };
+                    db.pasaje.Add(pasaje);
+                    db.SaveChanges();
+                    return PasajeConverter.convert(pasaje);
                 }
-                return null;
+                catch (Exception e)
+                {
+
+                    throw e;
+                }
             }
         }
     }

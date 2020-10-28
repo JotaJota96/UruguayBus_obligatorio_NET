@@ -9,7 +9,6 @@ namespace DataAccesLayer.Interfaces
 {
     public interface IDAL_Admin
     {
-        ICollection<Parada> ListarParadas();
         Vehiculo ModificarVehiculo(Vehiculo v);
         Parada RegistrarParada(Parada p);
         Vehiculo RegistrarVehiculo(Vehiculo v);

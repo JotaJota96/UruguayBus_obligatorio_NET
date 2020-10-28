@@ -21,18 +21,6 @@ namespace BusinessLayer.Implementations
             //
         }
 
-        public ICollection<Parada> ListarParadas()
-        {
-            try
-            {
-                return dal.ListarParadas();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Ocurrio un problema al intentar obtener el listado. " + e.Message);
-            }
-        }
-
         public Vehiculo ModificarVehiculo(Vehiculo v)
         {
             try

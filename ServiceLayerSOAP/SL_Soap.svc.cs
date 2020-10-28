@@ -18,15 +18,22 @@ namespace ServiceLayerSOAP
     public class SL_Soap : ISL_Soap
     {
         IBL_Usuario blu;
+        IBL_Global blg;
 
         public SL_Soap()
         {
             blu = new BL_Usuario();
+            blg = new BL_Global();
         }
 
         public string EchoTest(string mensaje)
         {
             return "Ha enviado el mensaje: '" + mensaje + "'";
+        }
+
+        public ICollection<Parada> ListarParadas()
+        {
+            return blg.ListarParadas();
         }
 
         public ICollection<ViajeDisponibleDTO> ListarViajesDisponibles(DateTime fecha, int idParadaOrigen, int idParadaDestino)

@@ -10,5 +10,6 @@ namespace DataAccesLayer.Interfaces
     public interface IDAL_Global
     {
         ICollection<Parada> obtenerParadasDeLinea(int idLinea);
+        ICollection<Parada> ListarParadas();
     }
 }

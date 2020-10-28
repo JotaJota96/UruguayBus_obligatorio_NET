@@ -37,5 +37,23 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
+
+        public ICollection<Parada> ListarParadas()
+        {
+            try
+            {
+                using (uruguay_busEntities db = new uruguay_busEntities())
+                {
+                    ICollection<parada> lstParadas = (ICollection<parada>)db.parada.ToList();
+                    Console.WriteLine(lstParadas.Count());
+                    return ParadaConverter.convert(lstParadas);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

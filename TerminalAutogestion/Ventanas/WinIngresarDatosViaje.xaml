@@ -14,21 +14,21 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ListBox x:Name="lstFechas" Margin="30,63,30,30" FontSize="20">
+            <ListBox x:Name="lstFechas" Margin="30,63,30,30" FontSize="20" SelectionChanged="HabilitarBoton">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding texto}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox x:Name="lstOrigen" Margin="30,63,30,30" FontSize="20" Grid.Column="1" Background="White">
+            <ListBox x:Name="lstOrigen" Margin="30,63,30,30" FontSize="20" Grid.Column="1" Background="White" SelectionChanged="lstOrigen_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding nombre}"></TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox x:Name="lstDestino" Margin="30,63,30,30" FontSize="20" Grid.Column="2">
+            <ListBox x:Name="lstDestino" Margin="30,63,30,30" FontSize="20" Grid.Column="2" SelectionChanged="HabilitarBoton">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding nombre}"></TextBlock>
@@ -45,7 +45,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" VerticalAlignment="Bottom" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnVolver_Click"/>
-            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Grid.Column="1" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnSiguiente_Click"/>
+            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Grid.Column="1" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnSiguiente_Click" IsEnabled="False"/>
         </Grid>
 
     </Grid>

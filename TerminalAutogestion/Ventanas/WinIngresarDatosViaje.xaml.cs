@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TerminalAutogestion.ServiceSOAP;
 
 namespace TerminalAutogestion.Ventanas
 {
@@ -26,7 +27,7 @@ namespace TerminalAutogestion.Ventanas
         public WinIngresarDatosViaje()
         {
             InitializeComponent();
-            ServiceSOAP.SL_SoapClient servicio = new ServiceSOAP.SL_SoapClient();
+            SL_SoapClient serv = new SL_SoapClient();
 
             // carga lista de fechas
             for (int i = 0; i < 20; i++)
@@ -42,16 +43,9 @@ namespace TerminalAutogestion.Ventanas
                 //lstFechas.Items.Add(String.Format("{0:dd-MM-yyyy}", fecha) + " (" + dia.ToString().ToLower() + ")");
             }
 
-            // ** borrar esto ****
-            ICollection<Parada> paradas = new List<Parada>();
-            for (int i = 1; i <= 10; i++)
-            {
-                paradas.Add(new Parada() { id = i, nombre = "parada " + i });
-            }
-            // *******************
 
-            // carga lista origen
-            // carga lista destino
+            // carga lista origen y destino
+            ICollection<Parada> paradas = serv.ListarParadas();
             foreach (var item in paradas)
             {
                 lstOrigen.Items.Add(item);
@@ -75,6 +69,21 @@ namespace TerminalAutogestion.Ventanas
             new WinSeleccionarViaje(f, po, pd).ShowDialog();
         }
 
+        private void lstOrigen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lstDestino.Items.Clear();
+            foreach (var item in lstOrigen.Items)
+            {
+                lstDestino.Items.Add(item);
+            }
+             lstDestino.Items.Remove(lstOrigen.SelectedItem);
+            HabilitarBoton();
+        }
+
+        private void HabilitarBoton(object sender = null, SelectionChangedEventArgs e = null)
+        {
+            btnSiguiente.IsEnabled = lstFechas.SelectedItem != null && lstOrigen.SelectedItem != null && lstDestino.SelectedItem != null;
+        }
     }
 
     public class FechaItem

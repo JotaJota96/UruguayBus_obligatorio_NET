@@ -1,7 +1,7 @@
 using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
-using DataAccesLayer.Implementations;
-using DataAccesLayer.Interfaces;
+using DataAccesLayer;
+using MainParaPruebas.ServicioSOAP;
 using Share.Entities;
 using Share.Enums;
 using System;
@@ -18,18 +18,21 @@ namespace MainParaPruebas
         static void Main(string[] args)
         {
             Console.WriteLine("Area de pruebas");
-            IBL_Usuario blu = new BL_Usuario();
-            IBL_Conductor blc = new BL_Conductor();
-            IBL_Superadmin bls = new BL_Superadmin();
 
-            DateTime p = new DateTime(2038,11,25);
-            Rol r = Rol.SUPERADMIN;
+            try
+            {
+                SL_SoapClient serv = new SL_SoapClient();
+                Console.WriteLine(serv.EchoTest("hola mundo"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("-------");
+                Console.WriteLine("ERROR: " + e.Message);
+                Console.WriteLine("-------");
+            }
 
-            bls.AsignarRol(1, null ,null);
-
-
-            Console.WriteLine("");
-
+            Console.WriteLine("Fin de area de pruebas");
+            Console.ReadLine();
         }
     }
 }

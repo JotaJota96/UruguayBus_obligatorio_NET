@@ -169,7 +169,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="marcopoloparadiso1350_aguiabranca2_41594274fda0993c1ca73fbb03f4736c.jpg" />
+    <Resource Include="Multimedia\marcopoloparadiso1350_aguiabranca2_41594274fda0993c1ca73fbb03f4736c.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Share\Share.csproj">
+      <Project>{619a73c9-6372-450d-9b3d-a85ce18f043b}</Project>
+      <Name>Share</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

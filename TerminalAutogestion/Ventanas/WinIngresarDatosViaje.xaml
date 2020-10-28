@@ -6,19 +6,47 @@
         xmlns:local="clr-namespace:TerminalAutogestion.Ventanas"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
-    <Grid>
-        <Grid Height="172" Margin="0,548,0,0" VerticalAlignment="Bottom">
+    <Grid Background="#FF2C69A5">
+        <TextBlock Margin="30,30,30,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" Foreground="White"><Run Text="Ingrese los datos del viaje"/></TextBlock>
+        <Grid Margin="10,134,10,104">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="lstFechas" Margin="30,63,30,30" FontSize="20">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding texto}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox x:Name="lstOrigen" Margin="30,63,30,30" FontSize="20" Grid.Column="1" Background="White">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding nombre}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox x:Name="lstDestino" Margin="30,63,30,30" FontSize="20" Grid.Column="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding nombre}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Margin="30,10,30,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" Foreground="White" Text="Fecha"/>
+            <TextBlock Margin="30,10,30,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" Foreground="White" Text="Origen" Grid.Column="1"/>
+            <TextBlock Margin="30,10,30,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" Foreground="White" Text="Destino" Grid.Column="2"/>
+        </Grid>
+        <Grid Height="99" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" Click="btnVolver_Click" VerticalAlignment="Bottom" Background="#FF2C69A5" Foreground="#FFDEE5EE"/>
-            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Click="btnSiguiente_Click" Grid.Column="1" Background="#FF2C69A5" Foreground="#FFDEE5EE"/>
+            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" VerticalAlignment="Bottom" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnVolver_Click"/>
+            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Grid.Column="1" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnSiguiente_Click"/>
         </Grid>
-        <TextBlock Margin="30" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" Text="Ingrese los datos del viaje"/>
-        <ListBox x:Name="lstOrigen" HorizontalAlignment="Right" Height="471" Margin="0,126,30,123" Width="389" VerticalAlignment="Center" FontSize="20"/>
-        <ListBox x:Name="lstDestino" HorizontalAlignment="Center" Height="471" Margin="446,126,445,123" VerticalAlignment="Center" Width="389" FontSize="20"/>
-        <ListBox x:Name="lstFechas" HorizontalAlignment="Left" Height="471" Margin="30,126,861,123" VerticalAlignment="Center" Width="389" FontSize="20"/>
 
     </Grid>
 </Window>

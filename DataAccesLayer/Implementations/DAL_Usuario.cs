@@ -200,6 +200,7 @@ namespace DataAccesLayer.Implementations
 
                 var res = viajes.Select(x => new ViajeDisponibleDTO() {
                     viaje_id = x.id,
+                    linea_nombre = x.horario.linea.nombre,
                     parada_id_destino = idParadaDestino,
                     parada_id_origen = idParadaOrigen,
                     hora = x.horario.hora,

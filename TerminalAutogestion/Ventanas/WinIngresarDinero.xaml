@@ -6,16 +6,35 @@
         xmlns:local="clr-namespace:TerminalAutogestion.Ventanas"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
-    <Grid>
-        <Grid Height="99" Margin="0,548,0,0" VerticalAlignment="Bottom">
+    <Grid Background="#FF2C69A5">
+        <TextBlock Margin="30" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" Foreground="White"><Run Text="Ingrese el dinero"/><Run Text=" y retire su pasaje"/></TextBlock>
+
+        <Grid Margin="10,134,10,104">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" Click="btnVolver_Click" VerticalAlignment="Bottom"/>
-            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Click="btnSiguiente_Click" Grid.Column="1"/>
+            <Image HorizontalAlignment="Center" Height="189" Margin="214,124,228.4,169" VerticalAlignment="Center" Width="188" Source="/TerminalAutogestion;component/Multimedia/dinero.png" RenderTransformOrigin="0.653,0.581"/>
+            <Image HorizontalAlignment="Center" Height="188" Margin="205.6,121,236,173" VerticalAlignment="Center" Width="188" Source="/TerminalAutogestion;component/Multimedia/pasaje.png" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="15"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
         </Grid>
-        <TextBlock Margin="30" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48"><Run Text="Ingrese el dinero"/><Run Text=" y retire su pasaje"/></TextBlock>
+
+        <Grid Height="99" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" VerticalAlignment="Bottom" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnVolver_Click"/>
+            <Button x:Name="btnSiguiente" Content="Finalizar" Height="93" FontSize="48" VerticalAlignment="Bottom" Grid.Column="1" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnSiguiente_Click" IsEnabled="False"/>
+        </Grid>
 
     </Grid>
 </Window>

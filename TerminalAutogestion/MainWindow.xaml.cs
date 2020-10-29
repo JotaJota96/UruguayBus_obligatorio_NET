@@ -24,11 +24,19 @@ namespace TerminalAutogestion
         public MainWindow()
         {
             InitializeComponent();
+            lbError.Visibility = Visibility.Hidden;
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            new WinIngresarDatosViaje().ShowDialog();
+            try
+            {
+                new WinIngresarDatosViaje().ShowDialog();
+            }
+            catch (Exception)
+            {
+                lbError.Visibility = Visibility.Visible;
+            }
         }
     }
 }

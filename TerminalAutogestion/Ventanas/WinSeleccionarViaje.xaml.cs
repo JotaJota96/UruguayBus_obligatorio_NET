@@ -25,14 +25,18 @@ namespace TerminalAutogestion.Ventanas
         SL_SoapClient serv = new SL_SoapClient();
         decimal precioParaElegirAsiento;
         bool permitirElegirAsiento = false;
-        int asientoSeleccionado;
+        int paradaOrigen = 0;
+        int paradaDestino = 0;
+        int? asientoSeleccionado = null;
         ViajeDisponibleDTO viajeSeleccionado;
 
-        public WinSeleccionarViaje(DateTime f, Parada po, Parada pd)
+        public WinSeleccionarViaje(DateTime f, int po, int pd)
         {
             InitializeComponent();
-            precioParaElegirAsiento = 100; // serv.PrecioParaElegirAsiento();
-            dgViajes.ItemsSource = serv.ListarViajesDisponibles(f, po.id, pd.id);
+            precioParaElegirAsiento = serv.PrecioParaElegirAsiento();
+            dgViajes.ItemsSource = serv.ListarViajesDisponibles(f, po, pd);
+            paradaOrigen = po;
+            paradaDestino = pd;
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -42,7 +46,7 @@ namespace TerminalAutogestion.Ventanas
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            new WinIngresarDocumento().ShowDialog();
+            new WinIngresarDocumento(viajeSeleccionado.viaje_id, paradaOrigen, paradaDestino, asientoSeleccionado).ShowDialog();
         }
 
         private void dgViajes_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -64,14 +68,8 @@ namespace TerminalAutogestion.Ventanas
 
         private void dgAsientos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dgAsientos.SelectedItem == null)
-            {
-                asientoSeleccionado = 0;
-            }
-            else
-            {
-                asientoSeleccionado = ((AsientoDisponible)dgAsientos.SelectedItem).numero;
-            }
+            if (dgAsientos.SelectedItem == null) asientoSeleccionado = null;
+            else asientoSeleccionado = ((AsientoDisponible)dgAsientos.SelectedItem).numero;
             HabilitarBoton();
         }
     }

@@ -21,11 +21,21 @@ namespace TerminalAutogestion.Ventanas
     /// </summary>
     public partial class WinIngresarDocumento : Window
     {
-        public WinIngresarDocumento()
+        private int viaje_id;
+        private int paradaOrigen;
+        private int paradaDestino;
+        private int? asientoSeleccionado;
+
+        public WinIngresarDocumento(int viaje_id, int paradaOrigen, int paradaDestino, int? asientoSeleccionado)
         {
             InitializeComponent();
             cmbTipoDocumento.Items.Add(TipoDocumento.CI);
             cmbTipoDocumento.Items.Add(TipoDocumento.OTROS);
+
+            this.viaje_id = viaje_id;
+            this.paradaOrigen = paradaOrigen;
+            this.paradaDestino = paradaDestino;
+            this.asientoSeleccionado = asientoSeleccionado;
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -35,7 +45,9 @@ namespace TerminalAutogestion.Ventanas
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            new WinIngresarDinero().ShowDialog();
+            string documento = txtDocumento.Text;
+            TipoDocumento td = (TipoDocumento) cmbTipoDocumento.SelectedItem;
+            new WinIngresarDinero(viaje_id, paradaOrigen, paradaDestino, asientoSeleccionado, td, documento).ShowDialog();
         }
 
         private void cmbTipoDocumento_SelectionChanged(object sender, SelectionChangedEventArgs e)

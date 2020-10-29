@@ -181,5 +181,9 @@
       <Name>Share</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Multimedia\dinero.png" />
+    <Resource Include="Multimedia\pasaje.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

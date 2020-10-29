@@ -52,9 +52,6 @@ namespace TerminalAutogestion.Ventanas
                 lstOrigen.Items.Add(item);
                 lstDestino.Items.Add(item);
             }
-
-
-
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -67,7 +64,7 @@ namespace TerminalAutogestion.Ventanas
             DateTime f = ((FechaItem)lstFechas.SelectedItem).fecha;
             Parada po = (Parada) lstOrigen.SelectedItem;
             Parada pd = (Parada) lstDestino.SelectedItem;
-            new WinSeleccionarViaje(f, po, pd).ShowDialog();
+            new WinSeleccionarViaje(f, po.id, pd.id).ShowDialog();
         }
 
         private void lstOrigen_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -192,21 +192,21 @@ INSERT INTO paso_por_parada (viaje_id, parada_id, fecha_hora) VALUES (5, 2, '202
 --
 -- **** tabla pasaje *********************************************************
 --
-INSERT INTO pasaje (id, asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
-    VALUES (1, 15, 1, NULL, NULL, 1, 2, 1, 5);
+INSERT INTO pasaje (asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
+    VALUES (15, 1, NULL, NULL, 1, 2, 1, 5);
 
-INSERT INTO pasaje (id, asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
-    VALUES (2, 25, 1, 1,'78459658', NULL, 2, 1, 3);
+INSERT INTO pasaje (asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
+    VALUES (25, 1, 1,'78459658', NULL, 2, 1, 3);
 
-INSERT INTO pasaje (id, asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
-    VALUES (3, 20, 0, NULL, NULL, 2, 6, 2, 5);
+INSERT INTO pasaje (asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
+    VALUES (20, 0, NULL, NULL, 2, 6, 2, 5);
 
-INSERT INTO pasaje (id, asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
-    VALUES (4, 10, 0, NULL, NULL, 3, 6, 2, 4);
+INSERT INTO pasaje (asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
+    VALUES (10, 0, NULL, NULL, 3, 6, 2, 4);
 
-INSERT INTO pasaje (id, asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
-    VALUES (5, 13, 0, NULL, NULL, 4, 6, 2, 5);
+INSERT INTO pasaje (asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
+    VALUES (13, 0, NULL, NULL, 4, 6, 2, 5);
 
-INSERT INTO pasaje (id, asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
-    VALUES (6, 16, 0, NULL, NULL, 5, 6, 3, 5);
+INSERT INTO pasaje (asiento, usado, tipo_documento, documento, usuario_id, viaje_id, parada_id_origen, parada_id_destino) 
+    VALUES (16, 0, NULL, NULL, 5, 6, 3, 5);
 

@@ -307,11 +307,11 @@ namespace DataAccesLayer.Implementations
                     var parada = db.parada.FirstOrDefault(x=> x.id == idParadaOrigen);
                     var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var pasaje = new pasaje() {
-                        parada_id_destino = idParadaDestino,
+                        //parada_id_destino = idParadaDestino,
                         parada = parada,
-                        parada_id_origen = idParadaOrigen,
+                        //parada_id_origen = idParadaOrigen,
                         parada1 = parada1,
-                        viaje_id = idViaje,
+                        //viaje_id = idViaje,
                         viaje = viaje,
                         tipo_documento = tipoDocumento == TipoDocumento.CI ? 0:1,
                         documento = documento,

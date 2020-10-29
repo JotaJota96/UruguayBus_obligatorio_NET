@@ -33,7 +33,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="parada">
           <Key>
@@ -55,7 +55,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="asiento" Type="int" />
           <Property Name="usado" Type="bit" Nullable="false" />
           <Property Name="tipo_documento" Type="int" />
@@ -72,7 +72,7 @@
           </Key>
           <Property Name="viaje_id" Type="int" Nullable="false" />
           <Property Name="parada_id" Type="int" Nullable="false" />
-          <Property Name="fecha_hora" Type="datetime" />
+          <Property Name="fecha_hora" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="persona">
           <Key>
@@ -110,7 +110,7 @@
           <Property Name="parada_id" Type="int" Nullable="false" />
           <Property Name="linea_id" Type="int" Nullable="false" />
           <Property Name="numero" Type="int" Nullable="false" />
-          <Property Name="tiempo" Type="time" Precision="7" />
+          <Property Name="tiempo" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -469,7 +469,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="horario" Relationship="Self.FK_horario_linea" FromRole="linea" ToRole="horario" />
           <NavigationProperty Name="tramo" Relationship="Self.FK_tramo_linea" FromRole="linea" ToRole="tramo" />
         </EntityType>
@@ -553,7 +553,7 @@
           <Property Name="parada_id" Type="Int32" Nullable="false" />
           <Property Name="linea_id" Type="Int32" Nullable="false" />
           <Property Name="numero" Type="Int32" Nullable="false" />
-          <Property Name="tiempo" Type="Time" Precision="7" />
+          <Property Name="tiempo" Type="Time" Precision="7" Nullable="false" />
           <NavigationProperty Name="linea" Relationship="Self.FK_tramo_linea" FromRole="tramo" ToRole="linea" />
           <NavigationProperty Name="parada" Relationship="Self.FK_tramo_parada" FromRole="tramo" ToRole="parada" />
           <NavigationProperty Name="precio" Relationship="Self.FK_precio_tramo" FromRole="tramo" ToRole="precio" />
@@ -865,7 +865,7 @@
           </Key>
           <Property Name="viaje_id" Type="Int32" Nullable="false" />
           <Property Name="parada_id" Type="Int32" Nullable="false" />
-          <Property Name="fecha_hora" Type="DateTime" Precision="3" />
+          <Property Name="fecha_hora" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="parada" Relationship="uruguay_busModel.FK_paso_por_parada_parada" FromRole="paso_por_parada" ToRole="parada" />
           <NavigationProperty Name="viaje" Relationship="uruguay_busModel.FK_paso_por_parada_viaje" FromRole="paso_por_parada" ToRole="viaje" />
         </EntityType>

@@ -68,6 +68,9 @@
     <Compile Include="Ventanas\WinIngresarDinero.xaml.cs">
       <DependentUpon>WinIngresarDinero.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\WinIngresarDocumento.xaml.cs">
+      <DependentUpon>WinIngresarDocumento.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\WinSeleccionarViaje.xaml.cs">
       <DependentUpon>WinSeleccionarViaje.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\WinIngresarDinero.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\WinIngresarDocumento.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

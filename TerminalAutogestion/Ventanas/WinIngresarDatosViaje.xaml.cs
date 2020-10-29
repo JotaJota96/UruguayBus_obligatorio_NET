@@ -24,10 +24,11 @@ namespace TerminalAutogestion.Ventanas
     /// </summary>
     public partial class WinIngresarDatosViaje : Window
     {
+        SL_SoapClient serv = new SL_SoapClient();
+
         public WinIngresarDatosViaje()
         {
             InitializeComponent();
-            SL_SoapClient serv = new SL_SoapClient();
 
             // carga lista de fechas
             for (int i = 0; i < 20; i++)

@@ -171,6 +171,21 @@ INSERT INTO viaje (fecha,finalizado,horario_id) VALUES ('2020-10-10', 1, 8);
 INSERT INTO viaje (fecha,finalizado,horario_id) VALUES ('2020-08-19', 1, 9);
 INSERT INTO viaje (fecha,finalizado,horario_id) VALUES ('2020-11-10', 0, 10);
 
+/*
+INSERT INTO viaje (fecha,finalizado,horario_id)
+    SELECT f.fecha as 'fecha', null as 'finalizado', h.id as 'horario_id'
+    FROM horario h, (
+            SELECT '2020-10-28' as 'fecha' union
+            SELECT '2020-10-29' as 'fecha' union
+            SELECT '2020-10-30' as 'fecha' union
+            SELECT '2020-10-03' as 'fecha' union
+            SELECT '2020-10-04' as 'fecha' union
+            SELECT '2020-10-05' as 'fecha'
+        ) f
+    WHERE h.linea_id = 1
+    
+*/
+
 --
 -- **** tabla paso_por_parada *********************************************************
 --

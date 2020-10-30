@@ -166,32 +166,36 @@ namespace DataAccesLayer.Implementations
             var paradas = DAL_G.obtenerParadasDeLinea(Viaje.horario.linea.id).Select(x => ParadaConverter.convert(x)).ToList();
             var res = new List<int>();
             List<int> ParadasI = ParadasIntermedias(Viaje.horario.linea.id, idParadaOrigen, idParadaDestino);
-            for (int i = 1; i < Viaje.horario.vehiculo.cant_asientos; i++)
+
+            using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                var pasajesParaElAsiento = Viaje.pasaje.Where(x=>x.asiento==i).ToList();
-                if (pasajesParaElAsiento.Count() == 0)
+                for (int i = 1; i < Viaje.horario.vehiculo.cant_asientos; i++)
                 {
-                    res.Add(i);
-                }
-                else
-                {
-                    var asientoDisponible = true;
-                    foreach (var pasaje in pasajesParaElAsiento)
-                    {
-                        if (ParadasI.Intersect(ParadasIntermedias(Viaje.horario.linea.id, pasaje.parada_id_origen, pasaje.parada_id_destino)).Count() == 0)
-                        {
-                            continue;
-                        }
-                        asientoDisponible = pasaje.parada_id_destino == idParadaOrigen ||
-                            pasaje.parada_id_origen == idParadaDestino;
-                        if (!asientoDisponible)
-                        {
-                            break;
-                        }
-                    }
-                    if (asientoDisponible)
+                    var pasajesParaElAsiento = Viaje.pasaje.Where(x => x.asiento == i).ToList();
+                    if (pasajesParaElAsiento.Count() == 0)
                     {
                         res.Add(i);
+                    }
+                    else
+                    {
+                        var asientoDisponible = true;
+                        foreach (var pasaje in pasajesParaElAsiento)
+                        {
+                            if (ParadasI.Intersect(ParadasIntermedias(Viaje.horario.linea.id, pasaje.parada_id_origen, pasaje.parada_id_destino)).Count() == 0)
+                            {
+                                continue;
+                            }
+                            asientoDisponible = pasaje.parada_id_destino == idParadaOrigen ||
+                                pasaje.parada_id_origen == idParadaDestino;
+                            if (!asientoDisponible)
+                            {
+                                break;
+                            }
+                        }
+                        if (asientoDisponible)
+                        {
+                            res.Add(i);
+                        }
                     }
                 }
             }

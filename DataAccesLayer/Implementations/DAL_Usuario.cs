@@ -319,9 +319,9 @@ namespace DataAccesLayer.Implementations
                     var pasaje = new pasaje()
                     {
                         //parada_id_destino = idParadaDestino,
-                        parada = paradaDest,
+                        parada_destino = paradaDest,
                         //parada_id_origen = idParadaOrigen,
-                        parada1 = paradaOri,
+                        parada_origen = paradaOri,
                         //viaje_id = idViaje,
                         viaje = viaje,
                         usuario_id = idUsuario,
@@ -367,9 +367,9 @@ namespace DataAccesLayer.Implementations
                     var paradaDest = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var pasaje = new pasaje() {
                         //parada_id_destino = idParadaDestino,
-                        parada = paradaDest,
+                        parada_destino = paradaDest,
                         //parada_id_origen = idParadaOrigen,
-                        parada1 = paradaOri,
+                        parada_origen = paradaOri,
                         //viaje_id = idViaje,
                         viaje = viaje,
                         tipo_documento = tipoDocumento == TipoDocumento.CI ? 0:1,

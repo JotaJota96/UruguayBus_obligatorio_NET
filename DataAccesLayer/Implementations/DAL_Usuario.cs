@@ -5,6 +5,7 @@ using Share.Entities;
 using Share.Enums;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,8 +24,14 @@ namespace DataAccesLayer.Implementations
                             x.correo == correo &&
                             x.contrasenia==contrasenia);
 
+                    if (per == null)
+                        return null;
+
                     //Persona personaRet = PersonaConverter.convert(per);
                     Usuario usuarioRet = UsuarioConverter.convert(per.usuario);
+                    Persona personaRet = PersonaConverter.convert(per);
+                    usuarioRet.persona = personaRet;
+                    personaRet.usuario = usuarioRet;
 
                     return usuarioRet;
                 }
@@ -41,6 +48,9 @@ namespace DataAccesLayer.Implementations
             {
                 var res = new List<VehiculoCercanoDTO>();
                 var parada = db.parada.FirstOrDefault(x=>x.id==idParada);
+                if (parada == null)
+                    throw new Exception("No se encontro ninguna parada con ese ID");
+
                 var Res = db.viaje
                     .Where(x => x.finalizado == false).ToList()?
                     .Where(x=> x.horario.linea.tramo.Any(y=>y.parada_id == idParada) &&
@@ -100,23 +110,28 @@ namespace DataAccesLayer.Implementations
             var paradas = DAL_G.obtenerParadasDeLinea(idlinea).Select(x => ParadaConverter.convert(x)).ToList();
             decimal precio = 0;
             bool EstoyEnRecorrido = false;
-            foreach (var parada in paradas)
+
+            using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                if (EstoyEnRecorrido)
+                foreach (var parada in paradas)
                 {
-                    var valor = parada.tramo
-                        .FirstOrDefault(x=>x.linea.id==idlinea)?.precio
-                        .OrderByDescending(x => x.fecha_validez)
-                        .FirstOrDefault(x=>x.fecha_validez.Date <= fecha.Date)?.valor?? 0;
-                    precio += valor;
-                    if (parada.id == idParadaDestino)
+                    if (EstoyEnRecorrido)
                     {
-                        return precio;
+                        var valor = db.parada.FirstOrDefault(x => x.id == parada.id)?.tramo
+                            .FirstOrDefault(x => x.linea.id == idlinea)?.precio
+                            .OrderByDescending(x => x.fecha_validez)
+                            .FirstOrDefault(x => x.fecha_validez.Date <= fecha.Date)?.valor ?? 0;
+
+                        precio += valor;
+                        if (parada.id == idParadaDestino)
+                        {
+                            return precio;
+                        }
                     }
-                }
-                else if (parada.id == idParadaOrigen)
-                {
-                    EstoyEnRecorrido = true;
+                    else if (parada.id == idParadaOrigen)
+                    {
+                        EstoyEnRecorrido = true;
+                    }
                 }
             }
             return precio;
@@ -151,32 +166,36 @@ namespace DataAccesLayer.Implementations
             var paradas = DAL_G.obtenerParadasDeLinea(Viaje.horario.linea.id).Select(x => ParadaConverter.convert(x)).ToList();
             var res = new List<int>();
             List<int> ParadasI = ParadasIntermedias(Viaje.horario.linea.id, idParadaOrigen, idParadaDestino);
-            for (int i = 1; i < Viaje.horario.vehiculo.cant_asientos; i++)
+
+            using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                var pasajesParaElAsiento = Viaje.pasaje.Where(x=>x.asiento==i).ToList();
-                if (pasajesParaElAsiento.Count() == 0)
+                for (int i = 1; i < Viaje.horario.vehiculo.cant_asientos; i++)
                 {
-                    res.Add(i);
-                }
-                else
-                {
-                    var asientoDisponible = true;
-                    foreach (var pasaje in pasajesParaElAsiento)
-                    {
-                        if (ParadasI.Intersect(ParadasIntermedias(Viaje.horario.linea.id, pasaje.parada_id_origen, pasaje.parada_id_destino)).Count() == 0)
-                        {
-                            continue;
-                        }
-                        asientoDisponible = pasaje.parada_id_destino == idParadaOrigen ||
-                            pasaje.parada_id_origen == idParadaDestino;
-                        if (!asientoDisponible)
-                        {
-                            break;
-                        }
-                    }
-                    if (asientoDisponible)
+                    var pasajesParaElAsiento = Viaje.pasaje.Where(x => x.asiento == i).ToList();
+                    if (pasajesParaElAsiento.Count() == 0)
                     {
                         res.Add(i);
+                    }
+                    else
+                    {
+                        var asientoDisponible = true;
+                        foreach (var pasaje in pasajesParaElAsiento)
+                        {
+                            if (ParadasI.Intersect(ParadasIntermedias(Viaje.horario.linea.id, pasaje.parada_id_origen, pasaje.parada_id_destino)).Count() == 0)
+                            {
+                                continue;
+                            }
+                            asientoDisponible = pasaje.parada_id_destino == idParadaOrigen ||
+                                pasaje.parada_id_origen == idParadaDestino;
+                            if (!asientoDisponible)
+                            {
+                                break;
+                            }
+                        }
+                        if (asientoDisponible)
+                        {
+                            res.Add(i);
+                        }
                     }
                 }
             }
@@ -236,16 +255,19 @@ namespace DataAccesLayer.Implementations
 
         public Usuario RegistrarUsuario(Usuario u)
         {
-            usuario usu = UsuarioConverter.convert(u);
-            persona per = PersonaConverter.convert(u.persona);
-
-            usu.persona = per;
-            per.usuario = usu;
-
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
                 try
                 {
+                    if (db.persona.Where(x => x.correo == u.persona.correo).Count() != 0)
+                        throw new Exception("Ya existe un usuario con ese correo");
+
+                    usuario usu = UsuarioConverter.convert(u);
+                    persona per = PersonaConverter.convert(u.persona);
+
+                    usu.persona = per;
+                    per.usuario = usu;
+
                     db.persona.Add(per);
                     db.SaveChanges();
 
@@ -271,10 +293,30 @@ namespace DataAccesLayer.Implementations
                 try
                 {
                     var viaje = db.viaje.FirstOrDefault(x => x.id == idViaje);
+
+                    if (viaje == null)
+                        throw new Exception("No se encontro ningun viaje con ese ID");
+
+                    if (viaje.horario.linea.tramo.Any(t => t.parada.id == idParadaOrigen) && viaje.horario.linea.tramo.Any(t => t.parada.id == idParadaDestino))
+                    {
+                        int no = viaje.horario.linea.tramo.Where(t => t.parada.id == idParadaOrigen).First().numero;
+                        int nd = viaje.horario.linea.tramo.Where(t => t.parada.id == idParadaDestino).First().numero;
+                        if (no >= nd)
+                            throw new Exception("La parada de origen es posterior a la de destino");
+                    }
+                    else
+                    {
+                        throw new Exception("Una o ambas paradas no pertenecen a la linea");
+                    }
+
                     var parada = db.parada.FirstOrDefault(x => x.id == idParadaOrigen);
                     var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var usuario = db.usuario.FirstOrDefault(x => x.id == idUsuario);
-                    var pasaje = new pasaje()
+
+                    if (usuario == null)
+                        throw new Exception("No se encontro ningun usuario con ese ID");
+
+                        var pasaje = new pasaje()
                     {
                         parada = parada,
                         parada_id_destino = idParadaDestino,
@@ -304,6 +346,23 @@ namespace DataAccesLayer.Implementations
                 try
                 {
                     var viaje = db.viaje.FirstOrDefault(x=>x.id==idViaje);
+
+                    if (viaje == null)
+                        throw new Exception("No se encontro ningun viaje con ese ID");
+
+                    if (viaje.horario.linea.tramo.Any(t => t.parada.id == idParadaOrigen) && viaje.horario.linea.tramo.Any(t => t.parada.id == idParadaDestino))
+                    {
+                        int no = viaje.horario.linea.tramo.Where(t => t.parada.id == idParadaOrigen).First().numero;
+                        int nd = viaje.horario.linea.tramo.Where(t => t.parada.id == idParadaDestino).First().numero;
+                        if (no >= nd)
+                            throw new Exception("La parada de origen es posterior a la de destino");
+                    }
+                    else
+                    {
+                        throw new Exception("Una o ambas paradas no pertenecen a la linea");
+                    }
+
+
                     var parada = db.parada.FirstOrDefault(x=> x.id == idParadaOrigen);
                     var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var pasaje = new pasaje() {
@@ -323,7 +382,6 @@ namespace DataAccesLayer.Implementations
                 }
                 catch (Exception e)
                 {
-
                     throw e;
                 }
             }

@@ -25,6 +25,15 @@ namespace BusinessLayer.Implementations
         {
             try
             {
+                if (rol == Rol.CONDUCTOR) {
+                    if (fechaVencLibreta == null)
+                        throw new Exception("Se debe especificar una fecha de vencimiento para la libreta");
+                }
+                else
+                {
+                    fechaVencLibreta = null;
+                }
+
                 dal.AsignarRol(idUsuario, rol, fechaVencLibreta);
             }
             catch (Exception e)

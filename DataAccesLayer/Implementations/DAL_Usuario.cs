@@ -271,10 +271,30 @@ namespace DataAccesLayer.Implementations
                 try
                 {
                     var viaje = db.viaje.FirstOrDefault(x => x.id == idViaje);
+
+                    if (viaje == null)
+                        throw new Exception("No se encontro ningun viaje con ese ID");
+
+                    if (viaje.horario.linea.tramo.Any(t => t.parada.id == idParadaOrigen) && viaje.horario.linea.tramo.Any(t => t.parada.id == idParadaDestino))
+                    {
+                        int no = viaje.horario.linea.tramo.Where(t => t.parada.id == idParadaOrigen).First().numero;
+                        int nd = viaje.horario.linea.tramo.Where(t => t.parada.id == idParadaDestino).First().numero;
+                        if (no >= nd)
+                            throw new Exception("La parada de origen es posterior a la de destino");
+                    }
+                    else
+                    {
+                        throw new Exception("Una o ambas paradas no pertenecen a la linea");
+                    }
+
                     var parada = db.parada.FirstOrDefault(x => x.id == idParadaOrigen);
                     var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var usuario = db.usuario.FirstOrDefault(x => x.id == idUsuario);
-                    var pasaje = new pasaje()
+
+                    if (usuario == null)
+                        throw new Exception("No se encontro ningun usuario con ese ID");
+
+                        var pasaje = new pasaje()
                     {
                         parada = parada,
                         parada_id_destino = idParadaDestino,
@@ -304,6 +324,23 @@ namespace DataAccesLayer.Implementations
                 try
                 {
                     var viaje = db.viaje.FirstOrDefault(x=>x.id==idViaje);
+
+                    if (viaje == null)
+                        throw new Exception("No se encontro ningun viaje con ese ID");
+
+                    if (viaje.horario.linea.tramo.Any(t => t.parada.id == idParadaOrigen) && viaje.horario.linea.tramo.Any(t => t.parada.id == idParadaDestino))
+                    {
+                        int no = viaje.horario.linea.tramo.Where(t => t.parada.id == idParadaOrigen).First().numero;
+                        int nd = viaje.horario.linea.tramo.Where(t => t.parada.id == idParadaDestino).First().numero;
+                        if (no >= nd)
+                            throw new Exception("La parada de origen es posterior a la de destino");
+                    }
+                    else
+                    {
+                        throw new Exception("Una o ambas paradas no pertenecen a la linea");
+                    }
+
+
                     var parada = db.parada.FirstOrDefault(x=> x.id == idParadaOrigen);
                     var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var pasaje = new pasaje() {

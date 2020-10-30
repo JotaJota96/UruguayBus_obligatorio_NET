@@ -21,8 +21,11 @@ namespace MainParaPruebas
 
             try
             {
-                SL_SoapClient serv = new SL_SoapClient();
-                Console.WriteLine(serv.EchoTest("hola mundo"));
+                DateTime fInicio = new DateTime(2020, 10, 30);
+
+                Console.WriteLine(
+                    DateTime.Today.CompareTo(fInicio)
+                );
             }
             catch (Exception e)
             {

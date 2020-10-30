@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
+using DataAccesLayer.Interfaces;
 using ServiceLayerREST.Models;
 using Share.DTOs;
 using Share.Entities;
@@ -17,9 +18,8 @@ namespace ServiceLayerREST.Controllers
     {
         IBL_Usuario blu = new BL_Usuario();
 
-        // POST: api/Usuario/RegistrarUsuario
         [HttpPost]
-        [ActionName("RegistrarUsuario")]
+        [Route("api/Usuario/RegistrarUsuario")]
         public Usuario RegistrarUsuario([FromBody] Usuario u)
         {
             try
@@ -28,13 +28,12 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al registrar el usuario");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar el usuario"));
             }
         }
 
-        // POST: api/Usuario/IniciarSesion
         [HttpPost]
-        [ActionName("IniciarSesion")]
+        [Route("api/Usuario/IniciarSesion")]
         public Usuario IniciarSesion([FromBody] IniciarSesionDTO dto)
         {
             try
@@ -47,10 +46,9 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
-        // GET: api/Usuario/VehiculosCercanos
         [HttpPost]
-        [ActionName("VehiculosCercanos")]
-        public ICollection<VehiculoCercanoDTO> ListarVehiculosCercanos(int idParada, int? idUsuario = null)
+        [Route("api/Usuario/VehiculosCercanos/{idParada}/{idUsuario?}")]
+        public ICollection<VehiculoCercanoDTO> ListarVehiculosCercanos([FromUri] int idParada, [FromUri] int? idUsuario = null)
         {
             try
             {
@@ -58,13 +56,12 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al obtener los vheiculos cercanos");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener los vheiculos cercanos"));
             }
         }
 
-        // GET: api/Usuario/PrecioAsiento
         [HttpGet]
-        [ActionName("PrecioAsiento")]
+        [Route("api/Usuario/PrecioAsiento")]
         public decimal PrecioParaElegirAsiento()
         {
             try
@@ -73,13 +70,12 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al obtener el precio minimo para los asientos");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener el precio minimo para los asientos"));
             }
         }
 
-        // GET: api/Usuario/ViajesDisponibles
         [HttpGet]
-        [ActionName("ViajesDisponibles")]
+        [Route("api/Usuario/ViajesDisponibles")]
         public ICollection<ViajeDisponibleDTO> ListarViajesDisponibles([FromBody] ListarViajesDisponiblesDTO dto)
         {
             try
@@ -88,13 +84,12 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al obtener los viajes disponibles");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener los viajes disponibles"));
             }
         }
 
-        // GET: api/Usuario/ReservarPasaje
         [HttpPost]
-        [ActionName("ReservarPasaje")]
+        [Route("api/Usuario/ReservarPasaje")]
         public Pasaje ReservarPasaje([FromBody] ReservarPasajeDTO dto)
         {
             try
@@ -110,7 +105,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al obtener el precio minimo para los asientos");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener el precio minimo para los asientos"));
             }
         }
     }

@@ -98,7 +98,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AsignarRolDTO.cs" />
+    <Compile Include="Models\IniciarSesionDTO.cs" />
+    <Compile Include="Models\ListarViajesDisponiblesDTO.cs" />
     <Compile Include="Models\registrarViajeDTO.cs" />
+    <Compile Include="Models\ReservarPasajeDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,8 @@ using ServiceLayerREST.Models;
 using Share.Entities;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
@@ -12,9 +14,9 @@ namespace ServiceLayerREST.Controllers
     {
         IBL_Admin bla = new BL_Admin();
 
-        // GET: api/Admin/Paradas
+
         [HttpGet]
-        [ActionName("Paradas")]
+        [Route("api/Admin/Paradas")]
         public ICollection<Parada> listarParadas()
         {
             try
@@ -23,13 +25,12 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al obtener las paradas");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener las paradas"));
             }
         }
 
-        // POST: api/Admin/RegitrarVehiculo
         [HttpPost]
-        [ActionName("RegitrarVehiculo")]
+        [Route("api/Admin/RegitrarVehiculo")]
         public Vehiculo RegistrarVehiculo([FromBody]Vehiculo v)
         {
             try
@@ -38,13 +39,13 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al registrar un vheiculo");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar un vheiculo"));
+
             }
         }
 
-        // PUT: api/Admin/ModificarVehiculo
         [HttpPut]
-        [ActionName("ModificarVehiculo")]
+        [Route("api/Admin/ModificarVehiculo")]
         public Vehiculo ModificarVehiculo([FromBody] Vehiculo v)
         {
             try
@@ -53,43 +54,40 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al modificar un vheiculo");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al modificar un vheiculo"));
             }
         }
 
-        // POST: api/Admin/RegitrarHorario
         [HttpPost]
-        [ActionName("RegitrarHorario")]
+        [Route("api/Admin/RegitrarHorario")]
         public Horario RegistrarHorario([FromBody] Horario h)
         {
             try
             {
                 return bla.RegistrarHorario(h);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al registrar un horario");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar un horario"));
             }
         }
 
-        // POST: api/Admin/RegitrarLinea
         [HttpPost]
-        [ActionName("RegitrarLinea")]
+        [Route("api/Admin/RegitrarLinea")]
         public Linea RegistrarLinea([FromBody] Linea l)
         {
             try
             {
                 return bla.RegistrarLinea(l);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al registrar una linea");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar una linea"));
             }
         }
 
-        // POST: api/Admin/RegitrarParada
         [HttpPost]
-        [ActionName("RegitrarParada")]
+        [Route("api/Admin/RegitrarParada")]
         public Parada RegistrarParada([FromBody] Parada p)
         {
             try
@@ -98,13 +96,12 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al registrar una parada");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar una parada"));
             }
         }
 
-        // POST: api/Admin/RegitrarViajes
         [HttpPost]
-        [ActionName("RegitrarViajes")]
+        [Route("api/Admin/RegitrarViajes")]
         public ICollection<Viaje> RegistrarViajes([FromBody] registrarViajeDTO rv)
         {
             try
@@ -113,7 +110,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrio un error al registrar los viajes. ");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrio un error al registrar los viajes"));
             }
         }
 

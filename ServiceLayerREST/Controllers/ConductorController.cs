@@ -1,8 +1,9 @@
 ﻿using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
+using Share.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -13,10 +14,10 @@ namespace ServiceLayerREST.Controllers
     {
         IBL_Conductor blc = new BL_Conductor();
 
-        // PUT: api/Conductor/Finalizar
+
         [HttpPut]
-        [ActionName("Finalizar")]
-        public void FinalizarViaje(int idViaje)
+        [Route("api/Conductor/Finalizar/{idViaje}")]
+        public void FinalizarViaje([FromUri] int idViaje)
         {
             try
             {
@@ -24,14 +25,14 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al finalizar el viaje");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al finalizar el viaje"));
             }
         }
 
-        // PUT: api/Conductor/Iniciar
+
         [HttpPut]
-        [ActionName("Iniciar")]
-        public void IniciarViaje(int idViaje)
+        [Route("api/Conductor/Iniciar/{idViaje}")]
+        public void IniciarViaje([FromUri] int idViaje)
         {
             try
             {
@@ -39,29 +40,29 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al iniciar el viaje");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al iniciar el viaje"));
             }
         }
 
-        // GET: api/Conductor/ViajesDelDia
+
         [HttpGet]
-        [ActionName("ViajesDelDia")]
-        public void ListarViajesDelDia(int idConductor)
+        [Route("api/Conductor/ViajesDelDia/{idConductor}")]
+        public ICollection<Viaje> ListarViajesDelDia([FromUri] int idConductor)
         {
             try
             {
-                blc.ListarViajesDelDia(idConductor);
+                return blc.ListarViajesDelDia(idConductor);
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al listar los viaje del conductor");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al listar los viaje del conductor"));
             }
         }
 
-        // POST: api/Conductor/RegistrarPasoPorParada
+
         [HttpPost]
-        [ActionName("RegistrarPasoPorParada")]
-        public void RegistrarPasoPorParada(int idParada, int idViaje)
+        [Route("api/Conductor/RegistrarParada/{idParada}/{idViaje}")]
+        public void RegistrarPasoPorParada([FromUri] int idParada, [FromUri] int idViaje)
         {
             try
             {
@@ -69,14 +70,14 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al Registrar el Paso Por Parada");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al Registrar el Paso Por Parada"));
             }
         }
 
-        // get: api/Conductor/ValidarPasaje
+
         [HttpGet]
-        [ActionName("ValidarPasaje")]
-        public bool ValidarPasaje(int idPasaje, int idViaje, int idParada)
+        [Route("api/Conductor/ValidarPasaje/{idPasaje}/{idViaje}/{idParada}")]
+        public bool ValidarPasaje([FromUri] int idPasaje, [FromUri] int idViaje, [FromUri] int idParada)
         {
             try
             {
@@ -84,7 +85,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al validaar el pasaje");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al validar el pasaje"));
             }
         }
     }

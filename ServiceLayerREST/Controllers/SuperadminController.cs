@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
 using ServiceLayerREST.Models;
+using Share.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +15,22 @@ namespace ServiceLayerREST.Controllers
     {
         IBL_Superadmin blsa = new BL_Superadmin();
 
-        // GET: api/Superadmin/Vehiculos
         [HttpGet]
-        [ActionName("Vehiculos")]
-        public void ListarVehiculos()
+        [Route("api/Superadmin/Vehiculos")]
+        public ICollection<Vehiculo> ListarVehiculos()
         {
             try
             {
-                blsa.ListarVehiculos();
+               return blsa.ListarVehiculos();
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al obtener los vehiculos");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener los vehiculos"));
             }
         }
 
-        // PUT: api/Superadmin/AsignarRol
         [HttpPut]
-        [ActionName("AsignarRol")]
+        [Route("api/Superadmin/AsignarRol")]
         public void AsignarRol([FromBody] AsignarRolDTO dto)
         {
             try
@@ -40,7 +39,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al asignar el rol");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al asignar el rol"));
             }
         }
     }

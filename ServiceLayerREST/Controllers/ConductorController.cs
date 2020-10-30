@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessLayer.Implementations;
+using BusinessLayer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,31 +11,81 @@ namespace ServiceLayerREST.Controllers
 {
     public class ConductorController : ApiController
     {
-        // GET: api/Conductor
-        public IEnumerable<string> Get()
+        IBL_Conductor blc = new BL_Conductor();
+
+        // PUT: api/Conductor/Finalizar
+        [HttpPut]
+        [ActionName("Finalizar")]
+        public void FinalizarViaje(int idViaje)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                blc.FinalizarViaje(idViaje);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al finalizar el viaje");
+            }
         }
 
-        // GET: api/Conductor/5
-        public string Get(int id)
+        // PUT: api/Conductor/Iniciar
+        [HttpPut]
+        [ActionName("Iniciar")]
+        public void IniciarViaje(int idViaje)
         {
-            return "value";
+            try
+            {
+                blc.IniciarViaje(idViaje);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al iniciar el viaje");
+            }
         }
 
-        // POST: api/Conductor
-        public void Post([FromBody]string value)
+        // GET: api/Conductor/ViajesDelDia
+        [HttpGet]
+        [ActionName("ViajesDelDia")]
+        public void ListarViajesDelDia(int idConductor)
         {
+            try
+            {
+                blc.ListarViajesDelDia(idConductor);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al listar los viaje del conductor");
+            }
         }
 
-        // PUT: api/Conductor/5
-        public void Put(int id, [FromBody]string value)
+        // POST: api/Conductor/RegistrarPasoPorParada
+        [HttpPost]
+        [ActionName("RegistrarPasoPorParada")]
+        public void RegistrarPasoPorParada(int idParada, int idViaje)
         {
+            try
+            {
+                blc.RegistrarPasoPorParada(idParada, idViaje);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al Registrar el Paso Por Parada");
+            }
         }
 
-        // DELETE: api/Conductor/5
-        public void Delete(int id)
+        // get: api/Conductor/ValidarPasaje
+        [HttpGet]
+        [ActionName("ValidarPasaje")]
+        public bool ValidarPasaje(int idPasaje, int idViaje, int idParada)
         {
+            try
+            {
+                return blc.ValidarPasaje(idPasaje, idViaje, idParada);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al validaar el pasaje");
+            }
         }
     }
 }

@@ -1,4 +1,10 @@
-﻿using System;
+﻿using BusinessLayer.Implementations;
+using BusinessLayer.Interfaces;
+using ServiceLayerREST.Models;
+using Share.DTOs;
+using Share.Entities;
+using Share.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,31 +15,103 @@ namespace ServiceLayerREST.Controllers
 {
     public class UsuarioController : ApiController
     {
-        // GET: api/Usuario
-        public IEnumerable<string> Get()
+        IBL_Usuario blu = new BL_Usuario();
+
+        // POST: api/Usuario/RegistrarUsuario
+        [HttpPost]
+        [ActionName("RegistrarUsuario")]
+        public Usuario RegistrarUsuario([FromBody] Usuario u)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return blu.RegistrarUsuario(u);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al registrar el usuario");
+            }
         }
 
-        // GET: api/Usuario/5
-        public string Get(int id)
+        // POST: api/Usuario/IniciarSesion
+        [HttpPost]
+        [ActionName("IniciarSesion")]
+        public Usuario IniciarSesion([FromBody] IniciarSesionDTO dto)
         {
-            return "value";
+            try
+            {
+                return blu.IniciarSesion(dto.correo, dto.contrasenia);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al intentar iniciar sesion");
+            }
         }
 
-        // POST: api/Usuario
-        public void Post([FromBody]string value)
+        // GET: api/Usuario/VehiculosCercanos
+        [HttpPost]
+        [ActionName("VehiculosCercanos")]
+        public ICollection<VehiculoCercanoDTO> ListarVehiculosCercanos(int idParada, int? idUsuario = null)
         {
+            try
+            {
+                return blu.ListarVehiculosCercanos(idParada, idUsuario);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al obtener los vheiculos cercanos");
+            }
         }
 
-        // PUT: api/Usuario/5
-        public void Put(int id, [FromBody]string value)
+        // GET: api/Usuario/PrecioAsiento
+        [HttpGet]
+        [ActionName("PrecioAsiento")]
+        public decimal PrecioParaElegirAsiento()
         {
+            try
+            {
+                return blu.PrecioParaElegirAsiento();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al obtener el precio minimo para los asientos");
+            }
         }
 
-        // DELETE: api/Usuario/5
-        public void Delete(int id)
+        // GET: api/Usuario/ViajesDisponibles
+        [HttpGet]
+        [ActionName("ViajesDisponibles")]
+        public ICollection<ViajeDisponibleDTO> ListarViajesDisponibles([FromBody] ListarViajesDisponiblesDTO dto)
         {
+            try
+            {
+                return blu.ListarViajesDisponibles(dto.fecha, dto.idParadaOrigen, dto.idParadaDestino);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al obtener los viajes disponibles");
+            }
+        }
+
+        // GET: api/Usuario/ReservarPasaje
+        [HttpPost]
+        [ActionName("ReservarPasaje")]
+        public Pasaje ReservarPasaje([FromBody] ReservarPasajeDTO dto)
+        {
+            try
+            {
+                if (dto.documento == null && dto.tipoDocumento == null && dto.idUsuario != null)
+                {
+                    return blu.ReservarPasaje(dto.idViaje, dto.idParadaOrigen, dto.idParadaDestino, (int)dto.idUsuario, dto.asiento);
+                }
+                else
+                {
+                    return blu.ReservarPasaje(dto.idViaje, dto.idParadaOrigen, dto.idParadaDestino, dto.documento, (TipoDocumento)dto.tipoDocumento, dto.asiento); 
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ha ocurrido un error al obtener el precio minimo para los asientos");
+            }
         }
     }
 }

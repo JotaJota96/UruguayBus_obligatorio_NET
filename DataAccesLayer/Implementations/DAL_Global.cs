@@ -20,7 +20,10 @@ namespace DataAccesLayer.Implementations
                     ICollection<parada> ret = new List<parada>();
                     IDictionary<int, parada> dicParada = new SortedDictionary<int,parada>();
 
-                    linea l = db.linea.Find(idLinea);
+                    linea l = db.linea.Where(x => x.id == idLinea).FirstOrDefault();
+                    
+                    if (l == null)
+                        throw new Exception("No se encontró ninguna linea con ese ID");
 
                     foreach (var item in l.tramo)
                     {

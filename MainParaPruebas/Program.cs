@@ -21,8 +21,7 @@ namespace MainParaPruebas
 
             try
             {
-                SL_SoapClient serv = new SL_SoapClient();
-                Console.WriteLine(serv.EchoTest("hola mundo"));
+
             }
             catch (Exception e)
             {

@@ -5,6 +5,7 @@ using Share.Entities;
 using Share.Enums;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -109,23 +110,28 @@ namespace DataAccesLayer.Implementations
             var paradas = DAL_G.obtenerParadasDeLinea(idlinea).Select(x => ParadaConverter.convert(x)).ToList();
             decimal precio = 0;
             bool EstoyEnRecorrido = false;
-            foreach (var parada in paradas)
+
+            using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                if (EstoyEnRecorrido)
+                foreach (var parada in paradas)
                 {
-                    var valor = parada.tramo
-                        .FirstOrDefault(x=>x.linea.id==idlinea)?.precio
-                        .OrderByDescending(x => x.fecha_validez)
-                        .FirstOrDefault(x=>x.fecha_validez.Date <= fecha.Date)?.valor?? 0;
-                    precio += valor;
-                    if (parada.id == idParadaDestino)
+                    if (EstoyEnRecorrido)
                     {
-                        return precio;
+                        var valor = db.parada.FirstOrDefault(x => x.id == parada.id)?.tramo
+                            .FirstOrDefault(x => x.linea.id == idlinea)?.precio
+                            .OrderByDescending(x => x.fecha_validez)
+                            .FirstOrDefault(x => x.fecha_validez.Date <= fecha.Date)?.valor ?? 0;
+
+                        precio += valor;
+                        if (parada.id == idParadaDestino)
+                        {
+                            return precio;
+                        }
                     }
-                }
-                else if (parada.id == idParadaOrigen)
-                {
-                    EstoyEnRecorrido = true;
+                    else if (parada.id == idParadaOrigen)
+                    {
+                        EstoyEnRecorrido = true;
+                    }
                 }
             }
             return precio;

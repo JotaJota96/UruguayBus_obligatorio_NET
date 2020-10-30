@@ -21,7 +21,18 @@ namespace MainParaPruebas
 
             try
             {
-
+                IBL_Usuario blu = new BL_Usuario();
+                DateTime f = new DateTime(2020, 11, 03);
+                foreach (var v in blu.ListarViajesDisponibles(f, 3, 5))
+                {
+                    Console.WriteLine(
+                        "\n----" + 
+                        "\nlinea:  " + v.linea_nombre +
+                        "\nviaje:  " + v.viaje_id +
+                        "\nprecio: " + v.precio
+                    );
+                }
+                Console.WriteLine("60 + 140 + 230 + 80 = 510");
             }
             catch (Exception e)
             {

@@ -167,4 +167,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Precio" nillable="true" type="tns:Precio" />
+  <xs:complexType name="ArrayOfParada">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Parada" nillable="true" type="tns:Parada" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfParada" nillable="true" type="tns:ArrayOfParada" />
 </xs:schema>

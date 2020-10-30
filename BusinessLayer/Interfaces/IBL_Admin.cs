@@ -41,12 +41,6 @@ namespace BusinessLayer.Interfaces
         Linea RegistrarLinea(Linea l);
 
         /// <summary>
-        /// Lista todas las paradas del sistema
-        /// </summary>
-        /// <returns></returns>
-        ICollection<Parada> ListarParadas();
-
-        /// <summary>
         /// Registra un nuevo horario en el sistema, y su respectivo conductor, vehiculo y linea
         /// Vinculos esperados: El horario debe estar vinculada a un conductor, un vehiculo y una linea
         /// </summary>

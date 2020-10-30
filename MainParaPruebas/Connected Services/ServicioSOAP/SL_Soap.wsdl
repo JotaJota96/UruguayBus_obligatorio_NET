@@ -34,6 +34,12 @@
   <wsdl:message name="ISL_Soap_PrecioParaElegirAsiento_OutputMessage">
     <wsdl:part name="parameters" element="tns:PrecioParaElegirAsientoResponse" />
   </wsdl:message>
+  <wsdl:message name="ISL_Soap_ListarParadas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarParadas" />
+  </wsdl:message>
+  <wsdl:message name="ISL_Soap_ListarParadas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarParadasResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISL_Soap">
     <wsdl:operation name="EchoTest">
       <wsdl:input wsaw:Action="http://tempuri.org/ISL_Soap/EchoTest" message="tns:ISL_Soap_EchoTest_InputMessage" />
@@ -50,6 +56,10 @@
     <wsdl:operation name="PrecioParaElegirAsiento">
       <wsdl:input wsaw:Action="http://tempuri.org/ISL_Soap/PrecioParaElegirAsiento" message="tns:ISL_Soap_PrecioParaElegirAsiento_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISL_Soap/PrecioParaElegirAsientoResponse" message="tns:ISL_Soap_PrecioParaElegirAsiento_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarParadas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISL_Soap/ListarParadas" message="tns:ISL_Soap_ListarParadas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISL_Soap/ListarParadasResponse" message="tns:ISL_Soap_ListarParadas_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISL_Soap" type="tns:ISL_Soap">
@@ -83,6 +93,15 @@
     </wsdl:operation>
     <wsdl:operation name="PrecioParaElegirAsiento">
       <soap:operation soapAction="http://tempuri.org/ISL_Soap/PrecioParaElegirAsiento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarParadas">
+      <soap:operation soapAction="http://tempuri.org/ISL_Soap/ListarParadas" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

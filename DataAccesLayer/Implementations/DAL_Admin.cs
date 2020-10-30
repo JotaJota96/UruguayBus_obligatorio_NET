@@ -12,23 +12,6 @@ namespace DataAccesLayer.Implementations
 {
     public class DAL_Admin : IDAL_Admin
     {
-        public ICollection<Parada> ListarParadas()
-        {
-            try
-            {
-                using (uruguay_busEntities db = new uruguay_busEntities())
-                {
-                    ICollection<parada> lstParadas = (ICollection<parada>) db.parada.ToList();
-                    Console.WriteLine(lstParadas.Count());
-                    return ParadaConverter.convert(lstParadas);
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
         public Vehiculo ModificarVehiculo(Vehiculo v)
         {
             vehiculo veh = VehiculoConverter.convert(v);

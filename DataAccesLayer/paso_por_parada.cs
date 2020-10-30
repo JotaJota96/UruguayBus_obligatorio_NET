@@ -16,7 +16,7 @@ namespace DataAccesLayer
     {
         public int viaje_id { get; set; }
         public int parada_id { get; set; }
-        public Nullable<System.DateTime> fecha_hora { get; set; }
+        public System.DateTime fecha_hora { get; set; }
     
         public virtual parada parada { get; set; }
         public virtual viaje viaje { get; set; }

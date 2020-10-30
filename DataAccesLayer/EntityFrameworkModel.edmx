@@ -481,8 +481,8 @@
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="latitud" Type="Decimal" Precision="8" Scale="6" Nullable="false" />
           <Property Name="longitud" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
-          <NavigationProperty Name="pasaje" Relationship="Self.FK_pasaje_parada_destino" FromRole="parada" ToRole="pasaje" />
-          <NavigationProperty Name="pasaje1" Relationship="Self.FK_pasaje_parada_origen" FromRole="parada" ToRole="pasaje" />
+          <NavigationProperty Name="pasajes_origen" Relationship="Self.FK_pasaje_parada_destino" FromRole="parada" ToRole="pasaje" />
+          <NavigationProperty Name="pasajes_destino" Relationship="Self.FK_pasaje_parada_origen" FromRole="parada" ToRole="pasaje" />
           <NavigationProperty Name="tramo" Relationship="Self.FK_tramo_parada" FromRole="parada" ToRole="tramo" />
           <NavigationProperty Name="paso_por_parada" Relationship="uruguay_busModel.FK_paso_por_parada_parada" FromRole="parada" ToRole="paso_por_parada" />
         </EntityType>
@@ -506,8 +506,8 @@
           <Property Name="viaje_id" Type="Int32" Nullable="false" />
           <Property Name="parada_id_origen" Type="Int32" Nullable="false" />
           <Property Name="parada_id_destino" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="parada" Relationship="Self.FK_pasaje_parada_destino" FromRole="pasaje" ToRole="parada" />
-          <NavigationProperty Name="parada1" Relationship="Self.FK_pasaje_parada_origen" FromRole="pasaje" ToRole="parada" />
+          <NavigationProperty Name="parada_destino" Relationship="Self.FK_pasaje_parada_destino" FromRole="pasaje" ToRole="parada" />
+          <NavigationProperty Name="parada_origen" Relationship="Self.FK_pasaje_parada_origen" FromRole="pasaje" ToRole="parada" />
           <NavigationProperty Name="usuario" Relationship="Self.FK_pasaje_usuario" FromRole="pasaje" ToRole="usuario" />
           <NavigationProperty Name="viaje" Relationship="Self.FK_pasaje_viaje" FromRole="pasaje" ToRole="viaje" />
         </EntityType>

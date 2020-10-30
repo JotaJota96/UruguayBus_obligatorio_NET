@@ -118,7 +118,7 @@ namespace DataAccesLayer.Implementations
                     if (siguienteParada == null)
                         return new List<Usuario>();
 
-                    retSinConvertir = siguienteParada.pasaje1
+                    retSinConvertir = siguienteParada.pasajes_origen
                         .Where(x => x.usuario != null)
                         .Select(x => x.usuario).ToList();
 

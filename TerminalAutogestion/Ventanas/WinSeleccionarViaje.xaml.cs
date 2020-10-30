@@ -33,10 +33,20 @@ namespace TerminalAutogestion.Ventanas
         public WinSeleccionarViaje(DateTime f, int po, int pd)
         {
             InitializeComponent();
-            precioParaElegirAsiento = serv.PrecioParaElegirAsiento();
-            dgViajes.ItemsSource = serv.ListarViajesDisponibles(f, po, pd);
-            paradaOrigen = po;
-            paradaDestino = pd;
+
+            try
+            {
+                precioParaElegirAsiento = serv.PrecioParaElegirAsiento();
+                dgViajes.ItemsSource = serv.ListarViajesDisponibles(f, po, pd);
+                paradaOrigen = po;
+                paradaDestino = pd;
+            }
+            catch (Exception ex)
+            {
+                MainWindow.excepcion = ex;
+                MainWindow.cerrarEnCascada = true;
+                Close();
+            }
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -46,7 +56,18 @@ namespace TerminalAutogestion.Ventanas
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            new WinIngresarDocumento(viajeSeleccionado.viaje_id, paradaOrigen, paradaDestino, asientoSeleccionado).ShowDialog();
+            try
+            {
+                new WinIngresarDocumento(viajeSeleccionado.viaje_id, paradaOrigen, paradaDestino, asientoSeleccionado).ShowDialog();
+                // si se completó el proceso o se debe volver a la pantalla de inicio
+                if (MainWindow.cerrarEnCascada) Close();
+            }
+            catch (Exception ex)
+            {
+                MainWindow.excepcion = ex;
+                MainWindow.cerrarEnCascada = true;
+                Close();
+            }
         }
 
         private void dgViajes_SelectionChanged(object sender, SelectionChangedEventArgs e)

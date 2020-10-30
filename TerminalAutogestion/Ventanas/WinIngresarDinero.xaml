@@ -33,7 +33,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" VerticalAlignment="Bottom" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnVolver_Click"/>
-            <Button x:Name="btnSiguiente" Content="Finalizar" Height="93" FontSize="48" VerticalAlignment="Bottom" Grid.Column="1" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnSiguiente_Click" IsEnabled="False"/>
+            <Button x:Name="btnSiguiente" Content="Finalizar" Height="93" FontSize="48" VerticalAlignment="Bottom" Grid.Column="1" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnSiguiente_Click"/>
         </Grid>
 
     </Grid>

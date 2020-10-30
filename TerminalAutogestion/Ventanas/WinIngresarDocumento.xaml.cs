@@ -47,7 +47,19 @@ namespace TerminalAutogestion.Ventanas
         {
             string documento = txtDocumento.Text;
             TipoDocumento td = (TipoDocumento) cmbTipoDocumento.SelectedItem;
-            new WinIngresarDinero(viaje_id, paradaOrigen, paradaDestino, asientoSeleccionado, td, documento).ShowDialog();
+
+            try
+            {
+                new WinIngresarDinero(viaje_id, paradaOrigen, paradaDestino, asientoSeleccionado, td, documento).ShowDialog();
+                // si se completó el proceso o se debe volver a la pantalla de inicio
+                if (MainWindow.cerrarEnCascada) Close();
+            }
+            catch (Exception ex)
+            {
+                MainWindow.excepcion = ex;
+                MainWindow.cerrarEnCascada = true;
+                Close();
+            }
         }
 
         private void cmbTipoDocumento_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -30,28 +30,38 @@ namespace TerminalAutogestion.Ventanas
         {
             InitializeComponent();
 
-            // carga lista de fechas
-            for (int i = 0; i < 20; i++)
+            try
             {
-                DateTime fecha = DateTime.Today.AddDays(i);
-                DiaSemana dia = (DiaSemana)fecha.DayOfWeek;
-                FechaItem fi = new FechaItem()
+                // carga lista de fechas
+                for (int i = 0; i < 20; i++)
                 {
-                    fecha = fecha,
-                    texto = String.Format("{0:dd-MM-yyyy}", fecha) + " (" + dia.ToString().ToLower() + ")",
-                };
-                lstFechas.Items.Add(fi);
-                //lstFechas.Items.Add(String.Format("{0:dd-MM-yyyy}", fecha) + " (" + dia.ToString().ToLower() + ")");
+                    DateTime fecha = DateTime.Today.AddDays(i);
+                    DiaSemana dia = (DiaSemana)fecha.DayOfWeek;
+                    FechaItem fi = new FechaItem()
+                    {
+                        fecha = fecha,
+                        texto = String.Format("{0:dd-MM-yyyy}", fecha) + " (" + dia.ToString().ToLower() + ")",
+                    };
+                    lstFechas.Items.Add(fi);
+                    //lstFechas.Items.Add(String.Format("{0:dd-MM-yyyy}", fecha) + " (" + dia.ToString().ToLower() + ")");
+                }
+
+
+                // carga lista origen y destino
+                ICollection<Parada> paradas = serv.ListarParadas();
+                foreach (var item in paradas)
+                {
+                    lstOrigen.Items.Add(item);
+                    lstDestino.Items.Add(item);
+                }
             }
-
-
-            // carga lista origen y destino
-            ICollection<Parada> paradas = serv.ListarParadas();
-            foreach (var item in paradas)
+            catch (Exception ex)
             {
-                lstOrigen.Items.Add(item);
-                lstDestino.Items.Add(item);
+                MainWindow.excepcion = ex;
+                MainWindow.cerrarEnCascada = true;
+                Close();
             }
+
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -64,7 +74,19 @@ namespace TerminalAutogestion.Ventanas
             DateTime f = ((FechaItem)lstFechas.SelectedItem).fecha;
             Parada po = (Parada) lstOrigen.SelectedItem;
             Parada pd = (Parada) lstDestino.SelectedItem;
-            new WinSeleccionarViaje(f, po.id, pd.id).ShowDialog();
+
+            try
+            {
+                new WinSeleccionarViaje(f, po.id, pd.id).ShowDialog();
+                // si se completó el proceso o se debe volver a la pantalla de inicio
+                if (MainWindow.cerrarEnCascada) Close();
+            }
+            catch (Exception ex)
+            {
+                MainWindow.excepcion = ex;
+                MainWindow.cerrarEnCascada = true;
+                Close();
+            }
         }
 
         private void lstOrigen_SelectionChanged(object sender, SelectionChangedEventArgs e)

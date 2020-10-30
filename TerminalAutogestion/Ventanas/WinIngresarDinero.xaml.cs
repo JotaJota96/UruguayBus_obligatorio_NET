@@ -39,13 +39,20 @@ namespace TerminalAutogestion.Ventanas
             this.asientoSeleccionado = asientoSeleccionado;
             this.tipoDoc = td;
             this.documento = documento;
-            reservar();
         }
 
         private void reservar()
         {
-            serv.ReservarPasaje(viaje_id, paradaOrigen, paradaDestino, documento, tipoDoc, asientoSeleccionado);
-            btnSiguiente.IsEnabled = true;
+            try
+            {
+                serv.ReservarPasaje(viaje_id, paradaOrigen, paradaDestino, documento, tipoDoc, asientoSeleccionado);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.excepcion = ex;
+                MainWindow.cerrarEnCascada = true;
+                Close();
+            }
         }
 
         private void btnVolver_Click(object sender, RoutedEventArgs e)
@@ -55,7 +62,19 @@ namespace TerminalAutogestion.Ventanas
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            try
+            {
+                reservar();
+                // cerrar todas las ventanas para volver al inicio
+                MainWindow.cerrarEnCascada = true;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MainWindow.excepcion = ex;
+                MainWindow.cerrarEnCascada = true;
+                Close();
+            }
         }
     }
 }

@@ -23,8 +23,14 @@ namespace DataAccesLayer.Implementations
                             x.correo == correo &&
                             x.contrasenia==contrasenia);
 
+                    if (per == null)
+                        return null;
+
                     //Persona personaRet = PersonaConverter.convert(per);
                     Usuario usuarioRet = UsuarioConverter.convert(per.usuario);
+                    Persona personaRet = PersonaConverter.convert(per);
+                    usuarioRet.persona = personaRet;
+                    personaRet.usuario = usuarioRet;
 
                     return usuarioRet;
                 }
@@ -41,6 +47,9 @@ namespace DataAccesLayer.Implementations
             {
                 var res = new List<VehiculoCercanoDTO>();
                 var parada = db.parada.FirstOrDefault(x=>x.id==idParada);
+                if (parada == null)
+                    throw new Exception("No se encontro ninguna parada con ese ID");
+
                 var Res = db.viaje
                     .Where(x => x.finalizado == false).ToList()?
                     .Where(x=> x.horario.linea.tramo.Any(y=>y.parada_id == idParada) &&
@@ -236,16 +245,19 @@ namespace DataAccesLayer.Implementations
 
         public Usuario RegistrarUsuario(Usuario u)
         {
-            usuario usu = UsuarioConverter.convert(u);
-            persona per = PersonaConverter.convert(u.persona);
-
-            usu.persona = per;
-            per.usuario = usu;
-
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
                 try
                 {
+                    if (db.persona.Where(x => x.correo == u.persona.correo).Count() != 0)
+                        throw new Exception("Ya existe un usuario con ese correo");
+
+                    usuario usu = UsuarioConverter.convert(u);
+                    persona per = PersonaConverter.convert(u.persona);
+
+                    usu.persona = per;
+                    per.usuario = usu;
+
                     db.persona.Add(per);
                     db.SaveChanges();
 
@@ -360,7 +372,6 @@ namespace DataAccesLayer.Implementations
                 }
                 catch (Exception e)
                 {
-
                     throw e;
                 }
             }

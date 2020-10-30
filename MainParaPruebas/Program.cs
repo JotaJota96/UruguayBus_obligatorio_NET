@@ -21,11 +21,7 @@ namespace MainParaPruebas
 
             try
             {
-                DateTime fInicio = new DateTime(2020, 10, 30);
 
-                Console.WriteLine(
-                    DateTime.Today.CompareTo(fInicio)
-                );
             }
             catch (Exception e)
             {

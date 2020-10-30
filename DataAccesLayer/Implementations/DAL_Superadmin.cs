@@ -20,39 +20,27 @@ namespace DataAccesLayer.Implementations
                 {
                     persona per = db.usuario.Find(idUsuario).persona;
 
-                    if (rol.Equals(null))
-                    {
-                        throw new Exception("Se deve espesificar el rol.");
-                    }
-
-                    if (per.Equals(null))
-                    {
-                        throw new Exception("El id del usuario es incorecto.");
-                    }
+                    if (per == null)
+                        throw new Exception("El ID del usuario es incorecto.");
 
                     if (rol.Equals(Rol.CONDUCTOR))
                     {
+                        if (fechaVencLibreta == null)
+                            throw new Exception("Se deve ingresar la fecha de vencimiento de la libreta.");
+
                         conductor con = new conductor();
                         con.persona = per;
-
-                        if (fechaVencLibreta.Equals(null))
-                        {
-                            throw new Exception("Se deve ingresar la fecha de vencimiento de la libreta.");
-                        }
-
                         con.vencimiento_libreta = (DateTime) fechaVencLibreta;
                        
                         db.conductor.Add(con);
                     }
-
-                    if (rol.Equals(Rol.ADMIN))
+                    else if (rol.Equals(Rol.ADMIN))
                     {
                         admin adm = new admin();
                         adm.persona = per;
                         db.admin.Add(adm);
                     }
-
-                    if (rol.Equals(Rol.SUPERADMIN))
+                    else if (rol.Equals(Rol.SUPERADMIN))
                     {
                         superadmin spm = new superadmin();
                         spm.persona = per;
@@ -75,8 +63,7 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    ICollection<Vehiculo> ret = VehiculoConverter.convert(db.vehiculo.ToList());
-                    return ret;
+                    return VehiculoConverter.convert(db.vehiculo.ToList());
                 }
                 catch (Exception e)
                 {

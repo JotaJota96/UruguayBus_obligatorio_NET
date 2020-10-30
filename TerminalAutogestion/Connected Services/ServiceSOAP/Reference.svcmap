@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="dd72e699-a9e9-4f74-891a-f0a78cc01380" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:52171/SL_Soap.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SL_Soap.xsd" MetadataType="Schema" ID="38d9054a-11c7-49aa-b2cb-16586bfdcdcf" SourceId="1" SourceUrl="http://localhost:52171/SL_Soap.svc?xsd=xsd4" />
+    <MetadataFile FileName="SL_Soap1.xsd" MetadataType="Schema" ID="5ffdb10b-e58a-461c-8c39-611f66bd0a2a" SourceId="1" SourceUrl="http://localhost:52171/SL_Soap.svc?xsd=xsd0" />
+    <MetadataFile FileName="SL_Soap.disco" MetadataType="Disco" ID="08c338d4-1b87-46d4-8f67-b14c37e1b0b8" SourceId="1" SourceUrl="http://localhost:52171/SL_Soap.svc?disco" />
+    <MetadataFile FileName="SL_Soap2.xsd" MetadataType="Schema" ID="00bf50e0-e9c5-4cef-bfc9-5798da537bac" SourceId="1" SourceUrl="http://localhost:52171/SL_Soap.svc?xsd=xsd5" />
+    <MetadataFile FileName="SL_Soap3.xsd" MetadataType="Schema" ID="83acfbb2-6020-407d-9b7f-85b33c819087" SourceId="1" SourceUrl="http://localhost:52171/SL_Soap.svc?xsd=xsd1" />
+    <MetadataFile FileName="SL_Soap.wsdl" MetadataType="Wsdl" ID="6faec999-1b9a-4121-835b-162370d34c61" SourceId="1" SourceUrl="http://localhost:52171/SL_Soap.svc?wsdl" />
+    <MetadataFile FileName="SL_Soap4.xsd" MetadataType="Schema" ID="6742c05e-ef9a-4484-a9d7-383f993268bf" SourceId="1" SourceUrl="http://localhost:52171/SL_Soap.svc?xsd=xsd2" />
+    <MetadataFile FileName="SL_Soap5.xsd" MetadataType="Schema" ID="89bc68a7-8956-4349-b9b2-18c0ad2498e9" SourceId="1" SourceUrl="http://localhost:52171/SL_Soap.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

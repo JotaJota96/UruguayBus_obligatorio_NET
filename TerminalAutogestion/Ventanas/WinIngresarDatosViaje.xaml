@@ -1,0 +1,52 @@
+﻿<Window x:Class="TerminalAutogestion.Ventanas.WinIngresarDatosViaje"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TerminalAutogestion.Ventanas"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
+    <Grid Background="#FF2C69A5">
+        <TextBlock Margin="30,30,30,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" Foreground="White"><Run Text="Ingrese los datos del viaje"/></TextBlock>
+        <Grid Margin="10,134,10,104">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="lstFechas" Margin="30,63,30,30" FontSize="20" SelectionChanged="HabilitarBoton">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding texto}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox x:Name="lstOrigen" Margin="30,63,30,30" FontSize="20" Grid.Column="1" Background="White" SelectionChanged="lstOrigen_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding nombre}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox x:Name="lstDestino" Margin="30,63,30,30" FontSize="20" Grid.Column="2" SelectionChanged="HabilitarBoton">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding nombre}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Margin="30,10,30,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" Foreground="White" Text="Fecha"/>
+            <TextBlock Margin="30,10,30,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" Foreground="White" Text="Origen" Grid.Column="1"/>
+            <TextBlock Margin="30,10,30,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" Foreground="White" Text="Destino" Grid.Column="2"/>
+        </Grid>
+        <Grid Height="99" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" VerticalAlignment="Bottom" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnVolver_Click"/>
+            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Grid.Column="1" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnSiguiente_Click" IsEnabled="False"/>
+        </Grid>
+
+    </Grid>
+</Window>

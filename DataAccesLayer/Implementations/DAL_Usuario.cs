@@ -309,20 +309,20 @@ namespace DataAccesLayer.Implementations
                         throw new Exception("Una o ambas paradas no pertenecen a la linea");
                     }
 
-                    var parada = db.parada.FirstOrDefault(x => x.id == idParadaOrigen);
-                    var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
+                    var paradaOri = db.parada.FirstOrDefault(x => x.id == idParadaOrigen);
+                    var paradaDest = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var usuario = db.usuario.FirstOrDefault(x => x.id == idUsuario);
 
                     if (usuario == null)
                         throw new Exception("No se encontro ningun usuario con ese ID");
 
-                        var pasaje = new pasaje()
+                    var pasaje = new pasaje()
                     {
-                        parada = parada,
-                        parada_id_destino = idParadaDestino,
-                        parada_id_origen = idParadaOrigen,
-                        parada1 = parada1,
-                        viaje_id = idViaje,
+                        //parada_id_destino = idParadaDestino,
+                        parada_destino = paradaDest,
+                        //parada_id_origen = idParadaOrigen,
+                        parada_origen = paradaOri,
+                        //viaje_id = idViaje,
                         viaje = viaje,
                         usuario_id = idUsuario,
                         usuario = usuario,
@@ -363,13 +363,13 @@ namespace DataAccesLayer.Implementations
                     }
 
 
-                    var parada = db.parada.FirstOrDefault(x=> x.id == idParadaOrigen);
-                    var parada1 = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
+                    var paradaOri = db.parada.FirstOrDefault(x=> x.id == idParadaOrigen);
+                    var paradaDest = db.parada.FirstOrDefault(x => x.id == idParadaDestino);
                     var pasaje = new pasaje() {
                         //parada_id_destino = idParadaDestino,
-                        parada = parada,
+                        parada_destino = paradaDest,
                         //parada_id_origen = idParadaOrigen,
-                        parada1 = parada1,
+                        parada_origen = paradaOri,
                         //viaje_id = idViaje,
                         viaje = viaje,
                         tipo_documento = tipoDocumento == TipoDocumento.CI ? 0:1,

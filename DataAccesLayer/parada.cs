@@ -17,8 +17,8 @@ namespace DataAccesLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public parada()
         {
-            this.pasaje = new HashSet<pasaje>();
-            this.pasaje1 = new HashSet<pasaje>();
+            this.pasajes_origen = new HashSet<pasaje>();
+            this.pasajes_destino = new HashSet<pasaje>();
             this.tramo = new HashSet<tramo>();
             this.paso_por_parada = new HashSet<paso_por_parada>();
         }
@@ -29,9 +29,9 @@ namespace DataAccesLayer
         public decimal longitud { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<pasaje> pasaje { get; set; }
+        public virtual ICollection<pasaje> pasajes_origen { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<pasaje> pasaje1 { get; set; }
+        public virtual ICollection<pasaje> pasajes_destino { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tramo> tramo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

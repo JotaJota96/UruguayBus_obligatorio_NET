@@ -26,7 +26,6 @@ namespace BusinessLayer.Interfaces
         /// <returns>Devuelve el usuario o null si los datos no son correctos</returns>
         Usuario IniciarSesion(string correo, string contrasenia);
 
-
         /// <summary>
         /// Devuelve informacion sobre los viajes disponibles en una fecha, que pasan por el origen y destino especificado
         /// Para cada viaje que cumpla la conducion se devuelve los ID de viaje, parada de origen y destino, la hora, el precio y la lista de asientos disponibles

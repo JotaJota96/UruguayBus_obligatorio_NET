@@ -28,7 +28,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar el usuario"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al registrar el usuario"));
             }
         }
 
@@ -42,7 +42,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new Exception("Ha ocurrido un error al intentar iniciar sesion");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al intentar iniciar sesion"));
             }
         }
 
@@ -56,7 +56,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener los vheiculos cercanos"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener los vheiculos cercanos"));
             }
         }
 
@@ -70,7 +70,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener el precio minimo para los asientos"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener el precio minimo para los asientos"));
             }
         }
 
@@ -84,7 +84,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener los viajes disponibles"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener los viajes disponibles"));
             }
         }
 
@@ -105,7 +105,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener el precio minimo para los asientos"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener el precio minimo para los asientos"));
             }
         }
     }

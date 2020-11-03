@@ -25,7 +25,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al finalizar el viaje"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al finalizar el viaje"));
             }
         }
 
@@ -40,7 +40,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al iniciar el viaje"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al iniciar el viaje"));
             }
         }
 
@@ -55,7 +55,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al listar los viaje del conductor"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al listar los viaje del conductor"));
             }
         }
 
@@ -70,7 +70,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al Registrar el Paso Por Parada"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al Registrar el Paso Por Parada"));
             }
         }
 
@@ -85,7 +85,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al validar el pasaje"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al validar el pasaje"));
             }
         }
     }

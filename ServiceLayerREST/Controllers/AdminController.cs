@@ -25,7 +25,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener las paradas"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener las paradas"));
             }
         }
 
@@ -39,7 +39,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar un vheiculo"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al registrar un vheiculo"));
 
             }
         }
@@ -54,7 +54,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al modificar un vheiculo"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al modificar un vheiculo"));
             }
         }
 
@@ -68,7 +68,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar un horario"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al registrar un horario"));
             }
         }
 
@@ -78,11 +78,21 @@ namespace ServiceLayerREST.Controllers
         {
             try
             {
-                return bla.RegistrarLinea(l);
+                l = bla.RegistrarLinea(l);
+                foreach (var item in l.tramos)
+                {
+                    item.linea = null;
+                    item.parada.tramos = null;
+                    foreach (var i in item.precio)
+                    {
+                        i.tramo = null;
+                    }
+                }
+                return l;
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar una linea"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al registrar una linea"));
             }
         }
 
@@ -96,7 +106,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al registrar una parada"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al registrar una parada"));
             }
         }
 
@@ -110,7 +120,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrio un error al registrar los viajes"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrio un error al registrar los viajes"));
             }
         }
 

@@ -25,7 +25,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al obtener los vehiculos"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener los vehiculos"));
             }
         }
 
@@ -39,7 +39,7 @@ namespace ServiceLayerREST.Controllers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Ha ocurrido un error al asignar el rol"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al asignar el rol"));
             }
         }
     }

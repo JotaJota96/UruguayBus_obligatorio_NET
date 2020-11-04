@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Share.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using UruguayBusWeb.ApiClient;
 
 namespace UruguayBusWeb.Controllers
 {
@@ -15,7 +18,18 @@ namespace UruguayBusWeb.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            
+            GlobalProxy gp = new GlobalProxy();
+
+            ICollection<Parada> lst = Task.Run(() => gp.ListarParadasAsync()).Result;
+            string str = "";
+            
+            foreach (var item in lst)
+            {
+                str += item.nombre + ", ";
+            }
+            
+            ViewBag.Message = "Las paradas son: " + str;
 
             return View();
         }

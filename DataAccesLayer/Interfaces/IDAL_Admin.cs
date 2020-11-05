@@ -19,5 +19,7 @@ namespace DataAccesLayer.Interfaces
         Linea RegistrarLinea(Linea l);
         ICollection<Viaje> RegistrarViajes(ICollection<Viaje> viajes, int idHorario);
         ICollection<Viaje> ListarViajes();
+        ICollection<Horario> ListarHorarios();
+        Horario ModificarHorario(Horario h);
     }
 }

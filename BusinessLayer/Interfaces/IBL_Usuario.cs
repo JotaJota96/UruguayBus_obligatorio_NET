@@ -74,6 +74,7 @@ namespace BusinessLayer.Interfaces
         /// <returns></returns>
         ICollection<VehiculoCercanoDTO> ListarVehiculosCercanos(int idParada, int? idUsuario = null);
 
+        bool CorreoExiste(string correo);
 
     }
 }

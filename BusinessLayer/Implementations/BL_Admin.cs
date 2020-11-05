@@ -253,5 +253,29 @@ namespace BusinessLayer.Implementations
                 throw new Exception("Ocurrio un problema al intentar obtener los conductores. " + e.Message);
             }
         }
+
+        public ICollection<Horario> ListarHorarios()
+        {
+            try
+            {
+                return dal.ListarHorarios();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar listar los horarios. " + e.Message);
+            }
+        }
+
+        public Horario ModificarHorario(Horario h)
+        {
+            try
+            {
+                return dal.ModificarHorario(h);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar modificar el horario. " + e.Message);
+            }
+        }
     }
 }

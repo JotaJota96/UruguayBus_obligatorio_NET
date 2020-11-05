@@ -270,7 +270,19 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    return HorarioConverter.convert((ICollection<horario>) db.horario.ToList());
+                    ICollection<Horario> ret = new List<Horario>();
+                    ICollection<horario> horarios = (ICollection<horario>)db.horario.ToList();
+
+                    foreach (var item in horarios)
+                    {
+                        Horario h = HorarioConverter.convert(item);
+                        h.vehiculo = VehiculoConverter.convert(item.vehiculo);
+                        h.conductor = ConductorConverter.convert(item.conductor);
+                        h.linea = LineaConverter.convert(item.linea);
+                        ret.Add(h);
+                    }
+
+                    return ret;
                 }
                 catch (Exception e)
                 {
@@ -311,33 +323,37 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    if (h.hora == null || h.conductor == null || h.vehiculo == null)
-                    {
-                        throw new Exception("Los datos del horario a modificar no son correctos");
-                    }
-
                     horario horarioModificado = db.horario.Find(h.id);
 
-                    horarioModificado.hora = h.hora;
-
-                    conductor conductor = db.conductor.Find(h.conductor.id);
-
-                    if (conductor.Equals(null))
+                    if (h.hora != null)
                     {
-                        throw new Exception("El conductor que se desa asociar al horario no existe");
+                        horarioModificado.hora = h.hora;
                     }
 
-                    horarioModificado.conductor = conductor;
-
-
-                    vehiculo vehiculo = db.vehiculo.Find(h.vehiculo.id);
-
-                    if (vehiculo.Equals(null))
+                    if (h.conductor != null)
                     {
-                        throw new Exception("El vehiculo que se desa asociar al horario no existe");
+                        conductor conductor = db.conductor.Find(h.conductor.id);
+
+                        if (conductor.Equals(null))
+                        {
+                            throw new Exception("El conductor que se desa asociar al horario no existe");
+                        }
+
+                        horarioModificado.conductor = conductor;
                     }
 
-                    horarioModificado.vehiculo = vehiculo;
+                    if (h.vehiculo != null) {
+
+                        vehiculo vehiculo = db.vehiculo.Find(h.vehiculo.id);
+
+                        if (vehiculo.Equals(null))
+                        {
+                            throw new Exception("El vehiculo que se desa asociar al horario no existe");
+                        }
+
+                        horarioModificado.vehiculo = vehiculo;
+                    }
+
 
                     db.Entry(horarioModificado).State = EntityState.Modified;
                     db.SaveChanges();

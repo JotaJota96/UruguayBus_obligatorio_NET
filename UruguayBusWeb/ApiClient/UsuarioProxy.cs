@@ -10,28 +10,32 @@ using System.Web;
 
 namespace UruguayBusWeb.ApiClient
 {
-    public class GlobalProxy
+    public class UsuarioProxy
     {
         HttpClient client = new HttpClient();
 
-        public GlobalProxy()
+        public UsuarioProxy()
         {
-            client.BaseAddress = new Uri("https://localhost:44349/api/Global");
+            client.BaseAddress = new Uri("https://localhost:44349");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
             );
         }
 
-        public async Task<ICollection<Parada>> ListarParadasAsync()
+        public async Task<Usuario> RegistrarUsuario(Usuario u)
         {
-            ICollection<Parada> ret = new List<Parada>();
-            HttpResponseMessage response = await client.GetAsync("/Paradas");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                ret = await response.Content.ReadAsAsync<ICollection<Parada>>();
+                HttpResponseMessage response = await client.PostAsJsonAsync("/api/Usuario/RegistrarUsuario", u);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Usuario>();
             }
-            return ret;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
     }

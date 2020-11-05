@@ -18,18 +18,9 @@ namespace UruguayBusWeb.Controllers
 
         public ActionResult About()
         {
-            
-            GlobalProxy gp = new GlobalProxy();
+            // Task.Run(() => gp.ListarParadasAsync()).Result;
 
-            ICollection<Parada> lst = Task.Run(() => gp.ListarParadasAsync()).Result;
-            string str = "";
-            
-            foreach (var item in lst)
-            {
-                str += item.nombre + ", ";
-            }
-            
-            ViewBag.Message = "Las paradas son: " + str;
+            ViewBag.Message = "Mensaje de ejemplo";
 
             return View();
         }

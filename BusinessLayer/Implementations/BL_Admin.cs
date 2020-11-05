@@ -130,6 +130,27 @@ namespace BusinessLayer.Implementations
             }
         }
 
+        public Parada ModificarParada(Parada p)
+        {
+            try
+            {
+                if (p == null)
+                    throw new Exception("La parada no puede ser NULL");
+
+                if (p.id <= 0)
+                    throw new Exception("El ID de la parada no es valido");
+
+                if (p.nombre == null || p.nombre.Equals(""))
+                    throw new Exception("El nombre no puede ser NULL ni vacio");
+
+                return dal.ModificarParada(p);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar registrar la parada. " + e.Message);
+            }
+        }
+
         public Vehiculo RegistrarVehiculo(Vehiculo v)
         {
             try
@@ -188,6 +209,48 @@ namespace BusinessLayer.Implementations
             catch (Exception e)
             {
                 throw new Exception("Ocurrio un error al intentar registrar los viajes. " + e.Message);
+            }
+        }
+
+        public ICollection<Conductor> ListarConductores()
+        {
+            try
+            {
+                return dal.ListarConductores();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar obtener los conductores. " + e.Message);
+            }
+        }
+
+        public Conductor ModificarConductor(Conductor c)
+        {
+            try
+            {
+                if (c == null)
+                    throw new Exception("El conductor no puede ser NULL");
+
+                if (c.id <= 0)
+                    throw new Exception("El ID de la parada no es valido");
+
+                return dal.ModificarConductor(c);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar registrar la parada. " + e.Message);
+            }
+        }
+
+        public ICollection<Viaje> ListarViajes()
+        {
+            try
+            {
+                return dal.ListarViajes();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar obtener los conductores. " + e.Message);
             }
         }
     }

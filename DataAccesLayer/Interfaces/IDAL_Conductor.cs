@@ -14,5 +14,6 @@ namespace DataAccesLayer.Interfaces
         ICollection<Viaje> ListarViajesDelDia(int idConductor);
         bool ValidarPasaje(int idPasaje, int idViaje, int idParada);
         ICollection<Usuario> RegistrarPasoPorParada(int idParada, int idViaje);
+        Viaje ObtenerViajeActual(int idConductor);
     }
 }

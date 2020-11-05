@@ -63,6 +63,8 @@ namespace BusinessLayer.Interfaces
         /// <param name="dias"></param>
         /// <returns></returns>
         ICollection<Viaje> RegistrarViajes(int idHorario, DateTime fInicio, DateTime fFin, ICollection<DiaSemana> dias);
+        ICollection<Horario> ListarHorarios();
+        Horario ModificarHorario(Horario h);
 
         // Faltan un par de funciones para los reportes...
 

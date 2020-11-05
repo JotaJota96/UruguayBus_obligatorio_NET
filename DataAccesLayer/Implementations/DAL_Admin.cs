@@ -190,5 +190,63 @@ namespace DataAccesLayer.Implementations
             }
         }
 
+        public ICollection<Horario> ListarHorarios()
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    return HorarioConverter.convert((ICollection<horario>) db.horario.ToList());
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+        public Horario ModificarHorario(Horario h)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    if (h.hora == null || h.conductor == null || h.vehiculo == null)
+                    {
+                        throw new Exception("Los datos del horario a modificar no son correctos");
+                    }
+
+                    horario horarioModificado = db.horario.Find(h.id);
+
+                    horarioModificado.hora = h.hora;
+
+                    conductor conductor = db.conductor.Find(h.conductor.id);
+
+                    if (conductor.Equals(null))
+                    {
+                        throw new Exception("El conductor que se desa asociar al horario no existe");
+                    }
+
+                    horarioModificado.conductor = conductor;
+
+
+                    vehiculo vehiculo = db.vehiculo.Find(h.vehiculo.id);
+
+                    if (vehiculo.Equals(null))
+                    {
+                        throw new Exception("El vehiculo que se desa asociar al horario no existe");
+                    }
+
+                    horarioModificado.vehiculo = vehiculo;
+
+                    db.Entry(horarioModificado).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return HorarioConverter.convert(horarioModificado);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
     }
 }

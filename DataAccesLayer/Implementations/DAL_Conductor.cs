@@ -181,6 +181,23 @@ namespace DataAccesLayer.Implementations
             }
         }
 
+
+        public Viaje ObtenerViajeActual(int idConductor)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    viaje v = db.viaje.Where(x => x.finalizado == false && x.horario.conductor_id == idConductor).First();
+
+                    return ViajeConverter.convert(v);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
     }
 
 }

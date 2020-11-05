@@ -33,18 +33,19 @@ namespace BusinessLayer.Interfaces
         Parada RegistrarParada(Parada p);
 
         /// <summary>
+        /// Modifica una parada especifica
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        Parada ModificarParada(Parada p);
+
+        /// <summary>
         /// Registra una nueva linea en el sistema, sus respectivos tramos, y el precio de cada tramo
         /// Vinculos esperados: La linea debe estar vinculada a los tramos, cada tramo a una parada, cada precio a un tramo
         /// </summary>
         /// <param name="l">Linea a crear y sus respectivas asociaciones</param>
         /// <returns></returns>
         Linea RegistrarLinea(Linea l);
-
-        /// <summary>
-        /// Lista todas las paradas del sistema
-        /// </summary>
-        /// <returns></returns>
-        ICollection<Parada> ListarParadas();
 
         /// <summary>
         /// Registra un nuevo horario en el sistema, y su respectivo conductor, vehiculo y linea
@@ -65,6 +66,24 @@ namespace BusinessLayer.Interfaces
         ICollection<Viaje> RegistrarViajes(int idHorario, DateTime fInicio, DateTime fFin, ICollection<DiaSemana> dias);
         ICollection<Horario> ListarHorarios();
         Horario ModificarHorario(Horario h);
+
+        /// <summary>
+        /// Lista todos los conductores registrados en el sistema
+        /// </summary>
+        /// <returns></returns>
+        ICollection<Conductor> ListarConductores();
+
+        /// <summary>
+        /// Modifica la fecha de vencimiento de la libreta del conductor
+        /// </summary>
+        /// <returns></returns>
+        Conductor ModificarConductor(Conductor c);
+
+        /// <summary>
+        /// Lista todos los viajes del sistema
+        /// </summary>
+        /// <returns></returns>
+        ICollection<Viaje> ListarViajes();
 
         // Faltan un par de funciones para los reportes...
 

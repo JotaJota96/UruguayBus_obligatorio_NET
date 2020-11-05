@@ -26,9 +26,9 @@ namespace ServiceLayerREST.Controllers
             {
                 return blu.RegistrarUsuario(u);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al registrar el usuario"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -40,9 +40,9 @@ namespace ServiceLayerREST.Controllers
             {
                 return blu.IniciarSesion(dto.correo, dto.contrasenia);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al intentar iniciar sesion"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -54,9 +54,9 @@ namespace ServiceLayerREST.Controllers
             {
                 return blu.ListarVehiculosCercanos(idParada, idUsuario);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener los vheiculos cercanos"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -68,9 +68,9 @@ namespace ServiceLayerREST.Controllers
             {
                 return blu.PrecioParaElegirAsiento();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener el precio minimo para los asientos"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -82,9 +82,9 @@ namespace ServiceLayerREST.Controllers
             {
                 return blu.ListarViajesDisponibles(dto.fecha, dto.idParadaOrigen, dto.idParadaDestino);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener los viajes disponibles"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -103,9 +103,9 @@ namespace ServiceLayerREST.Controllers
                     return blu.ReservarPasaje(dto.idViaje, dto.idParadaOrigen, dto.idParadaDestino, dto.documento, (TipoDocumento)dto.tipoDocumento, dto.asiento); 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener el precio minimo para los asientos"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
     }

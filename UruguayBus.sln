@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayerSOAP", "Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayerREST", "ServiceLayerREST\ServiceLayerREST.csproj", "{49EDB36A-97BD-4490-A2BC-4B5DFA2D0769}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalAutogestion", "TerminalAutogestion\TerminalAutogestion.csproj", "{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{49EDB36A-97BD-4490-A2BC-4B5DFA2D0769}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49EDB36A-97BD-4490-A2BC-4B5DFA2D0769}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49EDB36A-97BD-4490-A2BC-4B5DFA2D0769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

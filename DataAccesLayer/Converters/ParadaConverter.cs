@@ -67,9 +67,9 @@ namespace DataAccesLayer.Converters
         {
             foreach (var item in po)
             {
-                item.parada = p;
+                item.parada_origen = p;
                 item.parada_id_origen = p.id;
-                p.pasaje.Add(item);
+                p.pasajes_origen.Add(item);
             }
         }
 
@@ -85,9 +85,9 @@ namespace DataAccesLayer.Converters
         {
             foreach (var item in pd)
             {
-                item.parada = p;
+                item.parada_destino = p;
                 item.parada_id_destino = p.id;
-                p.pasaje1.Add(item);
+                p.pasajes_destino.Add(item);
             }
         }
 

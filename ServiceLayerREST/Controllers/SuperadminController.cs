@@ -23,9 +23,9 @@ namespace ServiceLayerREST.Controllers
             {
                return blsa.ListarVehiculos();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener los vehiculos"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -37,9 +37,9 @@ namespace ServiceLayerREST.Controllers
             {
                 blsa.AsignarRol(dto.idUsuario, dto.rol, dto.fechaVencLibreta);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al asignar el rol"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
     }

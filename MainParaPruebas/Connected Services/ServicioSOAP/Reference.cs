@@ -38,6 +38,12 @@ namespace MainParaPruebas.ServicioSOAP {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/PrecioParaElegirAsiento", ReplyAction="http://tempuri.org/ISL_Soap/PrecioParaElegirAsientoResponse")]
         System.Threading.Tasks.Task<decimal> PrecioParaElegirAsientoAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/ListarParadas", ReplyAction="http://tempuri.org/ISL_Soap/ListarParadasResponse")]
+        Share.Entities.Parada[] ListarParadas();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISL_Soap/ListarParadas", ReplyAction="http://tempuri.org/ISL_Soap/ListarParadasResponse")]
+        System.Threading.Tasks.Task<Share.Entities.Parada[]> ListarParadasAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -97,6 +103,14 @@ namespace MainParaPruebas.ServicioSOAP {
         
         public System.Threading.Tasks.Task<decimal> PrecioParaElegirAsientoAsync() {
             return base.Channel.PrecioParaElegirAsientoAsync();
+        }
+        
+        public Share.Entities.Parada[] ListarParadas() {
+            return base.Channel.ListarParadas();
+        }
+        
+        public System.Threading.Tasks.Task<Share.Entities.Parada[]> ListarParadasAsync() {
+            return base.Channel.ListarParadasAsync();
         }
     }
 }

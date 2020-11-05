@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Share.Enums" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Share.Enums" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="TipoDocumento">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CI" />
+      <xs:enumeration value="OTROS" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TipoDocumento" nillable="true" type="tns:TipoDocumento" />
+</xs:schema>

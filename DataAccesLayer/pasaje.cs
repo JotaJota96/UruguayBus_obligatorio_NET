@@ -24,8 +24,8 @@ namespace DataAccesLayer
         public int parada_id_origen { get; set; }
         public int parada_id_destino { get; set; }
     
-        public virtual parada parada { get; set; }
-        public virtual parada parada1 { get; set; }
+        public virtual parada parada_destino { get; set; }
+        public virtual parada parada_origen { get; set; }
         public virtual usuario usuario { get; set; }
         public virtual viaje viaje { get; set; }
     }

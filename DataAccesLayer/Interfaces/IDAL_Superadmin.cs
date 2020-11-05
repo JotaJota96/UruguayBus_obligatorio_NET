@@ -10,7 +10,6 @@ namespace DataAccesLayer.Interfaces
 {
     public interface IDAL_Superadmin
     {
-        ICollection<Vehiculo> ListarVehiculos();
         void AsignarRol(int idUsuario, Rol rol, DateTime? fechaVencLibreta);
     }
 }

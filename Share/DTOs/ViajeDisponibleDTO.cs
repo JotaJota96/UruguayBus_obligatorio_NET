@@ -12,6 +12,7 @@ namespace Share.DTOs
     public class ViajeDisponibleDTO
     {
         public int viaje_id { get; set; }
+        public string linea_nombre { get; set; }
         public int parada_id_origen { get; set; }
         public int parada_id_destino { get; set; }
         public TimeSpan hora { get; set; }

@@ -21,22 +21,24 @@ namespace BusinessLayer.Implementations
             //
         }
 
-        public ICollection<Parada> ListarParadas()
-        {
-            try
-            {
-                return dal.ListarParadas();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Ocurrio un problema al intentar obtener el listado. " + e.Message);
-            }
-        }
-
         public Vehiculo ModificarVehiculo(Vehiculo v)
         {
             try
             {
+                if (v == null)
+                    throw new Exception("El vehiculo no puede ser NUll");
+
+                if (v.id <= 0)
+                    throw new Exception("El ID del vehiculo no es válido");
+
+                if (v.marca == null || v.marca.Equals("")
+                    || v.modelo == null || v.modelo.Equals("")
+                    || v.matricula == null || v.matricula.Equals(""))
+                    throw new Exception("Ninguno de los siguientes datos puede ser NULL o vacio: 'marca', 'modelo', 'matricula'");
+
+                if (v.cant_asientos <= 0)
+                    throw new Exception("El vehiculo debe tener al menos un asiento. (para el chofer aunquesea xD)");
+
                 return dal.ModificarVehiculo(v);
             }
             catch (Exception e)
@@ -49,9 +51,14 @@ namespace BusinessLayer.Implementations
         {
             try
             {
-                if (h.vehiculo == null)  throw new Exception("El horario debe estar asociado a un vehiculo");
-                if (h.conductor == null) throw new Exception("El horario debe estar asociado a un conductor");
-                if (h.linea== null)      throw new Exception("El horario debe estar asociado a una linea");
+                if (h.vehiculo == null)
+                    throw new Exception("El horario debe estar asociado a un vehiculo");
+
+                if (h.conductor == null)
+                    throw new Exception("El horario debe estar asociado a un conductor");
+
+                if (h.linea== null)
+                    throw new Exception("El horario debe estar asociado a una linea");
 
                 return dal.RegistrarHorario(h);
             }
@@ -67,8 +74,12 @@ namespace BusinessLayer.Implementations
             /// Vinculos esperados: La linea debe estar vinculada a los tramos, cada tramo a una parada, cada precio a un tramo
             try
             {
-                if (l == null) throw new Exception("Debe especificar una linea");
-                if (l.tramos.Count < 2) throw new Exception("La linea debe estar formada por al menos 2 paradas (tramos).");
+                if (l == null)
+                    throw new Exception("Debe especificar una linea");
+                
+                if (l.tramos.Count < 2)
+                    throw new Exception("La linea debe estar formada por al menos 2 paradas (tramos).");
+                
                 ICollection<int> numeros = new List<int>();
 
 
@@ -78,22 +89,19 @@ namespace BusinessLayer.Implementations
                 // que tenga un precio asociado
                 foreach (var t in l.tramos)
                 {
-                    if (t == null) throw new Exception("Hay un tramo = null");
-                    if (t.parada == null) throw new Exception("Se encontró un tramo sin parada asociada.");
+                    if (t == null)
+                        throw new Exception("Hay un tramo = null");
+                    
+                    if (t.parada == null)
+                        throw new Exception("Se encontró un tramo sin parada asociada.");
                     
                     if (numeros.Contains(t.numero))
-                    {
                         throw new Exception("Hay dos paradas con el mismo numero.");
-                    }
                     else
-                    {
                         numeros.Add(t.numero);
-                    }
 
                     if (t.precio.Count < 1)
-                    {
-                        throw new Exception("No puede haber un tramo sin precio asociado.");
-                    }
+                        throw new Exception("Se encontró un tramo sin precio asociado.");
                 }
 
                 return dal.RegistrarLinea(l);
@@ -108,7 +116,34 @@ namespace BusinessLayer.Implementations
         {
             try
             {
+                if (p == null)
+                    throw new Exception("La parada no puede ser NULL");
+
+                if (p.nombre == null || p.nombre.Equals(""))
+                    throw new Exception("El nombre no puede ser NULL ni vacio");
+
                 return dal.RegistrarParada(p);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar registrar la parada. " + e.Message);
+            }
+        }
+
+        public Parada ModificarParada(Parada p)
+        {
+            try
+            {
+                if (p == null)
+                    throw new Exception("La parada no puede ser NULL");
+
+                if (p.id <= 0)
+                    throw new Exception("El ID de la parada no es valido");
+
+                if (p.nombre == null || p.nombre.Equals(""))
+                    throw new Exception("El nombre no puede ser NULL ni vacio");
+
+                return dal.ModificarParada(p);
             }
             catch (Exception e)
             {
@@ -120,6 +155,17 @@ namespace BusinessLayer.Implementations
         {
             try
             {
+                if (v == null)
+                    throw new Exception("El vehiculo no puede ser NUll");
+
+                if (v.marca == null || v.marca.Equals("")
+                    || v.modelo == null || v.modelo.Equals("")
+                    || v.matricula == null || v.matricula.Equals(""))
+                    throw new Exception("Ninguno de los siguientes datos puede ser NULL o vacio: 'marca', 'modelo', 'matricula'");
+
+                if (v.cant_asientos <= 0)
+                    throw new Exception("El vehiculo debe tener al menos un asiento. (para el chofer aunquesea xD)");
+
                 return dal.RegistrarVehiculo(v);
             }
             catch (Exception e)
@@ -132,16 +178,19 @@ namespace BusinessLayer.Implementations
         {
             try
             {
-                ICollection<Viaje> viajes = new List<Viaje>();
+                if (fInicio == null || fFin == null)
+                    throw new Exception("Las fechas de inicio y fin no pueden ser NUÑÑ");
+
+                if (DateTime.Today.CompareTo(fInicio) > 0)
+                    throw new Exception("La fecha de inicio debe ser igual o posterior a la fecha actual");
 
                 if (fInicio.CompareTo(fFin) >= 0)
-                {
                     throw new Exception("La fecha de inicio debe ser anterior que la de fin");
-                }
-                if (dias.Count < 1)
-                {
+                
+                if (dias == null || dias.Count < 1)
                     throw new Exception("Se debe especificar al menos un dia de la semana");
-                }
+
+                ICollection<Viaje> viajes = new List<Viaje>();
 
                 for (; fInicio.CompareTo(fFin) <= 0; fInicio = fInicio.AddDays(1))
                 {
@@ -160,6 +209,48 @@ namespace BusinessLayer.Implementations
             catch (Exception e)
             {
                 throw new Exception("Ocurrio un error al intentar registrar los viajes. " + e.Message);
+            }
+        }
+
+        public ICollection<Conductor> ListarConductores()
+        {
+            try
+            {
+                return dal.ListarConductores();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar obtener los conductores. " + e.Message);
+            }
+        }
+
+        public Conductor ModificarConductor(Conductor c)
+        {
+            try
+            {
+                if (c == null)
+                    throw new Exception("El conductor no puede ser NULL");
+
+                if (c.id <= 0)
+                    throw new Exception("El ID de la parada no es valido");
+
+                return dal.ModificarConductor(c);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar registrar la parada. " + e.Message);
+            }
+        }
+
+        public ICollection<Viaje> ListarViajes()
+        {
+            try
+            {
+                return dal.ListarViajes();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar obtener los conductores. " + e.Message);
             }
         }
 

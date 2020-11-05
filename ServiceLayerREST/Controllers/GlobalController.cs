@@ -44,5 +44,47 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/Global/ObtenerUsuario/{correo}")]
+        public Usuario ObtenerUsuario([FromUri] string correo)
+        {
+            try
+            {
+                return blg.ObtenerUsuario(correo);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Global/ListarVehiculos")]
+        public ICollection<Vehiculo> ListarVehiculos()
+        {
+            try
+            {
+                return blg.ListarVehiculos();
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+
+        [HttpGet]
+        [Route("api/Global/ListarParadas")]
+        public ICollection<Parada> ListarParadas()
+        {
+            try
+            {
+                return blg.ListarParadas();
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
     }
 }

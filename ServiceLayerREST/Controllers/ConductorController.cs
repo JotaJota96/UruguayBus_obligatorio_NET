@@ -88,5 +88,19 @@ namespace ServiceLayerREST.Controllers
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
+
+        [HttpGet]
+        [Route("api/Conductor/ObtenerViajeActual/{idConductor}")]
+        public Viaje ObtenerViajeActual([FromUri] int idConductor)
+        {
+            try
+            {
+                return blc.ObtenerViajeActual(idConductor);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
     }
 }

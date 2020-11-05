@@ -108,5 +108,19 @@ namespace ServiceLayerREST.Controllers
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
+
+        [HttpGet]
+        [Route("api/Usuario/CorreoExiste/{correo}")]
+        public bool CorreoExiste([FromUri] string correo)
+        {
+            try
+            {
+                return blu.CorreoExiste(correo);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
     }
 }

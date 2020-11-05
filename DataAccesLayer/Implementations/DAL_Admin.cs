@@ -104,15 +104,12 @@ namespace DataAccesLayer.Implementations
                     {
                         Tramo t = TramoConverter.convert(tra);
                         l.tramos.Add(t);
-                        t.linea = l;
 
                         t.parada = ParadaConverter.convert(tra.parada);
-                        t.parada.tramos.Add(t);
 
                         precio pre = db.precio.FirstOrDefault(x => x.linea_id == l.id && x.parada_id == t.parada.id);
                         Precio p = PrecioConverter.convert(pre);
                         t.precio.Add(p);
-                        p.tramo = t;
                     }
 
                     return l;

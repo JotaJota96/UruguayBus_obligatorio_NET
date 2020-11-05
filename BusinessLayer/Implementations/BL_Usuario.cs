@@ -139,5 +139,16 @@ namespace BusinessLayer.Implementations
                 throw new Exception("No se pudo reservar el pasaje. " + e.Message);
             }
         }
+        public bool CorreoExiste(string correo)
+        {
+            try
+            {
+                return dal.CorreoExiste(correo);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo saber si el correo existe. " + e.Message);
+            }
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/Usuario/VehiculosCercanos/{idParada}/{idUsuario?}")]
         public ICollection<VehiculoCercanoDTO> ListarVehiculosCercanos([FromUri] int idParada, [FromUri] int? idUsuario = null)
         {
@@ -74,7 +74,7 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Usuario/ViajesDisponibles")]
         public ICollection<ViajeDisponibleDTO> ListarViajesDisponibles([FromBody] ListarViajesDisponiblesDTO dto)
         {

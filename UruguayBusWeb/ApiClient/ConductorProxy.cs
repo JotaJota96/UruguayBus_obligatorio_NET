@@ -13,7 +13,7 @@ namespace UruguayBusWeb.ApiClient
     public class ConductorProxy
     {
         HttpClient client = new HttpClient();
-
+        string basicPath = "/api/Conductor/";
         public ConductorProxy()
         {
             client.BaseAddress = new Uri("https://localhost:44349/api/Conductor");
@@ -22,5 +22,62 @@ namespace UruguayBusWeb.ApiClient
                 new MediaTypeWithQualityHeaderValue("application/json")
             );
         }
+
+        public async Task FinalizarViaje(int idViaje)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsync(basicPath + "Finalizar/" + idViaje, null);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task IniciarViaje(int idViaje)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsync(basicPath + "Iniciar/" + idViaje, null);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<ICollection<Viaje>> ListarViajesDelDia(int idConductor)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ViajesDelDia/" + idConductor);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Viaje>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<bool> ValidarPasaje(int idPasaje, int idViaje, int idParada)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ValidarPasaje/" + idPasaje + "/" + idViaje + "/" + idParada);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<bool>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

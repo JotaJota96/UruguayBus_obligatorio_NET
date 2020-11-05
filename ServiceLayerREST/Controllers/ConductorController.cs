@@ -23,9 +23,9 @@ namespace ServiceLayerREST.Controllers
             {
                 blc.FinalizarViaje(idViaje);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al finalizar el viaje"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -38,9 +38,9 @@ namespace ServiceLayerREST.Controllers
             {
                 blc.IniciarViaje(idViaje);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al iniciar el viaje"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -53,9 +53,9 @@ namespace ServiceLayerREST.Controllers
             {
                 return blc.ListarViajesDelDia(idConductor);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al listar los viaje del conductor"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -68,9 +68,9 @@ namespace ServiceLayerREST.Controllers
             {
                 blc.RegistrarPasoPorParada(idParada, idViaje);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al Registrar el Paso Por Parada"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -83,9 +83,23 @@ namespace ServiceLayerREST.Controllers
             {
                 return blc.ValidarPasaje(idPasaje, idViaje, idParada);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al validar el pasaje"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Conductor/ObtenerViajeActual/{idConductor}")]
+        public Viaje ObtenerViajeActual([FromUri] int idConductor)
+        {
+            try
+            {
+                return blc.ObtenerViajeActual(idConductor);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
     }

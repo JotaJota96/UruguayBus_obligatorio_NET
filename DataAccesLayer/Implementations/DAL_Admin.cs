@@ -34,6 +34,29 @@ namespace DataAccesLayer.Implementations
             }
         }
 
+        public ICollection<Conductor> ListarConductores()
+        {
+            try
+            {
+                using (uruguay_busEntities db = new uruguay_busEntities())
+                {
+                    ICollection<Conductor> ret = new List<Conductor>();
+                    ICollection <conductor> conductores = (ICollection<conductor>) db.conductor.ToList();
+                    foreach (var item in conductores)
+                    {
+                        Conductor c = ConductorConverter.convert(item);
+                        c.persona = PersonaConverter.convert(item.persona);
+                        ret.Add(c);
+                    }
+                    return ret;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public Horario RegistrarHorario(Horario h)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -104,15 +127,12 @@ namespace DataAccesLayer.Implementations
                     {
                         Tramo t = TramoConverter.convert(tra);
                         l.tramos.Add(t);
-                        t.linea = l;
 
                         t.parada = ParadaConverter.convert(tra.parada);
-                        t.parada.tramos.Add(t);
 
                         precio pre = db.precio.FirstOrDefault(x => x.linea_id == l.id && x.parada_id == t.parada.id);
                         Precio p = PrecioConverter.convert(pre);
                         t.precio.Add(p);
-                        p.tramo = t;
                     }
 
                     return l;
@@ -135,6 +155,28 @@ namespace DataAccesLayer.Implementations
                     db.parada.Add(par);
                     db.SaveChanges();
 
+                    return ParadaConverter.convert(par);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+        public Parada ModificarParada(Parada p)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    if (p == null || db.parada.Find(p.id) == null)
+                        throw new Exception("No se encontro ninguna parada con ese ID");
+
+                    parada par = ParadaConverter.convert(p);
+
+                    db.Entry(par).State = EntityState.Modified;
+                    db.SaveChanges();
                     return ParadaConverter.convert(par);
                 }
                 catch (Exception e)
@@ -184,6 +226,122 @@ namespace DataAccesLayer.Implementations
                     db.SaveChanges();
 
                     return ViajeConverter.convert(viajes);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+
+        public Conductor ModificarConductor(Conductor c)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    if (c == null)
+                        throw new Exception("No se encontro ningun conductor con ese ID");
+
+                    conductor con = db.conductor.Find(c.id);
+                    if (con == null)
+                        throw new Exception("No se encontro ningun conductor con ese ID");
+
+                    con.vencimiento_libreta = c.vencimiento_libreta;
+                    db.SaveChanges();
+
+                    c = ConductorConverter.convert(con);
+                    c.persona = PersonaConverter.convert(con.persona);
+
+                    return c;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+
+        public ICollection<Horario> ListarHorarios()
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    return HorarioConverter.convert((ICollection<horario>) db.horario.ToList());
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+        public ICollection<Viaje> ListarViajes()
+        {
+            try
+            {
+                using (uruguay_busEntities db = new uruguay_busEntities())
+                {
+                    ICollection<Viaje> ret = new List<Viaje>();
+                    ICollection<viaje> viajes = (ICollection<viaje>) db.viaje.ToList();
+                    foreach (var item in viajes)
+                    {
+                        Viaje v = ViajeConverter.convert(item);
+                        v.horario = HorarioConverter.convert(item.horario);
+                        v.horario.vehiculo = VehiculoConverter.convert(item.horario.vehiculo);
+                        v.horario.conductor = ConductorConverter.convert(item.horario.conductor);
+                        v.horario.linea = LineaConverter.convert(item.horario.linea);
+                        ret.Add(v);
+                    }
+                    return ret;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public Horario ModificarHorario(Horario h)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    if (h.hora == null || h.conductor == null || h.vehiculo == null)
+                    {
+                        throw new Exception("Los datos del horario a modificar no son correctos");
+                    }
+
+                    horario horarioModificado = db.horario.Find(h.id);
+
+                    horarioModificado.hora = h.hora;
+
+                    conductor conductor = db.conductor.Find(h.conductor.id);
+
+                    if (conductor.Equals(null))
+                    {
+                        throw new Exception("El conductor que se desa asociar al horario no existe");
+                    }
+
+                    horarioModificado.conductor = conductor;
+
+
+                    vehiculo vehiculo = db.vehiculo.Find(h.vehiculo.id);
+
+                    if (vehiculo.Equals(null))
+                    {
+                        throw new Exception("El vehiculo que se desa asociar al horario no existe");
+                    }
+
+                    horarioModificado.vehiculo = vehiculo;
+
+                    db.Entry(horarioModificado).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return HorarioConverter.convert(horarioModificado);
                 }
                 catch (Exception e)
                 {

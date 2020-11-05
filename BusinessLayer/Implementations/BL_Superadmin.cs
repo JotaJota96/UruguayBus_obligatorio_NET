@@ -45,14 +45,9 @@ namespace BusinessLayer.Implementations
 
         public ICollection<Vehiculo> ListarVehiculos()
         {
-            try
-            {
-               return dal.ListarVehiculos();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("No se pudieron listar los vheiculos: " + e.Message);
-            }
+            // tendria que haberse movido al BL_Global pero se deja aca por compatibilidad
+            // (entiendase compatibilidad como "no tengo ganas de modificar todo lo que ya estaba hecho")
+            return dalg.ListarVehiculos();
         }
     }
 }

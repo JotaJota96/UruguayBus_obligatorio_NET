@@ -57,19 +57,5 @@ namespace DataAccesLayer.Implementations
             }
         }
 
-        public ICollection<Vehiculo> ListarVehiculos()
-        {
-            using (uruguay_busEntities db = new uruguay_busEntities())
-            {
-                try
-                {
-                    return VehiculoConverter.convert(db.vehiculo.ToList());
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-            }
-        }
     }
 }

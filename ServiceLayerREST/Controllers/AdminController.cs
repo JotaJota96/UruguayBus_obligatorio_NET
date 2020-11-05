@@ -15,20 +15,6 @@ namespace ServiceLayerREST.Controllers
         IBL_Admin bla = new BL_Admin();
 
 
-        [HttpGet]
-        [Route("api/Admin/Paradas")]
-        public ICollection<Parada> listarParadas()
-        {
-            try
-            {
-                return bla.ListarParadas();
-            }
-            catch (Exception)
-            {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener las paradas"));
-            }
-        }
-
         [HttpPost]
         [Route("api/Admin/RegitrarVehiculo")]
         public Vehiculo RegistrarVehiculo([FromBody]Vehiculo v)

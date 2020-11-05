@@ -58,5 +58,40 @@ namespace DataAccesLayer.Implementations
             }
         }
 
+        public ICollection<Vehiculo> ListarVehiculos()
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    return VehiculoConverter.convert(db.vehiculo.ToList());
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+        public Usuario ObtenerUsuario(string correo)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    usuario u = db.usuario.Where(x => x.persona.correo.Equals(correo)).FirstOrDefault();
+                    if (u == null)
+                        return null;
+
+                    Usuario ret = UsuarioConverter.convert(u);
+                    ret.persona = PersonaConverter.convert(u.persona);
+                    return ret;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
     }
 }

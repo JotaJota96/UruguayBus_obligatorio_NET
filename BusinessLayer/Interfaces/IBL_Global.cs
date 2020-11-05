@@ -22,5 +22,16 @@ namespace BusinessLayer.Interfaces
         /// <returns></returns>
         ICollection<Parada> ListarParadas();
 
+        /// <summary>
+        /// Devuelve todos los vehiculos del sistema (para saber su ubicacion)
+        /// </summary>
+        /// <returns></returns>
+        ICollection<Vehiculo> ListarVehiculos();
+
+        /// <summary>
+        /// devuelve el usuario registrado con ese correo o null si no hay ninguno
+        /// </summary>
+        /// <param name="correo"></param>
+        Usuario ObtenerUsuario(string correo);
     }
 }

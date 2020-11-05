@@ -23,9 +23,9 @@ namespace ServiceLayerREST.Controllers
             {
                 return blg.ListarParadas();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener las paradas"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 
@@ -38,9 +38,9 @@ namespace ServiceLayerREST.Controllers
             {
                 return blg.obtenerParadasDeLinea(idLinea);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Ha ocurrido un error al obtener las paradas"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
 

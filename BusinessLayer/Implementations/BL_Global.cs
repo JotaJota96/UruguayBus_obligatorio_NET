@@ -42,5 +42,29 @@ namespace BusinessLayer.Implementations
                 throw new Exception("Ocurrio un problema al intentar obtener las paradas de la linea. " + e.Message);
             }
         }
+
+        public ICollection<Vehiculo> ListarVehiculos()
+        {
+            try
+            {
+                return dalg.ListarVehiculos();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar obtener los vehiculos. " + e.Message);
+            }
+        }
+
+        public Usuario ObtenerUsuario(string correo)
+        {
+            try
+            {
+                return dalg.ObtenerUsuario(correo);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar obtener los vehiculos. " + e.Message);
+            }
+        }
     }
 }

@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccesLayer.Implementations
 {
@@ -41,7 +39,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
         public List<VehiculoCercanoDTO> ListarVehiculosCercanos(int idParada, int? idUsuario = null)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -66,7 +63,6 @@ namespace DataAccesLayer.Implementations
             }
             return null;
         }
-
         private int GetParadaAnterior(int idlinea, int? idParada)
         {
             DAL_Global DAL_G = new DAL_Global();
@@ -84,7 +80,6 @@ namespace DataAccesLayer.Implementations
             }
             return ParadaAnterior != null ? ParadaAnterior.id : 0;
         }
-
         private bool ParadasOrdenadas(int idlinea, int idParadaOrigen, int idParadaDestino)
         {
 
@@ -103,7 +98,6 @@ namespace DataAccesLayer.Implementations
             }
             return encontroParada?? false;
         }
-
         private decimal PrecioRecorrido(int idlinea, int idParadaOrigen, int idParadaDestino, DateTime fecha)
         {
             DAL_Global DAL_G = new DAL_Global();
@@ -136,7 +130,6 @@ namespace DataAccesLayer.Implementations
             }
             return precio;
         }
-
         private List<int> ParadasIntermedias(int idlinea, int idParadaOrigen, int idParadaDestino)
         {
             DAL_Global DAL_G = new DAL_Global();
@@ -229,7 +222,6 @@ namespace DataAccesLayer.Implementations
                 return res;
             }
         }
-
         public decimal PrecioParaElegirAsiento()
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -252,7 +244,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
         public Usuario RegistrarUsuario(Usuario u)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -285,7 +276,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
         public Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int idUsuario, int? asiento = null)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -338,7 +328,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
         public Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, TipoDocumento tipoDocumento, int? asiento = null)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -382,6 +371,21 @@ namespace DataAccesLayer.Implementations
                 }
                 catch (Exception e)
                 {
+                    throw e;
+                }
+            }
+        }
+        public bool CorreoExiste(string correo)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    return db.usuario.Any(x => x.persona.correo == correo);
+                }
+                catch (Exception e)
+                {
+
                     throw e;
                 }
             }

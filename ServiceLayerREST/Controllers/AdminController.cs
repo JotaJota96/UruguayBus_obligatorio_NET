@@ -99,5 +99,88 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("api/Admin/ModificarParada")]
+        public Parada ModificarParada([FromBody] Parada p)
+        {
+            try
+            {
+                return bla.ModificarParada(p);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Admin/ListarConductores")]
+        public ICollection<Conductor> ListarConductores()
+        {
+            try
+            {
+                return bla.ListarConductores();
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Admin/ModificarConductor")]
+        public Conductor ModificarConductor([FromBody] Conductor c)
+        {
+            try
+            {
+                return bla.ModificarConductor(c);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Admin/ListarHorarios")]
+        public ICollection<Horario> ListarHorarios()
+        {
+            try
+            {
+                return bla.ListarHorarios();
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Admin/ModificarHorario")]
+        public Horario ModificarHorario([FromBody] Horario h)
+        {
+            try
+            {
+                return bla.ModificarHorario(h);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Admin/ListarViajes")]
+        public ICollection<Viaje> ListarViajes()
+        {
+            try
+            {
+                return bla.ListarViajes();
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
     }
 }

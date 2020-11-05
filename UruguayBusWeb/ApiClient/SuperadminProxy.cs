@@ -51,7 +51,7 @@ namespace UruguayBusWeb.ApiClient
                     fechaVencLibreta = fechaVencLibreta
                 };
 
-                HttpResponseMessage response = await client.PutAsync(basicPath + "/AsignarRol", ar);
+                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "/AsignarRol", ar);
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Vehiculo>>();

@@ -114,7 +114,7 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
-        public async Task<Pasaje> ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int? idUsuario = null, string documento, TipoDocumento? tipoDocumento = null, int? asiento = null)
+        public async Task<Pasaje> ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int idUsuario, int? asiento = null)
         {
             try
             {
@@ -124,9 +124,9 @@ namespace UruguayBusWeb.ApiClient
                     idParadaOrigen = idParadaOrigen,
                     idParadaDestino = idParadaDestino,
                     idUsuario = idUsuario,
-                    documento = documento,
-                    tipoDocumento = tipoDocumento,
-                    asiento = asiento
+                    asiento = asiento,
+                    documento = null,
+                    tipoDocumento = null,
                 };
 
                 HttpResponseMessage response = await client.PostAsJsonAsync(basePath + "ReservarPasaje", rv);

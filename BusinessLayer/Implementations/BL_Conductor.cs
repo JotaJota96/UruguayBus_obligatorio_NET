@@ -80,5 +80,17 @@ namespace BusinessLayer.Implementations
                 throw new Exception("No se pudo validar el pasaje: " + e.Message);
             }
         }
+
+        public Viaje ObtenerViajeActual(int idConductor)
+        {
+            try
+            {
+                return dal.ObtenerViajeActual(idConductor);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo obtener el viaje: " + e.Message);
+            }
+        }
     }
 }

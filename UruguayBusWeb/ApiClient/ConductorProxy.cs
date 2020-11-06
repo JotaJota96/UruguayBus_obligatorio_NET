@@ -49,6 +49,21 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
+        public async Task<Viaje> ObtenerViajeActual(int idConductor)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ObtenerViajeActual" + idConductor);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Viaje>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public async Task<ICollection<Viaje>> ListarViajesDelDia(int idConductor)
         {
             try

@@ -92,6 +92,21 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
+        public async Task<bool> CorreoExiste(string correo)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basePath + "CorreoExiste" + correo);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<bool>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public async Task<ICollection<ViajeDisponibleDTO>> ListarViajesDisponibles(DateTime fecha, int idParadaOrigen, int idParadaDestino)
         {
             try

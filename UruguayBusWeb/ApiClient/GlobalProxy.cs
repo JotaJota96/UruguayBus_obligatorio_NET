@@ -37,5 +37,49 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+        public async Task<ICollection<Vehiculo>> ListarVehiculos()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarVehiculos");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Vehiculo>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<ICollection<Parada>> ListarParadas()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarParadas");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Parada>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        //ICollection<Parada> ListarVehiculos()
+        //ICollection<Parada> ListarParadas()
+        public async Task<Usuario> ObtenerUsuario(string correo)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "/ObtenerUsuario" + correo);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Usuario>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

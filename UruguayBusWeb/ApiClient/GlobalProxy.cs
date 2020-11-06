@@ -65,6 +65,20 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+        public async Task<ICollection<Linea>> ListarLinea()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarLinea");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Linea>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public async Task<Usuario> ObtenerUsuario(string correo)
         {
             try
@@ -197,6 +211,28 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
-        //linea
+        public async Task<Linea> obtenerLinea(int idVehiculo)
+        {
+            try
+            {
+                Linea ret = null;
+                ICollection<Linea> lst = await ListarLinea();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idVehiculo)
+                    {
+                        ret = item;
+                    }
+                }
+
+                return ret;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
     }
 }

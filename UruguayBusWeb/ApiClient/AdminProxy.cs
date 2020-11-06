@@ -214,5 +214,19 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
+        public async Task<Linea> ModificarLinea(Linea l)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "ModificarLinea", l);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Linea>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

@@ -21,9 +21,13 @@ namespace DataAccesLayer.Implementations
                     if (v == null || db.vehiculo.Find(v.id) == null)
                         throw new Exception("No se encontro ningun vehiculo con ese ID");
 
-                    vehiculo veh = VehiculoConverter.convert(v);
+                    vehiculo veh = db.vehiculo.Find(v.id);
 
-                    db.Entry(veh).State = EntityState.Modified;
+                    veh.cant_asientos = v.cant_asientos;
+                    veh.marca = v.marca;
+                    veh.modelo = v.modelo;
+                    veh.matricula = v.matricula;
+
                     db.SaveChanges();
                     return VehiculoConverter.convert(veh);
                 }

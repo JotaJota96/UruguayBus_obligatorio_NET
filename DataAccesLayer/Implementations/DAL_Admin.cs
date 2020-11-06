@@ -173,9 +173,8 @@ namespace DataAccesLayer.Implementations
                     if (p == null || db.parada.Find(p.id) == null)
                         throw new Exception("No se encontro ninguna parada con ese ID");
 
-                    parada par = ParadaConverter.convert(p);
-
-                    db.Entry(par).State = EntityState.Modified;
+                    parada par = db.parada.Find(p.id);
+                    par.nombre = p.nombre;
                     db.SaveChanges();
                     return ParadaConverter.convert(par);
                 }

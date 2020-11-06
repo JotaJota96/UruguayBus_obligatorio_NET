@@ -182,5 +182,19 @@ namespace ServiceLayerREST.Controllers
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
+
+        [HttpPut]
+        [Route("api/Admin/ModificarLinea")]
+        public Linea ModificarLinea([FromBody] Linea l)
+        {
+            try
+            {
+                return bla.ModificarLinea(l);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
     }
 }

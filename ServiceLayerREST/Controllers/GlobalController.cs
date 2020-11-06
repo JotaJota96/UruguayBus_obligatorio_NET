@@ -29,6 +29,19 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/Global/ListarLinea")]
+        public ICollection<Linea> ListarLinea()
+        {
+            try
+            {
+                return blg.ListarLinea();
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
 
         [HttpGet]
         [Route("api/Global/Lineas/{idLinea}/Paradas")]

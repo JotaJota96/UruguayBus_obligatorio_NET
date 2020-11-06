@@ -176,9 +176,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Admin\ListarVehiculos.cshtml" />
-    <Content Include="Views\Admin\EditarVehiculo.cshtml" />
-    <Content Include="Views\Admin\RegistrarVehiculo.cshtml" />
+    <Content Include="Views\Admin\Vehiculo\ListarVehiculos.cshtml" />
+    <Content Include="Views\Admin\Vehiculo\ModificarVehiculo.cshtml" />
+    <Content Include="Views\Admin\Vehiculo\RegistrarVehiculo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

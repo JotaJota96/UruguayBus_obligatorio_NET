@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccesLayer.Implementations
 {
@@ -31,7 +29,6 @@ namespace DataAccesLayer.Implementations
                     Usuario usuarioRet = UsuarioConverter.convert(per.usuario);
                     Persona personaRet = PersonaConverter.convert(per);
                     usuarioRet.persona = personaRet;
-                    personaRet.usuario = usuarioRet;
 
                     return usuarioRet;
                 }
@@ -41,32 +38,37 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
         public List<VehiculoCercanoDTO> ListarVehiculosCercanos(int idParada, int? idUsuario = null)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                var res = new List<VehiculoCercanoDTO>();
-                var parada = db.parada.FirstOrDefault(x=>x.id==idParada);
-                if (parada == null)
-                    throw new Exception("No se encontro ninguna parada con ese ID");
+                try
+                {
+                    var parada = db.parada.FirstOrDefault(x => x.id == idParada);
+                    if (parada == null)
+                        throw new Exception("No se encontro ninguna parada con ese ID");
 
-                var Res = db.viaje
-                    .Where(x => x.finalizado == false).ToList()?
-                    .Where(x=> x.horario.linea.tramo.Any(y=>y.parada_id == idParada) &&
-                        !x.paso_por_parada.Any(y=>y.parada_id == idParada) &&
-                        x.paso_por_parada.Any(y => y.parada_id == GetParadaAnterior(x.horario.linea.id, idParada))
-                ).ToList()
-                .Select(x=>
-                    new VehiculoCercanoDTO() {
-                        vehiculo_id = x.horario.vehiculo.id,
-                        pasaje_reservado = idUsuario == null? false : x.pasaje.Any(y=>y.usuario.id == idUsuario)
-                    }
-                ).ToList();
+                    var Res = db.viaje
+                        .Where(x => x.finalizado == false).ToList()?
+                        .Where(x => x.horario.linea.tramo.Any(y => y.parada_id == idParada) &&
+                            !x.paso_por_parada.Any(y => y.parada_id == idParada) &&
+                            x.paso_por_parada.Any(y => y.parada_id == GetParadaAnterior(x.horario.linea.id, idParada))
+                    ).ToList()
+                    .Select(x =>
+                        new VehiculoCercanoDTO()
+                        {
+                            vehiculo_id = x.horario.vehiculo.id,
+                            pasaje_reservado = idUsuario == null ? false : x.pasaje.Any(y => y.usuario.id == idUsuario)
+                        }
+                    ).ToList();
+                    return Res;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
-            return null;
         }
-
         private int GetParadaAnterior(int idlinea, int? idParada)
         {
             DAL_Global DAL_G = new DAL_Global();
@@ -84,7 +86,6 @@ namespace DataAccesLayer.Implementations
             }
             return ParadaAnterior != null ? ParadaAnterior.id : 0;
         }
-
         private bool ParadasOrdenadas(int idlinea, int idParadaOrigen, int idParadaDestino)
         {
 
@@ -103,7 +104,6 @@ namespace DataAccesLayer.Implementations
             }
             return encontroParada?? false;
         }
-
         private decimal PrecioRecorrido(int idlinea, int idParadaOrigen, int idParadaDestino, DateTime fecha)
         {
             DAL_Global DAL_G = new DAL_Global();
@@ -136,7 +136,6 @@ namespace DataAccesLayer.Implementations
             }
             return precio;
         }
-
         private List<int> ParadasIntermedias(int idlinea, int idParadaOrigen, int idParadaDestino)
         {
             DAL_Global DAL_G = new DAL_Global();
@@ -205,31 +204,38 @@ namespace DataAccesLayer.Implementations
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
-                DAL_Global DAL_G = new DAL_Global();
-                var viajes = db.viaje
-                    .Where(x => x.finalizado != true &&
-                        x.horario.linea.tramo.Any(y => y.parada_id == idParadaOrigen) &&
-                        x.horario.linea.tramo.Any(y => y.parada_id == idParadaDestino) &&
-                        !x.paso_por_parada.Any(y => y.parada_id == idParadaOrigen)).ToList();
-                viajes = viajes
-                    .Where(x =>
-                        ParadasOrdenadas(x.horario.linea.id, idParadaOrigen, idParadaDestino) &&
-                        x.fecha.Date == fecha.Date)
-                    .ToList();
+                try
+                {
+                    DAL_Global DAL_G = new DAL_Global();
+                    var viajes = db.viaje
+                        .Where(x => x.finalizado != true &&
+                            x.horario.linea.tramo.Any(y => y.parada_id == idParadaOrigen) &&
+                            x.horario.linea.tramo.Any(y => y.parada_id == idParadaDestino) &&
+                            !x.paso_por_parada.Any(y => y.parada_id == idParadaOrigen)).ToList();
+                    viajes = viajes
+                        .Where(x =>
+                            ParadasOrdenadas(x.horario.linea.id, idParadaOrigen, idParadaDestino) &&
+                            x.fecha.Date == fecha.Date)
+                        .ToList();
 
-                var res = viajes.Select(x => new ViajeDisponibleDTO() {
-                    viaje_id = x.id,
-                    linea_nombre = x.horario.linea.nombre,
-                    parada_id_destino = idParadaDestino,
-                    parada_id_origen = idParadaOrigen,
-                    hora = x.horario.hora,
-                    precio = PrecioRecorrido(x.horario.linea.id, idParadaOrigen, idParadaDestino, fecha),
-                    asientos_disponibles = GetCantAsientosDisponiblies(x,idParadaOrigen, idParadaDestino)
-                }).ToList();
-                return res;
+                    var res = viajes.Select(x => new ViajeDisponibleDTO()
+                    {
+                        viaje_id = x.id,
+                        linea_nombre = x.horario.linea.nombre,
+                        parada_id_destino = idParadaDestino,
+                        parada_id_origen = idParadaOrigen,
+                        hora = x.horario.hora,
+                        precio = PrecioRecorrido(x.horario.linea.id, idParadaOrigen, idParadaDestino, fecha),
+                        asientos_disponibles = GetCantAsientosDisponiblies(x, idParadaOrigen, idParadaDestino)
+                    }).ToList();
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
         }
-
         public decimal PrecioParaElegirAsiento()
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -252,7 +258,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
         public Usuario RegistrarUsuario(Usuario u)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -271,10 +276,9 @@ namespace DataAccesLayer.Implementations
                     db.persona.Add(per);
                     db.SaveChanges();
 
-                    Persona personaRet = PersonaConverter.convert(per);
                     Usuario usuarioRet = UsuarioConverter.convert(usu);
+                    Persona personaRet = PersonaConverter.convert(per);
 
-                    personaRet.usuario = usuarioRet;
                     usuarioRet.persona = personaRet;
 
                     return usuarioRet;
@@ -285,7 +289,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
         public Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int idUsuario, int? asiento = null)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -338,7 +341,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
         public Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, TipoDocumento tipoDocumento, int? asiento = null)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -382,6 +384,21 @@ namespace DataAccesLayer.Implementations
                 }
                 catch (Exception e)
                 {
+                    throw e;
+                }
+            }
+        }
+        public bool CorreoExiste(string correo)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    return db.usuario.Any(x => x.persona.correo == correo);
+                }
+                catch (Exception e)
+                {
+
                     throw e;
                 }
             }

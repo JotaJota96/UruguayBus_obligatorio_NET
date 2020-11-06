@@ -92,6 +92,21 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
+        public async Task<bool> CorreoExiste(string correo)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basePath + "CorreoExiste" + correo);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<bool>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public async Task<ICollection<ViajeDisponibleDTO>> ListarViajesDisponibles(DateTime fecha, int idParadaOrigen, int idParadaDestino)
         {
             try
@@ -114,7 +129,7 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
-        public async Task<Pasaje> ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int? idUsuario = null, string documento, TipoDocumento? tipoDocumento = null, int? asiento = null)
+        public async Task<Pasaje> ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int idUsuario, int? asiento = null)
         {
             try
             {
@@ -124,9 +139,9 @@ namespace UruguayBusWeb.ApiClient
                     idParadaOrigen = idParadaOrigen,
                     idParadaDestino = idParadaDestino,
                     idUsuario = idUsuario,
-                    documento = documento,
-                    tipoDocumento = tipoDocumento,
-                    asiento = asiento
+                    asiento = asiento,
+                    documento = null,
+                    tipoDocumento = null,
                 };
 
                 HttpResponseMessage response = await client.PostAsJsonAsync(basePath + "ReservarPasaje", rv);

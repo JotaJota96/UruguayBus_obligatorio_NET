@@ -123,5 +123,96 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+
+        public async Task<Parada> ModificarParada(Parada p)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "ModificarParada", p);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Parada>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<Conductor> ModificarConductor(Conductor c)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "ModificarConductor", c);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Conductor>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<Horario> ModificarHorario(Horario h)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "ModificarHorario", h);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Horario>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<ICollection<Conductor>> ListarConductores()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarConductores");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Conductor>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<ICollection<Horario>> ListarHorarios()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarHorarios");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Horario>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<ICollection<Viaje>> ListarViajes()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarViajes");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Viaje>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

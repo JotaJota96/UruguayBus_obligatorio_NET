@@ -27,7 +27,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/Paradas");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "Paradas");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Parada>>();
@@ -65,8 +65,6 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
-        //ICollection<Parada> ListarVehiculos()
-        //ICollection<Parada> ListarParadas()
         public async Task<Usuario> ObtenerUsuario(string correo)
         {
             try
@@ -81,5 +79,124 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+        public async Task<Parada> obtenerParada(int idParada)
+        {
+            try
+            {
+                Parada ret = null;
+                ICollection<Parada> lst = await ListarParadas();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idParada)
+                    {
+                        ret = item;
+                    }
+                }
+
+                return ret;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+        public async Task<Conductor> obtenerConductor(int idConductor)
+        {
+            try
+            {
+                AdminProxy ap = new AdminProxy();
+                Conductor ret = null;
+                ICollection<Conductor> lst = await ap.ListarConductores();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idConductor)
+                    {
+                        ret = item;
+                    }
+                }
+
+                return ret;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+        public async Task<Viaje> obtenerViaje(int idViaje)
+        {
+            try
+            {
+                AdminProxy ap = new AdminProxy();
+                Viaje ret = null;
+                ICollection<Viaje> lst = await ap.ListarViajes();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idViaje)
+                    {
+                        ret = item;
+                    }
+                }
+
+                return ret;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+        public async Task<Horario> obtenerHorario(int idHorario)
+        {
+            try
+            {
+                AdminProxy ap = new AdminProxy();
+                Horario ret = null;
+                ICollection<Horario> lst = await ap.ListarHorarios();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idHorario)
+                    {
+                        ret = item;
+                    }
+                }
+
+                return ret;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+        public async Task<Vehiculo> obtenerVehiculo(int idVehiculo)
+        {
+            try
+            {
+                Vehiculo ret = null;
+                ICollection<Vehiculo> lst = await ListarVehiculos();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idVehiculo)
+                    {
+                        ret = item;
+                    }
+                }
+
+                return ret;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+        //linea
     }
 }

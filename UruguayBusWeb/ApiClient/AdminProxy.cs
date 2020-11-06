@@ -158,7 +158,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "ModificarConductor", h);
+                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "ModificarHorario", h);
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<Horario>();

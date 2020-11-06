@@ -93,5 +93,23 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
+
+        public ICollection<Linea> ListarLinea()
+        {
+            try
+            {
+                using (uruguay_busEntities db = new uruguay_busEntities())
+                {
+                    ICollection<linea> lst = (ICollection<linea>)db.linea.ToList();
+                    
+                    return LineaConverter.convert(lst);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

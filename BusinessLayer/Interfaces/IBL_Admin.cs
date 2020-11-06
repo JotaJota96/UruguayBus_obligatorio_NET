@@ -85,6 +85,8 @@ namespace BusinessLayer.Interfaces
         /// <returns></returns>
         ICollection<Viaje> ListarViajes();
 
+        Linea ModificarLinea(Linea l);
+
         // Faltan un par de funciones para los reportes...
 
 

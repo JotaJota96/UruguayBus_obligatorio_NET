@@ -66,5 +66,17 @@ namespace BusinessLayer.Implementations
                 throw new Exception("Ocurrio un problema al intentar obtener los vehiculos. " + e.Message);
             }
         }
+
+        public ICollection<Linea> ListarLinea()
+        {
+            try
+            {
+                return dalg.ListarLinea();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar listar las lineas. " + e.Message);
+            }
+        }
     }
 }

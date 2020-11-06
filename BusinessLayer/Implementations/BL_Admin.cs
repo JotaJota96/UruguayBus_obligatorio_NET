@@ -277,5 +277,17 @@ namespace BusinessLayer.Implementations
                 throw new Exception("Ocurrio un error al intentar modificar el horario. " + e.Message);
             }
         }
+
+        public Linea ModificarLinea(Linea l)
+        {
+            try
+            {
+                return dal.ModificarLinea(l);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar modificar la linea. " + e.Message);
+            }
+        }
     }
 }

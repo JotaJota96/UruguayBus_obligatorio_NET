@@ -31,21 +31,27 @@ namespace UruguayBusWeb.Controllers
         // GET: Admin/ListarVehiculos
         public async Task<ActionResult> ListarVehiculos()
         {
+            // obtiene el listado y lo pasa a la vista
+
             ICollection<Vehiculo> lst = await gp.ListarVehiculos();
-            return View(lst);
+            // carga la vista y pasandole el modelo
+            return View("Vehiculo/ListarVehiculos", lst);
         }
 
 
         // GET: Admin/RegistrarVehiculo
         public ActionResult RegistrarVehiculo()
         {
-            return View();
+            // muestra la vista para registrar
+            // carga la vista
+            return View("Vehiculo/RegistrarVehiculo");
         }
 
         // POST: Admin/RegistrarVehiculo
         [HttpPost]
         public async Task<ActionResult> RegistrarVehiculo(FormCollection collection)
         {
+            // recibe los datos del elemento a registrar y redirige al listado
             try
             {
                 Vehiculo v = new Vehiculo()
@@ -58,31 +64,49 @@ namespace UruguayBusWeb.Controllers
 
                 v = await ap.RegistrarVehiculo(v);
 
+                // Llama a la funcion de este controlador (no es una ruta)
                 return RedirectToAction("ListarVehiculos");
             }
             catch
             {
-                return View();
+                // redirigir segun ele rror
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("RegistrarVehiculo");
             }
         }
 
 
 
-        // GET: Admin/EditarVehiculo/5
-        public async Task<ActionResult> EditarVehiculo(int id)
+        // GET: Admin/ModificarVehiculo/5
+        public async Task<ActionResult> ModificarVehiculo(int? id = null)
         {
+            if (id == null)
+            {
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ListarVehiculos");
+            }
+            // obtiene el elemento a modificar y carga la vista de edicion
+
             ICollection<Vehiculo> lst = await gp.ListarVehiculos();
             Vehiculo v = lst.Where(x => x.id == id).FirstOrDefault();
             if (v != null)
-                return View(v);
+            {
+                // carga la vista y pasandole el modelo
+                return View("Vehiculo/ModificarVehiculo", v);
+            }
             else
-                return View("Home");
+            {
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ListarVehiculos");
+            }
         }
 
-        // POST: Admin/EditarVehiculo/5
+
+        // POST: Admin/ModificarVehiculo/5
         [HttpPost]
-        public async Task<ActionResult> EditarVehiculo(int id, FormCollection collection)
+        public async Task<ActionResult> ModificarVehiculo(int id, FormCollection collection)
         {
+            // recibe los datos del elemento a modificar y redirige al listado
             try
             {
                 Vehiculo v = new Vehiculo()
@@ -96,11 +120,13 @@ namespace UruguayBusWeb.Controllers
 
                 v = await ap.ModificarVehiculo(v);
 
+                // Llama a la funcion de este controlador (no es una ruta)
                 return RedirectToAction("ListarVehiculos");
             }
             catch
             {
-                return View();
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ListarVehiculos");
             }
         }
     }

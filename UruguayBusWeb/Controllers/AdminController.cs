@@ -19,13 +19,12 @@ namespace UruguayBusWeb.Controllers
             //
         }
 
-        /*
+        
         // GET: Admin
         public ActionResult Index()
         {
             return View();
         }
-        */
 
 
         // GET: Admin/ListarVehiculos

@@ -21,5 +21,6 @@ namespace DataAccesLayer.Interfaces
         ICollection<Viaje> ListarViajes();
         ICollection<Horario> ListarHorarios();
         Horario ModificarHorario(Horario h);
+        Linea ModificarLinea(Linea l);
     }
 }

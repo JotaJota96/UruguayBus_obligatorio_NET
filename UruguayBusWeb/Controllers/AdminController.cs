@@ -19,13 +19,12 @@ namespace UruguayBusWeb.Controllers
             //
         }
 
-        /*
+        
         // GET: Admin
         public ActionResult Index()
         {
             return View();
         }
-        */
 
 
         // GET: Admin/ListarVehiculos
@@ -78,17 +77,12 @@ namespace UruguayBusWeb.Controllers
 
 
         // GET: Admin/ModificarVehiculo/5
-        public async Task<ActionResult> ModificarVehiculo(int? id = null)
+        public async Task<ActionResult> ModificarVehiculo(int id)
         {
-            if (id == null)
-            {
-                // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("ListarVehiculos");
-            }
             // obtiene el elemento a modificar y carga la vista de edicion
 
-            ICollection<Vehiculo> lst = await gp.ListarVehiculos();
-            Vehiculo v = lst.Where(x => x.id == id).FirstOrDefault();
+            Vehiculo v = await gp.obtenerVehiculo(id);
+
             if (v != null)
             {
                 // carga la vista y pasandole el modelo
@@ -97,7 +91,7 @@ namespace UruguayBusWeb.Controllers
             else
             {
                 // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("ListarVehiculos");
+                return HttpNotFound();
             }
         }
 
@@ -129,5 +123,16 @@ namespace UruguayBusWeb.Controllers
                 return RedirectToAction("ListarVehiculos");
             }
         }
+
+        // **** **** Inicio de seccion de Juan **** ****
+
+        // **** **** Fin de seccion de Juan **** ****
+        // **** **** Inicio de seccion de Sebastian **** ****
+
+        // **** **** Fin de seccion de Sebastian **** ****
+        // **** **** Inicio de seccion de Lucas **** ****
+
+        // **** **** Fin de seccion de Lucas **** ****
+
     }
 }

@@ -4,6 +4,7 @@ using Share.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace DataAccesLayer.Implementations
                 using (uruguay_busEntities db = new uruguay_busEntities())
                 {
                     ICollection<Conductor> ret = new List<Conductor>();
-                    ICollection <conductor> conductores = (ICollection<conductor>) db.conductor.ToList();
+                    ICollection<conductor> conductores = (ICollection<conductor>)db.conductor.ToList();
                     foreach (var item in conductores)
                     {
                         Conductor c = ConductorConverter.convert(item);
@@ -67,10 +68,10 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    horario hor   = HorarioConverter.convert(h);
+                    horario hor = HorarioConverter.convert(h);
                     hor.conductor = db.conductor.Find(h.conductor.id);
-                    hor.linea     = db.linea.Find(h.linea.id);
-                    hor.vehiculo  = db.vehiculo.Find(h.vehiculo.id);
+                    hor.linea = db.linea.Find(h.linea.id);
+                    hor.vehiculo = db.vehiculo.Find(h.vehiculo.id);
 
                     if (hor.conductor == null)
                         throw new Exception("No se encontro ningun conductor con ese ID");
@@ -218,7 +219,7 @@ namespace DataAccesLayer.Implementations
                     horario hor = db.horario.Find(idHorario);
                     if (hor == null)
                         throw new Exception("No se encontro ningun horario con ese ID");
-                    
+
                     ICollection<viaje> viajes = ViajeConverter.convert(vs);
 
                     foreach (var via in viajes)
@@ -301,7 +302,7 @@ namespace DataAccesLayer.Implementations
                 using (uruguay_busEntities db = new uruguay_busEntities())
                 {
                     ICollection<Viaje> ret = new List<Viaje>();
-                    ICollection<viaje> viajes = (ICollection<viaje>) db.viaje.ToList();
+                    ICollection<viaje> viajes = (ICollection<viaje>)db.viaje.ToList();
                     foreach (var item in viajes)
                     {
                         Viaje v = ViajeConverter.convert(item);
@@ -345,7 +346,8 @@ namespace DataAccesLayer.Implementations
                         horarioModificado.conductor = conductor;
                     }
 
-                    if (h.vehiculo != null) {
+                    if (h.vehiculo != null)
+                    {
 
                         vehiculo vehiculo = db.vehiculo.Find(h.vehiculo.id);
 
@@ -369,5 +371,34 @@ namespace DataAccesLayer.Implementations
             }
         }
 
+        public Linea ModificarLinea(Linea l)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    if (l == null)
+                    {
+                        throw new Exception("Se deve enviar el objeto que deceas modificar");
+                    }
+
+                    if (l.nombre == null)
+                    {
+                        throw new Exception("El nombre que se desa modificar no puede estar vacio");
+                    }
+
+                    linea lineaModificada = db.linea.Find(l.id);
+                    lineaModificada.nombre = l.nombre;
+                    db.SaveChanges();
+
+                    return LineaConverter.convert(lineaModificada); ;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+    
     }
 }

@@ -33,5 +33,7 @@ namespace BusinessLayer.Interfaces
         /// </summary>
         /// <param name="correo"></param>
         Usuario ObtenerUsuario(string correo);
+
+        ICollection<Linea> ListarLinea();
     }
 }

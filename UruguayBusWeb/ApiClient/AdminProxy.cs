@@ -173,7 +173,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarConductores");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarConductores");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Conductor>>();
@@ -188,7 +188,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarHorarios");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarHorarios");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Horario>>();
@@ -203,7 +203,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarViajes");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarViajes");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Viaje>>();

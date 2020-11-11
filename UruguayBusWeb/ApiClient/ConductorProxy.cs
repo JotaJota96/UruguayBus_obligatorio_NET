@@ -53,7 +53,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "ObtenerViajeActual" + idConductor);
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ObtenerViajeActual/" + idConductor);
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<Viaje>();

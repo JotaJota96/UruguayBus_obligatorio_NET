@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using UruguayBusWeb.ApiClient;
+using UruguayBusWeb.Models;
 
 namespace UruguayBusWeb.Controllers
 {
@@ -125,6 +126,30 @@ namespace UruguayBusWeb.Controllers
         }
 
         // **** **** Inicio de seccion de Juan **** ****
+
+        // GET: Admin/ListarViajes
+        public async Task<ActionResult> ListarViajes()
+        {
+            // obtiene el listado y lo pasa a la vista
+
+            ICollection<Viaje> viajes = await ap.ListarViajes();
+            ICollection<ListarViajesModel> lst = new List<ListarViajesModel>();
+
+            foreach (var item in viajes)
+            {
+                ListarViajesModel lvm = new ListarViajesModel()
+                {
+                    fecha = item.fecha,
+                    hora = item.horario.hora,
+                    nombre_linea = item.horario.linea.nombre,
+                    estado = item.finalizado == null ? "No iniciado" : item.finalizado == true ? "Finalizado" : "En curso",
+                };
+                lst.Add(lvm);
+            }
+
+            // carga la vista y pasandole el modelo
+            return View("Viaje/ListarViajes", lst);
+        }
 
         // **** **** Fin de seccion de Juan **** ****
         // **** **** Inicio de seccion de Sebastian **** ****

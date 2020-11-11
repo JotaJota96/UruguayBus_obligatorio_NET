@@ -17,10 +17,16 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    var per = db.persona
-                        .FirstOrDefault(x=>
-                            x.correo == correo &&
-                            x.contrasenia==contrasenia);
+                    ICollection<persona> lst = db.persona.ToList();
+
+                    persona per = null;
+                    foreach (var x in lst)
+                    {
+                        if (x.correo == correo && x.contrasenia == contrasenia)
+                        {
+                            per = x;
+                        }
+                    }
 
                     if (per == null)
                         return null;

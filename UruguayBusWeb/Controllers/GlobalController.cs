@@ -56,7 +56,7 @@ namespace UruguayBusWeb.Controllers
                     }
                 };
                 
-                //u = await up.RegistrarUsuario(u);
+                u = await up.RegistrarUsuario(u);
 
                 // Llama a la funcion de este controlador (no es una ruta)
                 return RedirectToAction("Index", "Home", new { area = "" });

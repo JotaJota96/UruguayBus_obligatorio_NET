@@ -142,6 +142,8 @@
     <Compile Include="Models\Proxy\ListarViajesDisponiblesDTO.cs" />
     <Compile Include="Models\Proxy\RegistrarViajesDTO.cs" />
     <Compile Include="Models\Proxy\ReservarPasajeDTO.cs" />
+    <Compile Include="Models\RegistrarUsuarioModel.cs" />
+    <Compile Include="Models\Validators\CorreoDisponible.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

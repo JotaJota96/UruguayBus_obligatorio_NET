@@ -151,6 +151,65 @@ namespace UruguayBusWeb.Controllers
             return View("Viaje/ListarViajes", lst);
         }
 
+        // GET: Admin/RegistrarViaje
+        public async Task<ActionResult> RegistrarViaje()
+        {
+            // muestra la vista para registrar
+            // carga la vista
+            ViewBag.lstLineas = await gp.ListarLinea();
+
+            return View("viaje/RegistrarViaje");
+        }
+
+        // POST: Admin/RegistrarViaje
+        [HttpPost]
+        public async Task<ActionResult> RegistrarViaje(RegistrarViajeModel rvm)
+        {
+            try
+            {
+                // cargo la lista en la bolsa de la vista por si hay que redirigir
+                ViewBag.lstLineas = await gp.ListarLinea();
+
+                // Si los datos no son validos, vuelve a la misma vista
+                if (!TryValidateModel(rvm, nameof(RegistrarViajeModel)))
+                {
+                    return View("viaje/RegistrarViaje", rvm);
+                }
+
+                //await ap.RegistrarViajes(rvm.idHorario, rvm.fInicio, rvm.fFin, rvm.dias);
+
+                return RedirectToAction("ListarViajes");
+            }
+            catch
+            {
+                // redirigir segun ele rror
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("viaje/RegistrarViaje");
+            }
+        }
+
+        // POST: Admin/ListarHorariosDeLineaAjax
+        public async Task<JsonResult> ListarHorariosDeLineaAjax(int id)
+        {
+            try
+            {
+                ICollection<Horario> horarios = await ap.ListarHorarios();
+
+                List<SelectListItem> lstRet = horarios
+                    .Where(x => x.linea.id == id)
+                    .Select(x => new SelectListItem()
+                    {
+                        Text = "" + String.Format("{0:hh\\:mm}", x.hora),
+                        Value = "" + x.id
+                    }).ToList();
+                return Json(lstRet, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new List<SelectListItem>(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
         // **** **** Fin de seccion de Juan **** ****
         // **** **** Inicio de seccion de Sebastian **** ****
 

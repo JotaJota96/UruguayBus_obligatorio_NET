@@ -14,7 +14,7 @@ namespace UruguayBusWeb.Models
         public DateTime fecha { get; set; }
 
         [DisplayName("Hora")]
-        [DisplayFormat(DataFormatString = "{0:mm\\:hh}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan hora { get; set; }
 
         [DisplayName("Linea")]

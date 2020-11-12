@@ -144,6 +144,8 @@
     <Compile Include="Models\Proxy\ListarViajesDisponiblesDTO.cs" />
     <Compile Include="Models\Proxy\RegistrarViajesDTO.cs" />
     <Compile Include="Models\Proxy\ReservarPasajeDTO.cs" />
+    <Compile Include="Models\RegistrarUsuarioModel.cs" />
+    <Compile Include="Models\Validators\CorreoDisponible.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +229,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Global\RegistrarUsuario.cshtml" />
     <Content Include="Views\Global\Login.cshtml" />
     <Content Include="Views\Admin\Horario\ListarHorarios.cshtml" />
     <Content Include="Views\Admin\Horario\RegistrarHorario.cshtml" />

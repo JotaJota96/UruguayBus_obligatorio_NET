@@ -79,6 +79,20 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+        public async Task<ICollection<Usuario>> ListarUsuario()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarUsuario");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Usuario>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public async Task<Usuario> ObtenerUsuario(string correo)
         {
             try

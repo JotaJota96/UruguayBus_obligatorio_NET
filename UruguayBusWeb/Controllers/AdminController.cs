@@ -169,7 +169,7 @@ namespace UruguayBusWeb.Controllers
 
         // POST: Admin/RegistrarHorario
         [HttpPost]
-        public async Task<ActionResult> RegistrarHorario(CrearHorariosDTO dto)
+        public async Task<ActionResult> RegistrarHorario(CrearHorariosModel dto)
         {
             try
             {
@@ -180,7 +180,7 @@ namespace UruguayBusWeb.Controllers
                 ViewBag.listaConductores = Conductores;
                 ViewBag.listaVehiculos = Vehiculos;
 
-                if (!TryValidateModel(dto, nameof(CrearHorariosDTO)))
+                if (!TryValidateModel(dto, nameof(CrearHorariosModel)))
                 {
                     return View("Horario/RegistrarHorario", dto);
                 }
@@ -213,7 +213,6 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
-
         // GET: Admin/ModificarHorario/5
         public async Task<ActionResult> ModificarHorario(int id)
         {
@@ -232,7 +231,6 @@ namespace UruguayBusWeb.Controllers
                 return HttpNotFound();
             }
         }
-
 
         // POST: Admin/ModificarHorario/5
         [HttpPost]
@@ -258,6 +256,60 @@ namespace UruguayBusWeb.Controllers
                 return RedirectToAction("ListarHorarios");
             }
         }
+
+
+
+        // GET: Admin/ListarConductores
+        public async Task<ActionResult> ListarConductores()
+        {
+            // obtiene el listado y lo pasa a la vista
+
+            ICollection<Conductor> lst = await ap.ListarConductores();
+            // carga la vista y pasandole el modelo
+            return View("Conductor/ListarConductor", lst);
+        }
+
+        // GET: Admin/ModificarConductor/5
+        public async Task<ActionResult> ModificarConductor(int id)
+        {
+            
+            Conductor c = await gp.obtenerConductor(id);
+
+            if (c != null)
+            {
+                // carga la vista y pasandole el modelo
+                return View("Conductor/ModificarConductor", c);
+            }
+            else
+            {
+                // Llama a la funcion de este controlador (no es una ruta)
+                return HttpNotFound();
+            }
+        }
+
+        // POST: Admin/ModificarConductor/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarConductor(int id, Conductor dto)
+        {
+            try
+            {
+                Conductor c = new Conductor()
+                {
+                    id = id,
+                    vencimiento_libreta = dto.vencimiento_libreta
+                };
+
+                c = await ap.ModificarConductor(c);
+
+                return RedirectToAction("ListarConductores");
+            }
+            catch
+            {
+                return View("Conductor/ModificarConductor");
+            }
+        }
+
+
         // **** **** Fin de seccion de Lucas **** ****
 
     }

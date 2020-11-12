@@ -83,12 +83,12 @@ namespace UruguayBusWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginDTO dto)
+        public async Task<ActionResult> Login(LoginModel dto)
         {
             // recibe los datos del elemento
             try
             {
-                if (!TryValidateModel(dto, nameof(LoginDTO)))
+                if (!TryValidateModel(dto, nameof(LoginModel)))
                 {
                     return View(dto);
                 }

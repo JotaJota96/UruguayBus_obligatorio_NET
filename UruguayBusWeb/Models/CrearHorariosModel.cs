@@ -8,7 +8,7 @@ using System.Web;
 
 namespace UruguayBusWeb.Models
 {
-    public class CrearHorariosDTO
+    public class CrearHorariosModel
     {
         [Required]
         [DisplayName("Hora")]

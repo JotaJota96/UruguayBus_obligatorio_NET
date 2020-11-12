@@ -29,8 +29,28 @@ namespace UruguayBusWeb.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime fFin { get; set; }
 
-        [Required]
-        public ICollection<DiaSemana> dias { get; set; } = new List<DiaSemana>();
+        // ---- Dias de la semana ----
+
+        [DisplayName("Lunes")]
+        public bool lunes { get; set; }
+
+        [DisplayName("Martes")]
+        public bool martes { get; set; }
+
+        [DisplayName("Miércoles")]
+        public bool miercoles { get; set; }
+
+        [DisplayName("Jueves")]
+        public bool jueves { get; set; }
+
+        [DisplayName("Viernes")]
+        public bool viernes { get; set; }
+
+        [DisplayName("Sábado")]
+        public bool sabado { get; set; }
+
+        [DisplayName("Domingo")]
+        public bool domingo { get; set; }
 
     }
 }

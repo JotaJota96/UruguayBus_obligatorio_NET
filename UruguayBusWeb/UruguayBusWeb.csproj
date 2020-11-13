@@ -146,6 +146,7 @@
     <Compile Include="Models\RegistrarUsuarioModel.cs" />
     <Compile Include="Models\RegistrarViajeModel.cs" />
     <Compile Include="Models\Validators\CorreoDisponible.cs" />
+    <Compile Include="Models\Validators\RequireAtLeastOneOfGroupAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

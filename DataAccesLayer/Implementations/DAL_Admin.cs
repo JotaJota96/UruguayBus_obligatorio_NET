@@ -226,8 +226,8 @@ namespace DataAccesLayer.Implementations
                     foreach (var via in viajes)
                     {
                         via.horario = hor;
-                        viajesGuardados.Add(via);
                         db.viaje.Add(via);
+                        viajesGuardados.Add(via);
                     }
                     db.SaveChanges();
 

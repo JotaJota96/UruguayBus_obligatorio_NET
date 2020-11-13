@@ -100,6 +100,7 @@
                 @Html.CheckBoxFor(model => model.domingo, htmlAttributes: new { @class = "custom-control-input" } )
                 @Html.LabelFor(model => model.domingo, htmlAttributes: new { @class = "custom-control-label"})
             </div>
+            @Html.ValidationMessageFor(model => model.domingo, "", new { @class = "text-danger" })
         </div>
     </div>
     <!-- Fin Lista de checkbox -->
@@ -123,12 +124,13 @@
     <script type="text/javascript">
         // referencia: https://stackoverflow.com/questions/47717656/dependent-dropdownlist-in-asp-net-mvc
 
-        let comboBoxA = "#idLinea"; // ID del elemento combobox que completa primero
-        let comboBoxB = "#idHorario"; // ID del elemento combobox que se rellena en funcion del primero
-
         // hago una funcion para llamarla un par de veces mas abajo...
         let actualizarComboboxHorarios = function () {
-            //Console.log("Se llamo a la funcion");
+
+            var comboBoxA = "#idLinea"; // ID del elemento combobox que completa primero
+            var comboBoxB = "#idHorario"; // ID del elemento combobox que se rellena en funcion del primero
+            let horarioSeleccionado = @Html.Raw(Model == null ? "undefined" : "" + Model.idHorario); // imprimo dentro del script el valor de la variable
+
             // vacia el segundo dropdown
             $(comboBoxB).empty();
             $(comboBoxB).append('<option value="">Seleccione un horario</option>');
@@ -146,7 +148,13 @@
                     // para cada elemento en la coleccion
                     $.each(respuesta, function (i, item) {
                         // agrega un fragmeto de HTML al segundo combobox
-                        let html = '<option value="' + item.Value + '">' + item.Text + '</option>';
+                        
+                        let seleccionado = "";
+                        if (horarioSeleccionado != undefined && horarioSeleccionado == item.Value) {
+                            seleccionado = "selected=";
+                        }
+
+                        let html = '<option value="' + item.Value + '" ' + seleccionado + '>' + item.Text + '</option>';
                         $(comboBoxB).append(html);
                     });
                 },
@@ -162,7 +170,7 @@
             // carga el segundo combobox (si habia algo seleccionado en el primero)
             actualizarComboboxHorarios();
             // Cuando se cambie la seleccion en el primer dropdown
-            $(comboBoxA).change(actualizarComboboxHorarios);
+            $("#idLinea").change(actualizarComboboxHorarios);
         });
     </script>
 }

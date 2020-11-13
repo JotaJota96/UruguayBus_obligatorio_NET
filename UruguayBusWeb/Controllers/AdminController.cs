@@ -133,20 +133,17 @@ namespace UruguayBusWeb.Controllers
             // obtiene el listado y lo pasa a la vista
 
             ICollection<Viaje> viajes = await ap.ListarViajes();
-            ICollection<ListarViajesModel> lst = new List<ListarViajesModel>();
-
-            foreach (var item in viajes)
-            {
-                ListarViajesModel lvm = new ListarViajesModel()
+            ICollection<ListarViajesModel> lst = viajes.Select(x => new ListarViajesModel()
                 {
-                    fecha = item.fecha,
-                    hora = item.horario.hora,
-                    nombre_linea = item.horario.linea.nombre,
-                    estado = item.finalizado == null ? "No iniciado" : item.finalizado == true ? "Finalizado" : "En curso",
-                };
-                lst.Add(lvm);
-            }
-
+                    fecha = x.fecha,
+                    hora = x.horario.hora,
+                    nombre_linea = x.horario.linea.nombre,
+                    estado = x.finalizado == null ? "No iniciado" : x.finalizado == true ? "Finalizado" : "En curso",
+                })
+                .Where(x => x.fecha.CompareTo(DateTime.Today) >= 0)
+                .OrderBy(x => x.fecha)
+                .ThenBy(x => x.hora.Hours)
+                .ToList();
             // carga la vista y pasandole el modelo
             return View("Viaje/ListarViajes", lst);
         }
@@ -176,15 +173,15 @@ namespace UruguayBusWeb.Controllers
                     return View("viaje/RegistrarViaje", rvm);
                 }
 
-                //await ap.RegistrarViajes(rvm.idHorario, rvm.fInicio, rvm.fFin, rvm.dias);
+                await ap.RegistrarViajes(rvm.idHorario, rvm.fInicio, rvm.fFin, rvm.getDiasSeleccionados());
 
                 return RedirectToAction("ListarViajes");
             }
-            catch
+            catch (Exception e)
             {
                 // redirigir segun ele rror
                 // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("viaje/RegistrarViaje");
+                return RedirectToAction("RegistrarViaje");
             }
         }
 

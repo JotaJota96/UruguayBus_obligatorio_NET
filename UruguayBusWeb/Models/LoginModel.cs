@@ -17,5 +17,8 @@ namespace UruguayBusWeb.Models
         [Required]
         [DisplayName("Contraseña")]
         public string contrasenia { get; set; }
+
+        public bool loginOk { get; set; } = true;
+
     }
 }

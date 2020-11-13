@@ -31,5 +31,20 @@ namespace Share.Entities
         public SuperAdmin superadmin { get; set; }
         public Usuario usuario { get; set; }
 
+        // ----------------------------------
+
+        /// <summary>
+        /// Devuelve una lista con los roles del usuario. ¡OJO! solo funciona si los punteros estan establecidos, sino puede que devuelva cualquier cosa
+        /// </summary>
+        /// <returns>Lista de roles del usuario</returns>
+        public List<Rol> GetRoles()
+        {
+            List<Rol> roles = new List<Rol>();
+            roles.Add(Rol.USUARIO); // todos son usuarios, asi que no le pongo IF
+            if (conductor != null) roles.Add(Rol.CONDUCTOR);
+            if (admin != null) roles.Add(Rol.ADMIN);
+            if (superadmin!= null) roles.Add(Rol.SUPERADMIN);
+            return roles;
+        }
     }
 }

@@ -131,9 +131,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ConductorController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GlobalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,12 +244,13 @@
     <Content Include="Views\Admin\Conductor\ModificarConductor.cshtml" />
     <Content Include="Views\Admin\Viaje\ListarViajes.cshtml" />
     <Content Include="Views\Admin\Viaje\RegistrarViaje.cshtml" />
+    <Content Include="Views\Global\Index.cshtml" />
+    <Content Include="Views\Conductor\Index.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Conductor\" />
     <Folder Include="Views\Superadmin\" />
-    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

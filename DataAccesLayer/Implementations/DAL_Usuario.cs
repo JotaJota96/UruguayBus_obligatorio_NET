@@ -33,8 +33,11 @@ namespace DataAccesLayer.Implementations
 
                     //Persona personaRet = PersonaConverter.convert(per);
                     Usuario usuarioRet = UsuarioConverter.convert(per.usuario);
-                    Persona personaRet = PersonaConverter.convert(per);
-                    usuarioRet.persona = personaRet;
+                    usuarioRet.persona = PersonaConverter.convert(per);
+
+                    usuarioRet.persona.conductor  = ConductorConverter.convert(per.conductor);
+                    usuarioRet.persona.admin      = AdminConverter.convert(per.admin);
+                    usuarioRet.persona.superadmin = SuperAdminConverter.convert(per.superadmin);
 
                     return usuarioRet;
                 }

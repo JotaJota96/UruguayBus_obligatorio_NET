@@ -85,6 +85,10 @@ namespace DataAccesLayer.Implementations
 
                     Usuario ret = UsuarioConverter.convert(u);
                     ret.persona = PersonaConverter.convert(u.persona);
+                    ret.persona.conductor = ConductorConverter.convert(u.persona.conductor);
+                    ret.persona.admin = AdminConverter.convert(u.persona.admin);
+                    ret.persona.superadmin = SuperAdminConverter.convert(u.persona.superadmin);
+
                     return ret;
                 }
                 catch (Exception e)

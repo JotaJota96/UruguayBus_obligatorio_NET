@@ -1,0 +1,118 @@
+﻿@model UruguayBusWeb.Models.CrearLineaModel
+
+@{
+    ViewBag.Title = "RegistrarLinea";
+
+    List<SelectListItem> listaParadas = new List<SelectListItem>();
+    foreach (var item in (ICollection<Share.Entities.Parada>)ViewBag.listaParadas)
+    {
+        listaParadas.Add(new SelectListItem()
+        {
+            Text = item.nombre,
+            Value = "" + item.id,
+        });
+    }
+    int max = 0;
+    if (Model != null)
+    {
+        max = Model.tramos.Count();
+    }
+
+}
+
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Crear Linea</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group row">
+        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr />
+    <h5>Agregar paradas</h5>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group row">
+        @Html.LabelFor(model => model.tramoAux.idParada, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.tramoAux.idParada, listaParadas, "Seleccione una parada", new { @class = "custom-select" })
+            @Html.ValidationMessageFor(model => model.tramoAux.idParada, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group row">
+        @Html.LabelFor(model => model.tramoAux.precio, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tramoAux.precio, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tramoAux.precio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group row">
+        @Html.LabelFor(model => model.tramoAux.tiempo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tramoAux.tiempo, new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tramoAux.tiempo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="submit" value="Agregar" class="btn btn-default" />
+        </div>
+    </div>
+    <hr />
+
+    @for (int i = 0; i < max; i++)
+    {
+        <div class="form-group row">
+            @Html.LabelFor(model => model.tramos[i].idParada, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tramos[i].idParada, new { htmlAttributes = new {  @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.tramos[i].precio, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tramos[i].precio, new { htmlAttributes = new {  @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.tramos[i].tiempo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tramos[i].tiempo, new { htmlAttributes = new {  @type = "time", @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.tramos[i].orden, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tramos[i].orden, new { htmlAttributes = new {  @class = "form-control" } })
+            </div>
+        </div>
+        <hr />
+    }
+
+    <div class="form-group row">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="submit" value="Crear" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

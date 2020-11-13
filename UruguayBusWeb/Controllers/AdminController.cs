@@ -257,8 +257,6 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
-
-
         // GET: Admin/ListarConductores
         public async Task<ActionResult> ListarConductores()
         {
@@ -309,6 +307,127 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
+        // GET: Admin/ListarLineas
+        public async Task<ActionResult> ListarLineas()
+        {
+            // obtiene el listado y lo pasa a la vista
+
+            ICollection<Linea> lst = await gp.ListarLinea();
+            
+            // carga la vista y pasandole el modelo
+            return View("Linea/ListarLinea", lst);
+        }
+
+        // GET: Admin/RegistrarLinea
+        public async Task<ActionResult> RegistrarLinea()
+        {
+            // muestra la vista para registrar
+            // carga la vista
+            try
+            {
+                ICollection<Parada> paradas = await gp.ListarParadas();
+                ViewBag.listaParadas = paradas;
+
+                return View("Linea/RegistrarLinea");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        // POST: Admin/RegistrarLinea
+        [HttpPost]
+        public async Task<ActionResult> RegistrarLinea(CrearLineaModel dto, string submit)
+        {
+            try
+            {
+                ICollection<Parada> paradas = await gp.ListarParadas();
+
+                if (submit.Equals("Agregar"))
+                {
+
+                    ViewBag.listaParadas = paradas;
+
+                    if (!TryValidateModel(dto, nameof(CrearHorariosModel)))
+                    {
+                        return View("Linea/RegistrarLinea", dto);
+                    }
+
+                    dto.tramoAux.orden = dto.tramos.Count()+1;
+                    dto.tramos.Add(dto.tramoAux);
+
+                    ICollection<Parada> ret = new List<Parada>();
+                    foreach (var item in paradas)
+                    {
+                        bool agregar = true;
+                        foreach (var itemT in dto.tramos)
+                        {
+                            if (item.id == itemT.idParada)
+                            {
+                                agregar = false;
+                                continue;
+                            }
+                        }
+                        if (agregar)
+                        {
+                            ret.Add(item);
+                        }
+                    }
+
+                    ViewBag.listaParadas = ret;
+
+                    return View("Linea/RegistrarLinea", dto);
+                }
+
+                if (submit.Equals("Crear"))
+                {
+                    if (dto.tramos.Count < 2)
+                    {
+                        ICollection<Parada> ret = new List<Parada>();
+                    foreach (var item in paradas)
+                    {
+                        bool agregar = true;
+                        foreach (var itemT in dto.tramos)
+                        {
+                            if (item.id == itemT.idParada)
+                            {
+                                agregar = false;
+                                continue;
+                            }
+                        }
+                        if (agregar)
+                        {
+                            ret.Add(item);
+                        }
+                    }
+
+                    ViewBag.listaParadas = ret;
+
+                    return View("Linea/RegistrarLinea", dto);
+                    }
+
+                    Linea l = new Linea();
+                    l.nombre = dto.nombre;
+                    foreach (var item in dto.tramos)
+                    {
+                        Parada p = new Parada() { id = item.idParada };
+                        Tramo t = new Tramo() { numero = item.orden, parada = p, tiempo = item.tiempo};
+                        Precio precio = new Precio() { valor = item.precio, fecha_validez = DateTime.Today };
+                        t.precio.Add(precio);
+
+                        l.tramos.Add(t);
+                    }
+                    await ap.RegistrarLinea(l);
+                }
+
+                return RedirectToAction("ListarLineas");
+            }
+            catch
+            {
+                return View("Linea/RegistrarLinea");
+            }
+        }
 
         // **** **** Fin de seccion de Lucas **** ****
 

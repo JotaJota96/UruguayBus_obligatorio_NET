@@ -12,6 +12,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Tramo convert(tramo t)
         {
+            if (t == null) return null;
+
             Tramo ret = new Tramo()
             {
                 numero = t.numero,
@@ -22,6 +24,8 @@ namespace DataAccesLayer.Converters
 
         public static tramo convert(Tramo t)
         {
+            if (t == null) return null;
+
             tramo ret = new tramo()
             {
                 numero = t.numero,
@@ -33,6 +37,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Tramo> convert(ICollection<tramo> t)
         {
+            if (t == null) return null;
+
             List<Tramo> ret = new List<Tramo>();
             foreach (var item in t)
             {
@@ -42,6 +48,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<tramo> convert(ICollection<Tramo> t)
         {
+            if (t == null) return null;
+
             List<tramo> ret = new List<tramo>();
             foreach (var item in t)
             {

@@ -12,6 +12,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Parada convert(parada p)
         {
+            if (p == null) return null;
+
             Parada ret = new Parada()
             {
                 id = p.id,
@@ -24,6 +26,8 @@ namespace DataAccesLayer.Converters
 
         public static parada convert(Parada p)
         {
+            if (p == null) return null;
+
             parada ret = new parada()
             {
                 id = p.id,
@@ -37,6 +41,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Parada> convert(ICollection<parada> p)
         {
+            if (p == null) return null;
+
             List<Parada> ret = new List<Parada>();
             foreach (var item in p)
             {
@@ -46,6 +52,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<parada> convert(ICollection<Parada> p)
         {
+            if (p == null) return null;
+
             List<parada> ret = new List<parada>();
             foreach (var item in p)
             {

@@ -12,6 +12,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Linea convert(linea l)
         {
+            if (l == null) return null;
+
             Linea ret = new Linea()
             {
                 id = l.id,
@@ -23,6 +25,8 @@ namespace DataAccesLayer.Converters
 
         public static linea convert(Linea l)
         {
+            if (l == null) return null;
+
             linea ret = new linea()
             {
                 id = l.id,
@@ -35,6 +39,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Linea> convert(ICollection<linea> l)
         {
+            if (l == null) return null;
+
             List<Linea> ret = new List<Linea>();
             foreach (var item in l)
             {
@@ -44,6 +50,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<linea> convert(ICollection<Linea> l)
         {
+            if (l == null) return null;
+
             List<linea> ret = new List<linea>();
             foreach (var item in l)
             {

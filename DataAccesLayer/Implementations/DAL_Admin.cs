@@ -51,6 +51,12 @@ namespace DataAccesLayer.Implementations
                     {
                         Conductor c = ConductorConverter.convert(item);
                         c.persona = PersonaConverter.convert(item.persona);
+
+                        c.persona.usuario = UsuarioConverter.convert(item.persona.usuario);
+                        c.persona.admin = AdminConverter.convert(item.persona.admin);
+                        c.persona.superadmin = SuperAdminConverter.convert(item.persona.superadmin);
+
+
                         ret.Add(c);
                     }
                     return ret;

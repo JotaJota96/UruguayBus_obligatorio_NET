@@ -15,16 +15,8 @@ INSERT INTO persona (nombre, apellido, correo, contrasenia, tipo_documento, docu
 --
 -- tablINTO *********************************************************
 --a usuario
-INSERT INTO usuario (id) VALUES (1);
-INSERT INTO usuario (id) VALUES (2);
-INSERT INTO usuario (id) VALUES (3);
-INSERT INTO usuario (id) VALUES (4);
-INSERT INTO usuario (id) VALUES (5);
-INSERT INTO usuario (id) VALUES (6);
-INSERT INTO usuario (id) VALUES (7);
-INSERT INTO usuario (id) VALUES (8);
-INSERT INTO usuario (id) VALUES (9);
-INSERT INTO usuario (id) VALUES (10);
+INSERT INTO usuario (id)
+	SELECT id FROM persona
 
 --
 -- **** tabla admin *********************************************************

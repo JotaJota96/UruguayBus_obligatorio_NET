@@ -12,6 +12,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Precio convert(precio p)
         {
+            if (p == null) return null;
+
             Precio ret = new Precio()
             {
                 id = p.id,
@@ -23,6 +25,8 @@ namespace DataAccesLayer.Converters
 
         public static precio convert(Precio p)
         {
+            if (p == null) return null;
+
             precio ret = new precio()
             {
                 id = p.id,
@@ -35,6 +39,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Precio> convert(ICollection<precio> p)
         {
+            if (p == null) return null;
+
             List<Precio> ret = new List<Precio>();
             foreach (var item in p)
             {
@@ -44,6 +50,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<precio> convert(ICollection<Precio> p)
         {
+            if (p == null) return null;
+
             List<precio> ret = new List<precio>();
             foreach (var item in p)
             {

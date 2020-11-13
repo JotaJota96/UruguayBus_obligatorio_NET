@@ -24,6 +24,12 @@ namespace UruguayBusWeb.Controllers
             //
         }
 
+        // GET: Global
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         // **** **** Inicio de seccion de Juan **** ****
 
         // GET: Global/RegistrarUsuario
@@ -79,7 +85,6 @@ namespace UruguayBusWeb.Controllers
         public ActionResult Login()
         {
             return View();
-
         }
 
         [HttpPost]
@@ -100,16 +105,31 @@ namespace UruguayBusWeb.Controllers
                 };
                 Usuario u = await up.IniciarSesion(lg.correo, lg.contrasenia);
                 
-                //Guarda los datos en la variable de sesion
+                // si los datos no son correctos
+                if (u == null)
+                {
+                    dto.loginOk = false;
+                    return View(dto);
+                }
+
                 Session["datosLogeados"] = u;
 
+                // si solo tiene un rol, es un usuario comun, y se le redirige a su pagina de inicio
+                if (u.persona.GetRoles().Count == 1)
+                {
+                    return RedirectToAction("Index", "Usuario");
+                }
+
+                //Guarda los datos en la variable de sesion
+
                 //redirige al inicio
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
             catch
             {
                 // redirigir segun ele rror
                 // Llama a la funcion de este controlador (no es una ruta)
+                Session.Remove("datosLogeados");
                 return View();
             }
         }

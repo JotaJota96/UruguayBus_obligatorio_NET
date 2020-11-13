@@ -180,6 +180,8 @@ namespace DataAccesLayer.Implementations
 
                     parada par = db.parada.Find(p.id);
                     par.nombre = p.nombre;
+                    par.latitud = p.latitud;
+                    par.longitud = p.longitud;
                     db.SaveChanges();
                     return ParadaConverter.convert(par);
                 }

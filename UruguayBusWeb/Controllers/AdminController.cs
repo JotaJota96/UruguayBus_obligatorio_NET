@@ -213,6 +213,183 @@ namespace UruguayBusWeb.Controllers
         // **** **** Fin de seccion de Sebastian **** ****
         // **** **** Inicio de seccion de Lucas **** ****
 
+        // GET: Admin/ListarHorarios
+        public async Task<ActionResult> ListarHorarios()
+        {
+            // obtiene el listado y lo pasa a la vista
+
+            ICollection<Horario> lst = await ap.ListarHorarios();
+            // carga la vista y pasandole el modelo
+            return View("Horario/ListarHorarios", lst);
+        }
+
+        // GET: Admin/RegistrarHorario
+        public async Task<ActionResult> RegistrarHorario()
+        {
+            // muestra la vista para registrar
+            // carga la vista
+            try
+            {
+                ICollection<Linea> lineas = await gp.ListarLinea();
+                ICollection<Conductor> Conductores = await ap.ListarConductores();
+                ICollection<Vehiculo> Vehiculos = await gp.ListarVehiculos();
+
+                ViewBag.listaLineas = lineas;
+                ViewBag.listaConductores = Conductores;
+                ViewBag.listaVehiculos = Vehiculos;
+
+                return View("Horario/RegistrarHorario");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        // POST: Admin/RegistrarHorario
+        [HttpPost]
+        public async Task<ActionResult> RegistrarHorario(CrearHorariosModel dto)
+        {
+            try
+            {
+                ICollection<Linea> lineas = await gp.ListarLinea();
+                ICollection<Conductor> Conductores = await ap.ListarConductores();
+                ICollection<Vehiculo> Vehiculos = await gp.ListarVehiculos();
+                ViewBag.listaLineas = lineas;
+                ViewBag.listaConductores = Conductores;
+                ViewBag.listaVehiculos = Vehiculos;
+
+                if (!TryValidateModel(dto, nameof(CrearHorariosModel)))
+                {
+                    return View("Horario/RegistrarHorario", dto);
+                }
+
+                Linea l = await gp.obtenerLinea(dto.idLinea);
+                Vehiculo v = await gp.obtenerVehiculo(dto.idVehiculo);
+                Conductor c = await gp.obtenerConductor(dto.idConductor);
+
+                if (l == null || v == null || c==null)
+                {
+                    return View("Horario/RegistrarHorario");
+                }
+
+                Horario h = new Horario()
+                {
+                    hora = dto.hora,
+
+                    linea = l,
+                    vehiculo = v,
+                    conductor = c
+                };
+
+                await ap.RegistrarHorario(h);
+
+                return RedirectToAction("ListarHorarios");
+            }
+            catch
+            {
+                return View("Horario/RegistrarHorario");
+            }
+        }
+
+        // GET: Admin/ModificarHorario/5
+        public async Task<ActionResult> ModificarHorario(int id)
+        {
+            // obtiene el elemento a modificar y carga la vista de edicion
+
+            Horario h = await gp.obtenerHorario(id);
+
+            if (h != null)
+            {
+                // carga la vista y pasandole el modelo
+                return View("Horario/ModificarHorario", h);
+            }
+            else
+            {
+                // Llama a la funcion de este controlador (no es una ruta)
+                return HttpNotFound();
+            }
+        }
+
+        // POST: Admin/ModificarHorario/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarHorario(int id, Horario dto)
+        {
+            // recibe los datos del elemento a modificar y redirige al listado
+            try
+            {
+                Horario h = new Horario()
+                {
+                    id = id,
+                    hora = dto.hora
+                };
+
+                h = await ap.ModificarHorario(h);
+
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ListarHorarios");
+            }
+            catch
+            {
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ListarHorarios");
+            }
+        }
+
+
+
+        // GET: Admin/ListarConductores
+        public async Task<ActionResult> ListarConductores()
+        {
+            // obtiene el listado y lo pasa a la vista
+
+            ICollection<Conductor> lst = await ap.ListarConductores();
+            // carga la vista y pasandole el modelo
+            return View("Conductor/ListarConductor", lst);
+        }
+
+        // GET: Admin/ModificarConductor/5
+        public async Task<ActionResult> ModificarConductor(int id)
+        {
+            
+            Conductor c = await gp.obtenerConductor(id);
+
+            if (c != null)
+            {
+                // carga la vista y pasandole el modelo
+                return View("Conductor/ModificarConductor", c);
+            }
+            else
+            {
+                // Llama a la funcion de este controlador (no es una ruta)
+                return HttpNotFound();
+            }
+        }
+
+        // POST: Admin/ModificarConductor/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarConductor(int id, Conductor dto)
+        {
+            try
+            {
+                Conductor c = new Conductor()
+                {
+                    id = id,
+                    vencimiento_libreta = dto.vencimiento_libreta
+                };
+
+                c = await ap.ModificarConductor(c);
+
+                return RedirectToAction("ListarConductores");
+            }
+            catch
+            {
+                return View("Conductor/ModificarConductor");
+            }
+        }
+
+
         // **** **** Fin de seccion de Lucas **** ****
 
     }

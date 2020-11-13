@@ -12,6 +12,7 @@ namespace DataAccesLayer.Interfaces
         ICollection<Parada> obtenerParadasDeLinea(int idLinea);
         ICollection<Parada> ListarParadas();
         ICollection<Vehiculo> ListarVehiculos();
+        ICollection<Usuario> ListarUsuario();
         Usuario ObtenerUsuario(string correo);
         ICollection<Linea> ListarLinea();
     }

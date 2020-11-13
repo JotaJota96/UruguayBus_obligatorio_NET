@@ -137,6 +137,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ListarViajesModel.cs" />
     <Compile Include="Models\CrearConductorModel.cs" />
     <Compile Include="Models\CrearHorariosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -146,7 +147,9 @@
     <Compile Include="Models\Proxy\RegistrarViajesDTO.cs" />
     <Compile Include="Models\Proxy\ReservarPasajeDTO.cs" />
     <Compile Include="Models\RegistrarUsuarioModel.cs" />
+    <Compile Include="Models\RegistrarViajeModel.cs" />
     <Compile Include="Models\Validators\CorreoDisponible.cs" />
+    <Compile Include="Models\Validators\RequireAtLeastOneOfGroupAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +240,8 @@
     <Content Include="Views\Admin\Horario\ModificarHorario.cshtml" />
     <Content Include="Views\Admin\Conductor\ListarConductor.cshtml" />
     <Content Include="Views\Admin\Conductor\ModificarConductor.cshtml" />
+    <Content Include="Views\Admin\Viaje\ListarViajes.cshtml" />
+    <Content Include="Views\Admin\Viaje\RegistrarViaje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

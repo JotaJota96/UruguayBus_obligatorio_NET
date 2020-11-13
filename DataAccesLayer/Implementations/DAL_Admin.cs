@@ -221,15 +221,30 @@ namespace DataAccesLayer.Implementations
                         throw new Exception("No se encontro ningun horario con ese ID");
 
                     ICollection<viaje> viajes = ViajeConverter.convert(vs);
+                    ICollection<viaje> viajesGuardados = new List<viaje>();
 
                     foreach (var via in viajes)
                     {
                         via.horario = hor;
                         db.viaje.Add(via);
+                        viajesGuardados.Add(via);
                     }
                     db.SaveChanges();
 
-                    return ViajeConverter.convert(viajes);
+                    //-------- para retornar
+                    ICollection<Viaje> viajesRet = new List<Viaje>();
+                    
+                    foreach (var item in viajesGuardados)
+                    {
+                        Viaje v = ViajeConverter.convert(item);
+                        v.horario = HorarioConverter.convert(item.horario);
+                        v.horario.vehiculo = VehiculoConverter.convert(item.horario.vehiculo);
+                        v.horario.conductor = ConductorConverter.convert(item.horario.conductor);
+                        v.horario.linea = LineaConverter.convert(item.horario.linea);
+                        viajesRet.Add(v);
+                    }
+
+                    return viajesRet;
                 }
                 catch (Exception e)
                 {

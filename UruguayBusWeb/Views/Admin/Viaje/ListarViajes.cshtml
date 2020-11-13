@@ -1,0 +1,45 @@
+﻿@model IEnumerable<UruguayBusWeb.Models.ListarViajesModel>
+
+@{
+    ViewBag.Title = "Listar Viajes";
+}
+
+<h2>Listar Viajes</h2>
+
+<p>
+    @Html.ActionLink("Crear", "RegistrarViaje")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre_linea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre_linea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+    </tr>
+}
+
+</table>

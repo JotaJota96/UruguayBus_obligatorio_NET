@@ -1,0 +1,176 @@
+﻿@model UruguayBusWeb.Models.RegistrarViajeModel
+
+@{
+    ViewBag.Title = "RegistrarViaje";
+    // creo la lista de lineas para ser mostradas en el DropDown
+    List<SelectListItem> lstLineas= new List<SelectListItem>();
+    foreach (var item in (ICollection<Share.Entities.Linea>) ViewBag.lstLineas)
+    {
+        lstLineas.Add(new SelectListItem()
+        {
+            Text = item.nombre,
+            Value = "" + item.id,
+        });
+    }
+}
+
+<h2>RegistrarViaje</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>RegistrarViajeModel</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <!-- DropDown para seleccionar Linea -->
+    <div class="form-group row">
+        @Html.LabelFor(model => model.idLinea, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => 
+                model.idLinea, 
+                lstLineas, 
+                "Seleccione una linea", 
+                new { @class = "custom-select" })
+            @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <!-- DropDown para seleccionar Horario (carga dinamica segun linea) (ver script al final) -->
+    <div class="form-group row">
+        @Html.LabelFor(model => model.idHorario, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => 
+                model.idHorario, 
+                new List<SelectListItem>(), 
+                "Seleccione un horario", 
+                new { @class = "custom-select" })
+            @Html.ValidationMessageFor(model => model.idHorario, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.fInicio, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.fInicio, new { htmlAttributes = new { @class = "form-control", @Type = "date" } })
+            @Html.ValidationMessageFor(model => model.fInicio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.fFin, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.fFin, new { htmlAttributes = new { @class = "form-control", @Type = "date" } })
+            @Html.ValidationMessageFor(model => model.fFin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <!-- Inicio Lista de checkbox -->
+    <div class="form-group row">
+        @Html.Label("Dias de la semana", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            
+            <div class="custom-control custom-checkbox">
+                @Html.CheckBoxFor(model => model.lunes, htmlAttributes: new { @class = "custom-control-input" } )
+                @Html.LabelFor(model => model.lunes, htmlAttributes: new { @class = "custom-control-label"})
+            </div>
+            <div class="custom-control custom-checkbox">
+                @Html.CheckBoxFor(model => model.martes, htmlAttributes: new { @class = "custom-control-input" } )
+                @Html.LabelFor(model => model.martes, htmlAttributes: new { @class = "custom-control-label"})
+            </div>
+            <div class="custom-control custom-checkbox">
+                @Html.CheckBoxFor(model => model.miercoles, htmlAttributes: new { @class = "custom-control-input" } )
+                @Html.LabelFor(model => model.miercoles, htmlAttributes: new { @class = "custom-control-label"})
+            </div>
+            <div class="custom-control custom-checkbox">
+                @Html.CheckBoxFor(model => model.jueves, htmlAttributes: new { @class = "custom-control-input" } )
+                @Html.LabelFor(model => model.jueves, htmlAttributes: new { @class = "custom-control-label"})
+            </div>
+            <div class="custom-control custom-checkbox">
+                @Html.CheckBoxFor(model => model.viernes, htmlAttributes: new { @class = "custom-control-input" } )
+                @Html.LabelFor(model => model.viernes, htmlAttributes: new { @class = "custom-control-label"})
+            </div>
+            <div class="custom-control custom-checkbox">
+                @Html.CheckBoxFor(model => model.sabado, htmlAttributes: new { @class = "custom-control-input" } )
+                @Html.LabelFor(model => model.sabado, htmlAttributes: new { @class = "custom-control-label"})
+            </div>
+            <div class="custom-control custom-checkbox">
+                @Html.CheckBoxFor(model => model.domingo, htmlAttributes: new { @class = "custom-control-input" } )
+                @Html.LabelFor(model => model.domingo, htmlAttributes: new { @class = "custom-control-label"})
+            </div>
+            @Html.ValidationMessageFor(model => model.domingo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <!-- Fin Lista de checkbox -->
+    
+    <div class="form-group row">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        // referencia: https://stackoverflow.com/questions/47717656/dependent-dropdownlist-in-asp-net-mvc
+
+        // hago una funcion para llamarla un par de veces mas abajo...
+        let actualizarComboboxHorarios = function () {
+
+            var comboBoxA = "#idLinea"; // ID del elemento combobox que completa primero
+            var comboBoxB = "#idHorario"; // ID del elemento combobox que se rellena en funcion del primero
+            let horarioSeleccionado = @Html.Raw(Model == null ? "undefined" : "" + Model.idHorario); // imprimo dentro del script el valor de la variable
+
+            // vacia el segundo dropdown
+            $(comboBoxB).empty();
+            $(comboBoxB).append('<option value="">Seleccione un horario</option>');
+
+            // Si no se selecciono nada, termina aca
+            if ($(comboBoxA).val() == "") return;
+
+            // realiza una peticion ajax
+            $.ajax({
+                type: 'POST', // metodo HTTP a utilizar
+                url: '@Url.Action("ListarHorariosDeLineaAjax")', // ¡¡OJO que esto no es JQuery!! Nombre de la funcion a llamar (dentro del controlador que cargo esta vista)
+                dataType: 'json', // creo que esto es que espera obtener un JSON como respuesta
+                data: { id: $(comboBoxA).val() }, // Obtiene el valor seleccionado en el primer combobox y lo manda con la clave 'id'
+                success: function (respuesta) { // esta funcion se ejecutara al obtener la respuesta
+                    // para cada elemento en la coleccion
+                    $.each(respuesta, function (i, item) {
+                        // agrega un fragmeto de HTML al segundo combobox
+                        
+                        let seleccionado = "";
+                        if (horarioSeleccionado != undefined && horarioSeleccionado == item.Value) {
+                            seleccionado = "selected=";
+                        }
+
+                        let html = '<option value="' + item.Value + '" ' + seleccionado + '>' + item.Text + '</option>';
+                        $(comboBoxB).append(html);
+                    });
+                },
+                error: function (ex) { // en caso de que haya un error
+                    alert('Fallo al rellenar el combobox ' + comboBoxB + ': ' + ex);
+                }
+            });
+            return false;
+        }
+
+        // luego de cargar el documento
+        $(document).ready(function () {
+            // carga el segundo combobox (si habia algo seleccionado en el primero)
+            actualizarComboboxHorarios();
+            // Cuando se cambie la seleccion en el primer dropdown
+            $("#idLinea").change(actualizarComboboxHorarios);
+        });
+    </script>
+}

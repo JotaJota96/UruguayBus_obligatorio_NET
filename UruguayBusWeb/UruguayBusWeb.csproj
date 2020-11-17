@@ -131,16 +131,27 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ConductorController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GlobalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ListarViajesModel.cs" />
+    <Compile Include="Models\CrearConductorModel.cs" />
+    <Compile Include="Models\CrearHorariosModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Proxy\AsignarRolDTO.cs" />
     <Compile Include="Models\Proxy\IniciarSesionDTO.cs" />
     <Compile Include="Models\Proxy\ListarViajesDisponiblesDTO.cs" />
     <Compile Include="Models\Proxy\RegistrarViajesDTO.cs" />
     <Compile Include="Models\Proxy\ReservarPasajeDTO.cs" />
+    <Compile Include="Models\RegistrarUsuarioModel.cs" />
+    <Compile Include="Models\RegistrarViajeModel.cs" />
+    <Compile Include="Models\Validators\CorreoDisponible.cs" />
+    <Compile Include="Models\Validators\RequireAtLeastOneOfGroupAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -224,16 +235,26 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Admin\Index.cshtml" />
+
     <Content Include="Views\Admin\Parada\RegistrarParada.cshtml" />
     <Content Include="Views\Admin\Parada\ListarParadas.cshtml" />
     <Content Include="Views\Admin\Parada\ModificarParada.cshtml" />
+    <Content Include="Views\Global\RegistrarUsuario.cshtml" />
+    <Content Include="Views\Global\Login.cshtml" />
+    <Content Include="Views\Admin\Horario\ListarHorarios.cshtml" />
+    <Content Include="Views\Admin\Horario\RegistrarHorario.cshtml" />
+    <Content Include="Views\Admin\Horario\ModificarHorario.cshtml" />
+    <Content Include="Views\Admin\Conductor\ListarConductor.cshtml" />
+    <Content Include="Views\Admin\Conductor\ModificarConductor.cshtml" />
+    <Content Include="Views\Admin\Viaje\ListarViajes.cshtml" />
+    <Content Include="Views\Admin\Viaje\RegistrarViaje.cshtml" />
+    <Content Include="Views\Global\Index.cshtml" />
+    <Content Include="Views\Conductor\Index.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Conductor\" />
-    <Folder Include="Views\Global\" />
     <Folder Include="Views\Superadmin\" />
-    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

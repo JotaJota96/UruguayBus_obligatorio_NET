@@ -78,5 +78,17 @@ namespace BusinessLayer.Implementations
                 throw new Exception("Ocurrio un problema al intentar listar las lineas. " + e.Message);
             }
         }
+
+        public ICollection<Usuario> ListarUsuario()
+        {
+            try
+            {
+                return dalg.ListarUsuario();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un problema al intentar listar los usuarios. " + e.Message);
+            }
+        }
     }
 }

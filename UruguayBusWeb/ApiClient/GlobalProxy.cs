@@ -41,7 +41,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarVehiculos");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarVehiculos");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Vehiculo>>();
@@ -55,7 +55,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarParadas");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarParadas");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Parada>>();
@@ -69,10 +69,24 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarLinea");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarLinea");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Linea>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<ICollection<Usuario>> ListarUsuario()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarUsuario");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Usuario>>();
             }
             catch (Exception e)
             {
@@ -83,7 +97,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ObtenerUsuario" + correo);
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ObtenerUsuario/" + correo);
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<Usuario>();

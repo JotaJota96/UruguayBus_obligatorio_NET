@@ -12,6 +12,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Vehiculo convert(vehiculo v)
         {
+            if (v == null) return null;
+
             Vehiculo ret = new Vehiculo()
             {
                 id = v.id,
@@ -27,6 +29,8 @@ namespace DataAccesLayer.Converters
 
         public static vehiculo convert(Vehiculo v)
         {
+            if (v == null) return null;
+
             vehiculo ret = new vehiculo()
             {
                 id = v.id,
@@ -43,6 +47,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Vehiculo> convert(ICollection<vehiculo> v)
         {
+            if (v == null) return null;
+
             List<Vehiculo> ret = new List<Vehiculo>();
             foreach (var item in v)
             {
@@ -52,6 +58,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<vehiculo> convert(ICollection<Vehiculo> v)
         {
+            if (v == null) return null;
+
             List<vehiculo> ret = new List<vehiculo>();
             foreach (var item in v)
             {

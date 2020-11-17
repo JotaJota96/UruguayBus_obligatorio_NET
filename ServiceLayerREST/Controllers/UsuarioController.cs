@@ -115,6 +115,7 @@ namespace ServiceLayerREST.Controllers
         {
             try
             {
+                correo = correo.Replace("~", ".");
                 return blu.CorreoExiste(correo);
             }
             catch (Exception e)

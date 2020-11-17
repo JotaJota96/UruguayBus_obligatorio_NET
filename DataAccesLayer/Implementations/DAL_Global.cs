@@ -85,6 +85,10 @@ namespace DataAccesLayer.Implementations
 
                     Usuario ret = UsuarioConverter.convert(u);
                     ret.persona = PersonaConverter.convert(u.persona);
+                    ret.persona.conductor = ConductorConverter.convert(u.persona.conductor);
+                    ret.persona.admin = AdminConverter.convert(u.persona.admin);
+                    ret.persona.superadmin = SuperAdminConverter.convert(u.persona.superadmin);
+
                     return ret;
                 }
                 catch (Exception e)
@@ -111,5 +115,33 @@ namespace DataAccesLayer.Implementations
             }
         }
 
+        public ICollection<Usuario> ListarUsuario()
+        {
+            try
+            {
+                using (uruguay_busEntities db = new uruguay_busEntities())
+                {
+                    ICollection<usuario> lst = (ICollection<usuario>)db.usuario.ToList();
+                    ICollection<Usuario> ret = new List<Usuario>();
+
+                    foreach (var item in lst)
+                    {
+                        Usuario u = UsuarioConverter.convert(item);
+                        u.persona = PersonaConverter.convert(item.persona);
+                        u.persona.admin = item.persona.admin == null ? null : AdminConverter.convert(item.persona.admin);
+                        u.persona.superadmin = item.persona.superadmin == null ? null : SuperAdminConverter.convert(item.persona.superadmin);
+                        u.persona.conductor = item.persona.conductor == null ? null : ConductorConverter.convert(item.persona.conductor);
+
+                        ret.Add(u);
+                    }
+                    
+                    return ret;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

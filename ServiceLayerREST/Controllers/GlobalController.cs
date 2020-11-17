@@ -99,5 +99,19 @@ namespace ServiceLayerREST.Controllers
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
+
+        [HttpGet]
+        [Route("api/Global/ListarUsuario")]
+        public ICollection<Usuario> ListarUsuario()
+        {
+            try
+            {
+                return blg.ListarUsuario();
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
     }
 }

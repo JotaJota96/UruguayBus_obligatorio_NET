@@ -66,7 +66,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basePath + "VehiculosCercanos" + idParada + "/" + idUsuario);
+                HttpResponseMessage response = await client.GetAsync(basePath + "VehiculosCercanos/" + idParada + "/" + idUsuario);
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<VehiculoCercanoDTO>>();
@@ -96,7 +96,8 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basePath + "CorreoExiste" + correo);
+                correo = correo.Replace(".", "~");
+                HttpResponseMessage response = await client.GetAsync(basePath + "CorreoExiste/" + correo);
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<bool>();

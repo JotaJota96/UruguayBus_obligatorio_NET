@@ -29,7 +29,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/Vehiculos");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "Vehiculos");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Vehiculo>>();
@@ -51,7 +51,7 @@ namespace UruguayBusWeb.ApiClient
                     fechaVencLibreta = fechaVencLibreta
                 };
 
-                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "/AsignarRol", ar);
+                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "AsignarRol", ar);
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Vehiculo>>();

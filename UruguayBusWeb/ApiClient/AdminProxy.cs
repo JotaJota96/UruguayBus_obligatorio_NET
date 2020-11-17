@@ -101,7 +101,7 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
-        public async Task<Viaje> RegistrarViajes(int idHorario, DateTime fInicio, DateTime fFin, ICollection<DiaSemana> dias)
+        public async Task<ICollection<Viaje>> RegistrarViajes(int idHorario, DateTime fInicio, DateTime fFin, ICollection<DiaSemana> dias)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace UruguayBusWeb.ApiClient
                 HttpResponseMessage response = await client.PostAsJsonAsync(basicPath + "RegitrarViajes", rv);
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<Viaje>();
+                return await response.Content.ReadAsAsync<ICollection<Viaje>>();
             }
             catch (Exception e)
             {
@@ -173,7 +173,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarConductores");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarConductores");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Conductor>>();
@@ -188,7 +188,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarHorarios");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarHorarios");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Horario>>();
@@ -203,7 +203,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync(basicPath + "/ListarViajes");
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ListarViajes");
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<ICollection<Viaje>>();

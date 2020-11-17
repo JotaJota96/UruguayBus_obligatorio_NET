@@ -17,18 +17,27 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    var per = db.persona
-                        .FirstOrDefault(x=>
-                            x.correo == correo &&
-                            x.contrasenia==contrasenia);
+                    ICollection<persona> lst = db.persona.ToList();
+
+                    persona per = null;
+                    foreach (var x in lst)
+                    {
+                        if (x.correo == correo && x.contrasenia == contrasenia)
+                        {
+                            per = x;
+                        }
+                    }
 
                     if (per == null)
                         return null;
 
                     //Persona personaRet = PersonaConverter.convert(per);
                     Usuario usuarioRet = UsuarioConverter.convert(per.usuario);
-                    Persona personaRet = PersonaConverter.convert(per);
-                    usuarioRet.persona = personaRet;
+                    usuarioRet.persona = PersonaConverter.convert(per);
+
+                    usuarioRet.persona.conductor  = ConductorConverter.convert(per.conductor);
+                    usuarioRet.persona.admin      = AdminConverter.convert(per.admin);
+                    usuarioRet.persona.superadmin = SuperAdminConverter.convert(per.superadmin);
 
                     return usuarioRet;
                 }

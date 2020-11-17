@@ -13,6 +13,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Pasaje convert(pasaje p)
         {
+            if (p == null) return null;
+
             Pasaje ret = new Pasaje()
             {
                 id = p.id,
@@ -33,6 +35,8 @@ namespace DataAccesLayer.Converters
 
         public static pasaje convert(Pasaje p)
         {
+            if (p == null) return null;
+
             pasaje ret = new pasaje()
             {
                 id = p.id,
@@ -54,6 +58,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Pasaje> convert(ICollection<pasaje> p)
         {
+            if (p == null) return null;
+
             List<Pasaje> ret = new List<Pasaje>();
             foreach (var item in p)
             {
@@ -63,6 +69,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<pasaje> convert(ICollection<Pasaje> p)
         {
+            if (p == null) return null;
+
             List<pasaje> ret = new List<pasaje>();
             foreach (var item in p)
             {

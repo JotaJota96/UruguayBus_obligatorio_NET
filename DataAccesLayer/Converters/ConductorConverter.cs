@@ -12,6 +12,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Conductor convert(conductor c)
         {
+            if (c == null) return null;
+
             Conductor ret = new Conductor()
             {
                 id = c.id,
@@ -23,6 +25,8 @@ namespace DataAccesLayer.Converters
 
         public static conductor convert(Conductor c)
         {
+            if (c == null) return null;
+
             conductor ret = new conductor()
             {
                 id = c.id,
@@ -32,9 +36,11 @@ namespace DataAccesLayer.Converters
             return ret;
         }
 
-            /** Conversion de colecciones *****************************************/
-            public static ICollection<Conductor> convert(ICollection<conductor> c)
+        /** Conversion de colecciones *****************************************/
+        public static ICollection<Conductor> convert(ICollection<conductor> c)
         {
+            if (c == null) return null;
+
             List<Conductor> ret = new List<Conductor>();
             foreach (var item in c)
             {
@@ -44,6 +50,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<conductor> convert(ICollection<Conductor> c)
         {
+            if (c == null) return null;
+
             List<conductor> ret = new List<conductor>();
             foreach (var item in c)
             {

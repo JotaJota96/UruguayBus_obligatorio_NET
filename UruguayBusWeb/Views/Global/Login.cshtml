@@ -12,6 +12,14 @@
     <h2>Login</h2>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    
+    @if (Model != null && Model.loginOk == false)
+    {
+    <div class="form-group">
+        <span class="text-danger">El correo o la contraseña son incorrectos</span>
+    </div>
+    }
+
     <div class="form-group">
         @Html.LabelFor(model => model.correo, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -27,7 +35,7 @@
             @Html.ValidationMessageFor(model => model.contrasenia, "", new { @class = "text-danger" })
         </div>
     </div>
-
+    
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Iniciar sesión" class="btn btn-default" />

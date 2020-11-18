@@ -13,6 +13,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Persona convert(persona p)
         {
+            if (p == null) return null;
+
             Persona ret = new Persona()
             {
                 id = p.id,
@@ -28,6 +30,8 @@ namespace DataAccesLayer.Converters
 
         public static persona convert(Persona p)
         {
+            if (p == null) return null;
+
             persona ret = new persona()
             {
                 id = p.id,
@@ -44,6 +48,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Persona> convert(ICollection<persona> p)
         {
+            if (p == null) return null;
+
             List<Persona> ret = new List<Persona>();
             foreach (var item in p)
             {
@@ -53,6 +59,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<persona> convert(ICollection<Persona> p)
         {
+            if (p == null) return null;
+
             List<persona> ret = new List<persona>();
             foreach (var item in p)
             {

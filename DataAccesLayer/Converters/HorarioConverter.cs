@@ -12,6 +12,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Horario convert(horario h)
         {
+            if (h == null) return null;
+
             Horario ret = new Horario()
             {
                 id = h.id,
@@ -22,6 +24,8 @@ namespace DataAccesLayer.Converters
 
         public static horario convert(Horario h)
         {
+            if (h == null) return null;
+
             horario ret = new horario()
             {
                 id = h.id,
@@ -33,6 +37,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Horario> convert(ICollection<horario> h)
         {
+            if (h == null) return null;
+
             List<Horario> ret = new List<Horario>();
             foreach (var item in h)
             {
@@ -42,6 +48,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<horario> convert(ICollection<Horario> h)
         {
+            if (h == null) return null;
+
             List<horario> ret = new List<horario>();
             foreach (var item in h)
             {

@@ -101,7 +101,7 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
-        public async Task<Viaje> RegistrarViajes(int idHorario, DateTime fInicio, DateTime fFin, ICollection<DiaSemana> dias)
+        public async Task<ICollection<Viaje>> RegistrarViajes(int idHorario, DateTime fInicio, DateTime fFin, ICollection<DiaSemana> dias)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace UruguayBusWeb.ApiClient
                 HttpResponseMessage response = await client.PostAsJsonAsync(basicPath + "RegitrarViajes", rv);
                 response.EnsureSuccessStatusCode();
 
-                return await response.Content.ReadAsAsync<Viaje>();
+                return await response.Content.ReadAsAsync<ICollection<Viaje>>();
             }
             catch (Exception e)
             {

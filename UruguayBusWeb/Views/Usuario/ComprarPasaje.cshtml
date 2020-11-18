@@ -1,0 +1,165 @@
+﻿@model UruguayBusWeb.Models.ComprarPasajeModel
+
+@{
+    ViewBag.Title = "Comprar pasaje";
+    
+    List<SelectListItem> lstLineas = new List<SelectListItem>();
+    foreach (var item in Model.lineas) //(ICollection<Share.Entities.Linea>)
+    {
+        lstLineas.Add(new SelectListItem()
+        {
+            Text = item.nombre,
+            Value = "" + item.id,
+        });
+    }
+
+}
+
+<h2>Comprar pasaje</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ComprarPasajeModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <!-- fecha -->
+        <div class="form-group row">
+            @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control", @Type = "date" } })
+                @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- linea -->
+        <div class="form-group row">
+            @Html.LabelFor(model => model.idLinea, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.idLinea, lstLineas, "Seleccione una linea", new { @class = "custom-select" })
+                @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <!-- parada origen -->
+        <div class="form-group row">
+            @Html.LabelFor(model => model.idParadaOrigen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.idParadaOrigen, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select" })
+                @Html.ValidationMessageFor(model => model.idParadaOrigen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <!-- parada destino -->
+        <div class="form-group row">
+            @Html.LabelFor(model => model.idParadaDestino, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.idParadaDestino, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select" })
+                @Html.ValidationMessageFor(model => model.idParadaDestino, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Reservar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<!-- ***** ***** scripts ***** ***** -->
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        // lista de paradas (se carga con AJAX)
+        let lstParadas = [];
+
+        // Funcion para rellenar un combobox y seleccionar un elemento
+        function rellenarComboBox(idComboBox, items, idSeleccionado = undefined) {
+            // para cada elemento en la coleccion
+            $.each(items, function (i, item) {
+                // agrega un fragmeto de HTML al combobox
+                let seleccionado = "";
+                if (idSeleccionado != undefined && idSeleccionado == item.Value) {
+                    seleccionado = "selected=";
+                }
+
+                let html = '<option value="' + item.Value + '" ' + seleccionado + '>' + item.Text + '</option>';
+                $(idComboBox).append(html);
+            });
+        }
+        
+        // Funcion para vaciar combobox
+        function vaciarComboBox(idComboBox, placeholder) {
+            $(idComboBox).empty();
+            $(idComboBox).append('<option value="">' + placeholder + '</option>');
+        }
+
+        // Funcion para obtener las Paradas de una linea
+        let actualizarComboboxParadasOrigen = function () {
+            let comboBoxA = "#idLinea"; // ID del elemento combobox que completa primero
+            let comboBoxB = "#idParadaOrigen"; // ID del elemento combobox que se rellena en funcion del primero
+            let idParadaOrigenSeleccionada = @Html.Raw(Model == null ? "undefined" : "" + Model.idParadaOrigen); // imprimo dentro del script el valor de la variable
+
+            vaciarComboBox(comboBoxB, "Seleccione una parada");
+
+            if ($(comboBoxA).val() == "") return; // Si no se selecciono nada, termina aca
+
+            $.ajax({ // realiza una peticion ajax
+                type: 'POST', // metodo HTTP a utilizar
+                url: '@Url.Action("ListarParadasDeLineaAjax")', // ¡¡OJO que esto no es JQuery!! Nombre de la funcion a llamar (dentro del controlador que cargo esta vista)
+                dataType: 'json', // creo que esto es que espera obtener un JSON como respuesta
+                data: { id: $(comboBoxA).val() }, // Obtiene el valor seleccionado en el primer combobox y lo manda con la clave 'id'
+                success: function (respuesta) { // esta funcion se ejecutara al obtener la respuesta
+                    lstParadas = respuesta.slice(); // guardo una copia de las paradas para tenerlas de forma global
+                    respuesta.pop(); // saco el ultimo elemento (porque no te podes subir en la ultima parada)
+                    rellenarComboBox(comboBoxB, respuesta, idParadaOrigenSeleccionada);
+                    actualizarComboboxParadasDestino();
+                },
+                error: function (ex) { // en caso de que haya un error
+                    alert('Fallo al rellenar el combobox ' + comboBoxB + ': ' + ex);
+                }
+            });
+            return false;
+        }
+
+        
+        // Funcion para obtener las Paradas de una linea
+        let actualizarComboboxParadasDestino = function () {
+            let comboBoxA = "#idParadaOrigen"; // ID del elemento combobox que completa primero
+            let comboBoxB = "#idParadaDestino"; // ID del elemento combobox que se rellena en funcion del primero
+            let paradaDestinoeleccionada = @Html.Raw(Model == null ? "undefined" : "" + Model.idParadaDestino); // imprimo dentro del script el valor de la variable
+            
+            vaciarComboBox(comboBoxB, "Seleccione una parada");
+
+            if ($(comboBoxA).val() == "") return; // Si no se selecciono nada, termina aca
+            
+            let idParadaOrigen = $(comboBoxA).val();
+            let paradas = [];
+            let agregar = false;
+            $.each(lstParadas, function (i, item) {
+                if (agregar) {
+                    paradas.push(item);
+                } else if (item.Value == idParadaOrigen) {
+                    agregar = true;
+                }
+            });
+
+            rellenarComboBox(comboBoxB, paradas, paradaDestinoeleccionada);
+            return false;
+        }
+
+
+        $(document).ready(function () { // luego de cargar el documento
+            actualizarComboboxParadasOrigen();
+            $("#idLinea").change(actualizarComboboxParadasOrigen);
+            $("#idParadaOrigen").change(actualizarComboboxParadasDestino);
+        });
+    </script>
+}

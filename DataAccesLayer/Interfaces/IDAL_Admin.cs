@@ -22,5 +22,7 @@ namespace DataAccesLayer.Interfaces
         ICollection<Horario> ListarHorarios();
         Horario ModificarHorario(Horario h);
         Linea ModificarLinea(Linea l);
+        Tramo ModificarTramo(Precio p);
+
     }
 }

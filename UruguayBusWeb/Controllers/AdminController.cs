@@ -542,11 +542,23 @@ namespace UruguayBusWeb.Controllers
             // obtiene el elemento a modificar y carga la vista de edicion
 
             Linea l = await gp.obtenerLinea(id);
+            ICollection<Parada> lstParada = new List<Parada>();
+
+            foreach (var item in l.tramos)
+            {
+                lstParada.Add(item.parada);
+            }
+
+            ViewBag.listaParada = lstParada;
 
             if (l != null)
             {
                 // carga la vista y pasandole el modelo
-                return View("Linea/ModificarLinea", l);
+                ModificarLinea ml = new ModificarLinea()
+                {
+                    nombre = l.nombre
+                };
+                return View("Linea/ModificarLinea", ml);
             }
             else
             {
@@ -557,15 +569,11 @@ namespace UruguayBusWeb.Controllers
 
         // POST: Admin/ModificarHorario/5
         [HttpPost]
-        public async Task<ActionResult> ModificarLinea(int id, Linea dto)
+        public async Task<ActionResult> ModificarLinea(int id, ModificarLinea dto)
         {
             // recibe los datos del elemento a modificar y redirige al listado
             try
             {
-                if (!TryValidateModel(dto, nameof(CrearHorariosModel)))
-                {
-                    return View("Linea/ModificarLinea", dto);
-                }
 
                 Linea l = new Linea()
                 {
@@ -575,6 +583,72 @@ namespace UruguayBusWeb.Controllers
 
                 l = await ap.ModificarLinea(l);
 
+                if(dto.idParada != null)
+                {
+                    Linea modificada = await gp.obtenerLinea(id);
+                    Tramo aModificar = null;
+
+                    foreach (var item in modificada.tramos)
+                    {
+                        if (item.parada.id == dto.idParada)
+                        {
+                            aModificar = item;
+                        }
+                    }
+
+                    if (aModificar == null)
+                    {
+
+                        Linea lin = await gp.obtenerLinea(id);
+                        ICollection<Parada> lstParada = new List<Parada>();
+
+                        foreach (var item in lin.tramos)
+                        {
+                            lstParada.Add(item.parada);
+                        }
+
+                        ViewBag.listaParada = lstParada;
+
+                        return View("Linea/ModificarLinea", dto);
+                    }
+
+                    aModificar.linea = modificada;
+
+                    if(dto.tiempo != null)
+                    {
+                        aModificar.tiempo = (TimeSpan) dto.tiempo;
+                    }                   
+
+                    if (dto.precio != null && dto.fecha_valides != null)
+                    {
+                        Precio p = new Precio()
+                        {
+                            tramo = aModificar,
+                            valor = (int) dto.precio,
+                            fecha_validez = (DateTime) dto.fecha_valides
+                        };
+                        p.tramo.parada.tramos = null;
+                        p.tramo.linea.tramos = null;
+                        p.tramo.precio = null;
+
+                        await ap.ModificarTramo(p);
+                    }
+                    else
+                    {
+
+                        Linea lin = await gp.obtenerLinea(id);
+                        ICollection<Parada> lstParada = new List<Parada>();
+
+                        foreach (var item in lin.tramos)
+                        {
+                            lstParada.Add(item.parada);
+                        }
+
+                        ViewBag.listaParada = lstParada;
+
+                        return View("Linea/ModificarLinea", dto);
+                    }
+                }
                 // Llama a la funcion de este controlador (no es una ruta)
                 return RedirectToAction("ListarLineas");
             }
@@ -588,7 +662,6 @@ namespace UruguayBusWeb.Controllers
         // GET: Admin/DetalleLinea/5
         public async Task<ActionResult> DetalleLinea(int id)
         {
-            // obtiene el elemento a modificar y carga la vista de edicion
 
             Linea l = await gp.obtenerLinea(id);
 
@@ -600,7 +673,6 @@ namespace UruguayBusWeb.Controllers
             }
             else
             {
-                // Llama a la funcion de este controlador (no es una ruta)
                 return HttpNotFound();
             }
         }

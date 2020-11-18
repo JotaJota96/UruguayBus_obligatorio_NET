@@ -144,6 +144,7 @@
     <Compile Include="Models\CrearHorariosModel.cs" />
     <Compile Include="Models\CrearLineaModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ModificarLinea.cs" />
     <Compile Include="Models\Proxy\AsignarRolDTO.cs" />
     <Compile Include="Models\Proxy\IniciarSesionDTO.cs" />
     <Compile Include="Models\Proxy\ListarViajesDisponiblesDTO.cs" />
@@ -250,8 +251,8 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Admin\Linea\ListarLinea.cshtml" />
     <Content Include="Views\Admin\Linea\RegistrarLinea.cshtml" />
-    <Content Include="Views\Admin\Linea\ModificarLinea.cshtml" />
     <Content Include="Views\Admin\Linea\DetallesLinea.cshtml" />
+    <Content Include="Views\Admin\Linea\ModificarLinea.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

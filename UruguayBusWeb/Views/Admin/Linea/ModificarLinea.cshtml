@@ -1,7 +1,17 @@
-﻿@model Share.Entities.Linea
+﻿@model UruguayBusWeb.Models.ModificarLinea
 
 @{
-    ViewBag.Title = "Modificar linea";
+    ViewBag.Title = "ModificarLinea";
+
+    List<SelectListItem> listaParadas = new List<SelectListItem>();
+    foreach (var item in (ICollection<Share.Entities.Parada>)ViewBag.listaParada)
+    {
+        listaParadas.Add(new SelectListItem()
+        {
+            Text = item.nombre,
+            Value = "" + item.id,
+        });
+    }
 }
 
 <h2>ModificarLinea</h2>
@@ -9,12 +19,11 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
+        <h4>ModificarLinea</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
-
         <div class="form-group">
             @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -24,8 +33,40 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.idParada, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.idParada, listaParadas, "Seleccione una parada", new { @class = "custom-select" })
+                @Html.ValidationMessageFor(model => model.idParada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fecha_valides, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fecha_valides, new { htmlAttributes = new { @class = "form-control", @Type = "date" } })
+                @Html.ValidationMessageFor(model => model.fecha_valides, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tiempo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tiempo, new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tiempo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Modificar" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>

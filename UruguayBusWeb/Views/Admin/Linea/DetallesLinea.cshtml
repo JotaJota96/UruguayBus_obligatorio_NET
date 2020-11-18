@@ -1,0 +1,57 @@
+﻿@model Share.Entities.Linea
+
+@{
+    ViewBag.Title = "DetallesLinea";
+
+    int max = 0;
+    if (Model != null)
+    {
+        max = Model.tramos.Count();
+    }
+    ICollection<Share.Entities.Tramo> lst = (ICollection<Share.Entities.Tramo>)ViewBag.listaTramos;
+}
+
+<h2>DetallesLinea</h2>
+
+<div>
+    <h4>Linea</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <hr />
+
+        @foreach (var item in lst)
+        {
+            <div class="form-group row">
+                @Html.LabelFor(model => item.parada.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => item.parada.nombre, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => item.tiempo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => item.tiempo, new { htmlAttributes = new { @disabled = "disabled", @type = "time", @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => item.numero, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => item.numero, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control" } })
+                </div>
+            </div>
+            <hr />
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

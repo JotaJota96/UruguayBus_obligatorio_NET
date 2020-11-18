@@ -408,11 +408,18 @@ namespace DataAccesLayer.Implementations
                         throw new Exception("El nombre que se desa modificar no puede estar vacio");
                     }
 
-                    linea lineaModificada = db.linea.Find(l.id);
-                    lineaModificada.nombre = l.nombre;
+                    linea LinMod = db.linea.Find(l.id);
+
+                    if (LinMod == null)
+                    {
+                        throw new Exception("La linea que se desa modificar no existe");
+                    }
+
+                    LinMod.nombre = l.nombre;
+
                     db.SaveChanges();
 
-                    return LineaConverter.convert(lineaModificada); ;
+                    return LineaConverter.convert(LinMod);
                 }
                 catch (Exception e)
                 {

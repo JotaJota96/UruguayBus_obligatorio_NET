@@ -108,7 +108,13 @@ namespace DataAccesLayer.Implementations
                     foreach (var item in lst)
                     {
                         Linea l = LineaConverter.convert(item);
-                        l.tramos = TramoConverter.convert(item.tramo);
+                        
+                        foreach (var t in item.tramo)
+                        {
+                            Tramo nuevo = TramoConverter.convert(t);
+                            nuevo.parada = ParadaConverter.convert(t.parada);
+                            l.tramos.Add(nuevo);
+                        }
                         ret.Add(l);
                     }
 

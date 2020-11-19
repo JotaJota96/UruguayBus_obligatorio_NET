@@ -92,7 +92,10 @@ namespace UruguayBusWeb.Controllers
                     .Where(x => x.linea_id == idLinea)
                     .OrderBy(x => x.hora)
                     .ToList();
-
+                foreach (var item in vd)
+                {
+                    item.horaStr = item.hora.ToString(@"hh\:mm");
+                }
                 return Json(vd, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)

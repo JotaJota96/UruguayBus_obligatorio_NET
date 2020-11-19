@@ -74,7 +74,18 @@
             </div>
         </div>
         
-
+        <table id="tblViajesDisponibles" class="table table-bordered">
+            <thead>
+                <tr class="table-primary">
+                    <th>Hora</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ... -->
+            </tbody>
+        </table>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -94,6 +105,7 @@
         const cmbParadaOrigen = "#idParadaOrigen";
         const cmbParadaDestino = "#idParadaDestino";
         const spnBuscarViajesError = "#buscarViajesError";
+        const tblViajesDisponibles = "#tblViajesDisponibles";
 
         function validarParaBuscarViaje() {
             let validar = true;
@@ -109,8 +121,34 @@
             return validar;
         }
 
+        function vaciarTabla(mostrarMensaje = false) {
+            $(tblViajesDisponibles + ' tbody').empty();
+            if (mostrarMensaje == false) return;
+
+            $(tblViajesDisponibles).find('tbody')
+                .append($('<tr>')
+                    .append($('<td>')
+                        .append($('<span>').text('No hay ningún resultado'))
+                    )
+                );
+        }
+
+        function insertarFila(datosFila) {
+            // hora
+            // precio
+            // viaje_id
+            console.log(datosFila);
+            $(tblViajesDisponibles).find('tbody')
+                .append($('<tr>')
+                    .append($('<td>').text(datosFila.horaStr))
+                    .append($('<td>').text(datosFila.precio))
+                    .append($('<td>').text(datosFila.viaje_id ))
+                );
+        }
 
         function buscarViajes() {
+            vaciarTabla(false);
+
             if ( ! validarParaBuscarViaje()) return;
 
             // datos para mandar a buscar
@@ -127,14 +165,20 @@
                 dataType: 'json', // creo que esto es que espera obtener un JSON como respuesta
                 data: datosBuscar, // Obtiene el valor seleccionado en el primer combobox y lo manda con la clave 'id'
                 success: function (respuesta) { // esta funcion se ejecutara al obtener la respuesta
-                    console.log(respuesta);
+                    if (respuesta.length == 0) {
+                        vaciarTabla(true);
+                    } else {
+                        vaciarTabla(false);
+                        $.each(respuesta, function (i, item) {
+                            insertarFila(item);
+                        });
+
+                    }
                 },
                 error: function (ex) { // en caso de que haya un error
                     alert('Fallo al buscar viajes: ' + ex);
                 }
             });
-
-
         }
 
 

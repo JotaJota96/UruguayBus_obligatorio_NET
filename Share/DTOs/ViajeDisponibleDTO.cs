@@ -17,6 +17,7 @@ namespace Share.DTOs
         public int parada_id_origen { get; set; }
         public int parada_id_destino { get; set; }
         public TimeSpan hora { get; set; }
+        public string horaStr { get; set; } // usado para la vista
         public decimal precio { get; set; }
         public ICollection<int> asientos_disponibles { get; set; } = new List<int>();
     }

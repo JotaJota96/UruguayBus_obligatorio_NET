@@ -1,4 +1,5 @@
-﻿using Share.Entities;
+﻿using Share.DTOs;
+using Share.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,7 @@ namespace UruguayBusWeb.Controllers
 
 
         // POST: Usuario/ListarParadasDeLineaAjax
+        [HttpPost]
         public async Task<JsonResult> ListarParadasDeLineaAjax(int id)
         {
             try
@@ -71,6 +73,27 @@ namespace UruguayBusWeb.Controllers
                         Value = "" + x.id
                     }).ToList();
                 return Json(lstRet, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new List<SelectListItem>(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+        // POST: Usuario/BuscarViajesAjax
+        [HttpPost]
+        public async Task<JsonResult> BuscarViajesAjax(DateTime fecha, int idLinea, int idParadaOrigen, int idParadaDestino)
+        {
+            try
+            {
+                ICollection<ViajeDisponibleDTO> vd = (await up.ListarViajesDisponibles(fecha, idParadaOrigen, idParadaDestino))
+                    .Where(x => x.linea_id == idLinea)
+                    .OrderBy(x => x.hora)
+                    .ToList();
+
+                return Json(vd, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {

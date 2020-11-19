@@ -22,10 +22,12 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ComprarPasajeModel</h4>
+        <h4>Buscar viajes</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
+        <!-- Inicio datos basicos para buscar viaje -->
+
         <!-- fecha -->
         <div class="form-group row">
             @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -61,6 +63,18 @@
                 @Html.ValidationMessageFor(model => model.idParadaDestino, "", new { @class = "text-danger" })
             </div>
         </div>
+        
+        <!-- Fin datos basicos para buscar viaje -->
+        
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <button type="button" class="btn btn-primary btn-lg" onclick="buscarViajes()">Buscar viajes</button>
+                <span id="buscarViajesError" class="text-danger"></span>
+            </div>
+        </div>
+        
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -73,9 +87,58 @@
 <!-- ***** ***** scripts ***** ***** -->
 
 @section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
+        const txtFecha = "#fecha";
+        const cmbLinea = "#idLinea";
+        const cmbParadaOrigen = "#idParadaOrigen";
+        const cmbParadaDestino = "#idParadaDestino";
+        const spnBuscarViajesError = "#buscarViajesError";
+
+        function validarParaBuscarViaje() {
+            let validar = true;
+            validar = validar && $(txtFecha).val() != "";
+            validar = validar && $(cmbLinea).val() != "";
+            validar = validar && $(cmbParadaOrigen).val() != "";
+            validar = validar && $(cmbParadaDestino).val() != "";
+            if (validar) {
+                $(spnBuscarViajesError).text("");
+            } else {
+                $(spnBuscarViajesError).text("Debe completar los datos anteriores");
+            }
+            return validar;
+        }
+
+
+        function buscarViajes() {
+            if ( ! validarParaBuscarViaje()) return;
+
+            // datos para mandar a buscar
+            let datosBuscar = {
+                fecha: $(txtFecha).val(),
+                idLinea: $(cmbLinea).val(),
+                idParadaOrigen: $(cmbParadaOrigen).val(),
+                idParadaDestino: $(cmbParadaDestino).val(),
+            };
+
+            $.ajax({ // realiza una peticion ajax
+                type: 'POST', // metodo HTTP a utilizar
+                url: '@Url.Action("BuscarViajesAjax")', // ¡¡OJO que esto no es JQuery!! Nombre de la funcion a llamar (dentro del controlador que cargo esta vista)
+                dataType: 'json', // creo que esto es que espera obtener un JSON como respuesta
+                data: datosBuscar, // Obtiene el valor seleccionado en el primer combobox y lo manda con la clave 'id'
+                success: function (respuesta) { // esta funcion se ejecutara al obtener la respuesta
+                    console.log(respuesta);
+                },
+                error: function (ex) { // en caso de que haya un error
+                    alert('Fallo al buscar viajes: ' + ex);
+                }
+            });
+
+
+        }
+
+
+        // ***** ***** ***** ***** Interaccion entre combobox ***** ***** ***** *****
 
         // lista de paradas (se carga con AJAX)
         let lstParadas = [];
@@ -155,6 +218,7 @@
             return false;
         }
 
+        // ***** ***** ***** ***** Interaccion entre combobox ***** ***** ***** *****
 
         $(document).ready(function () { // luego de cargar el documento
             actualizarComboboxParadasOrigen();

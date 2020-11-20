@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Comprar pasaje";
-    
+
     List<SelectListItem> lstLineas = new List<SelectListItem>();
     foreach (var item in Model.lineas) //(ICollection<Share.Entities.Linea>)
     {
@@ -17,17 +17,73 @@
 
 <h2>Comprar pasaje</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
+    <!-- reemplazar todas las apariciones de la palabra 'identificador' para agregar una seccion nueva-->
+    <!--
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <a id="nav-identificador-tab" href="#nav-identificador" aria-controls="nav-identificador" aria-selected="false" class="nav-link" data-toggle="tab" role="tab">
+                Nueva sección
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="nav-identificador" aria-labelledby="nav-identificador-tab" class="tab-pane fade" role="tabpanel">
+            <h3>Nueva sección</h3>
+        </div>
+    </div>
+    -->
+    <!-- agregar la clase "active" al elemento seleccionado -->
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <a id="nav-datos-viaje-tab" href="#nav-datos-viaje" aria-controls="nav-datos-viaje" aria-selected="true" class="nav-link active" data-toggle="tab" role="tab">
+                Buscar viaje
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="nav-seleccionar-viaje-tab" href="#nav-seleccionar-viaje" aria-controls="nav-seleccionar-viaje" aria-selected="false" class="nav-link" data-toggle="tab" role="tab">
+                Elegir viaje
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="nav-seleccionar-asiento-tab" href="#nav-seleccionar-asiento" aria-controls="nav-seleccionar-asiento" aria-selected="false" class="nav-link" data-toggle="tab" role="tab">
+                Elegir asiento
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="nav-pagar-tab" href="#nav-pagar" aria-controls="nav-pagar" aria-selected="false" class="nav-link" data-toggle="tab" role="tab">
+                Pagar
+            </a>
+        </li>
+    </ul>
+
+    <!-- agregar la clase "show active" al elemento seleccionado -->
+    <div class="tab-content">
+        <div id="nav-datos-viaje" aria-labelledby="nav-datos-viaje-tab" class="tab-pane fade show active" role="tabpanel">
+            Buscar viaje
+        </div>
+        <div id="nav-seleccionar-viaje" aria-labelledby="nav-seleccionar-viaje-tab" class="tab-pane fade" role="tabpanel">
+            Elegir viaje
+        </div>
+        <div id="nav-seleccionar-asiento" aria-labelledby="nav-seleccionar-asiento-tab" class="tab-pane fade" role="tabpanel">
+            Elegir asiento
+        </div>
+        <div id="nav-pagar" aria-labelledby="nav-pagar-tab" class="tab-pane fade" role="tabpanel">
+            Pagar
+        </div>
+    </div>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
     <div class="form-horizontal">
         <h4>Buscar viajes</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        <!-- Inicio datos basicos para buscar viaje -->
 
+        <!-- Inicio datos basicos para buscar viaje -->
         <!-- fecha -->
         <div class="form-group row">
             @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -45,7 +101,7 @@
                 @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <!-- parada origen -->
         <div class="form-group row">
             @Html.LabelFor(model => model.idParadaOrigen, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,7 +110,7 @@
                 @Html.ValidationMessageFor(model => model.idParadaOrigen, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <!-- parada destino -->
         <div class="form-group row">
             @Html.LabelFor(model => model.idParadaDestino, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -63,11 +119,10 @@
                 @Html.ValidationMessageFor(model => model.idParadaDestino, "", new { @class = "text-danger" })
             </div>
         </div>
-        
-        <!-- Fin datos basicos para buscar viaje -->
 
+        <!-- Fin datos basicos para buscar viaje -->
         <!-- Inicio busqueda de viaje y resultados -->
-        
+
         <div class="form-group row">
             <div class="col-md-2"></div>
             <div class="col-md-10">
@@ -75,7 +130,7 @@
                 <span id="buscarViajesError" class="text-danger"></span>
             </div>
         </div>
-        
+
         <table id="tblViajesDisponibles" class="table table-bordered">
             <thead>
                 <tr class="table-primary">
@@ -90,31 +145,30 @@
         </table>
 
         <!-- Fin busqueda de viaje y resultados -->
-        
         <!-- Inicio detalle del viaje y seleccion de asiento -->
         <h3>Compruebe la información</h3>
         <div class="form-group row">
             <label class="control-label col-md-2">Fecha</label>
             <div class="col-md-10">
-                <input id="mostrarFecha" type="date" class="form-control" disabled/>
+                <input id="mostrarFecha" type="date" class="form-control" disabled />
             </div>
         </div>
         <div class="form-group row">
             <label class="control-label col-md-2">Linea</label>
             <div class="col-md-10">
-                <input id="mostrarLinea" type="text" class="form-control" disabled/>
+                <input id="mostrarLinea" type="text" class="form-control" disabled />
             </div>
         </div>
         <div class="form-group row">
             <label class="control-label col-md-2">Origen</label>
             <div class="col-md-10">
-                <input id="mostrarOrigen" type="text" class="form-control" disabled/>
+                <input id="mostrarOrigen" type="text" class="form-control" disabled />
             </div>
         </div>
         <div class="form-group row">
             <label class="control-label col-md-2">Destino</label>
             <div class="col-md-10">
-                <input id="mostrarDestino" type="text" class="form-control" disabled/>
+                <input id="mostrarDestino" type="text" class="form-control" disabled />
             </div>
         </div>
 
@@ -169,7 +223,7 @@
             }
             return validar;
         }
-        
+
         // Funcion para rellenar un combobox y seleccionar un elemento
         function rellenarComboBox(idComboBox, items, idSeleccionado = undefined) {
             // para cada elemento en la coleccion
@@ -184,7 +238,7 @@
                 $(idComboBox).append(html);
             });
         }
-        
+
         // Funcion para vaciar combobox
         function vaciarComboBox(idComboBox, placeholder) {
             $(idComboBox).empty();
@@ -199,11 +253,11 @@
         }
 
         // ***** ***** ***** ***** Llenado de tabla y selección de viaje ***** ***** ***** *****
-        
+
         function seleccionarViajeDisponible(idViaje) {
             // obtengo del array el viaje seleccionado segun su ID
             let viaje = lstViajesDisponibles.find(elem => elem.viaje_id == idViaje);
-            
+
             // informacion que se va a mostrar
             let mostrarFecha = $(txtFecha).val();
             let mostrarLinea = $(cmbLinea + ' > option:selected').text();
@@ -238,7 +292,7 @@
                 $(cmbAsiento).prop("disabled", true);
             }
         }
-        
+
         // limpia la filas de la tabla
         function vaciarTabla(mostrarMensaje = false) {
             $(tblViajesDisponibles + ' tbody').empty();
@@ -332,17 +386,17 @@
             return false;
         }
 
-        
+
         // Funcion para obtener las Paradas de una linea
         let actualizarComboboxParadasDestino = function () {
             let comboBoxA = "#idParadaOrigen"; // ID del elemento combobox que completa primero
             let comboBoxB = "#idParadaDestino"; // ID del elemento combobox que se rellena en funcion del primero
             let paradaDestinoeleccionada = @Html.Raw(Model == null ? "undefined" : "" + Model.idParadaDestino); // imprimo dentro del script el valor de la variable
-            
+
             vaciarComboBox(comboBoxB, "Seleccione una parada");
 
             if ($(comboBoxA).val() == "") return; // Si no se selecciono nada, termina aca
-            
+
             let idParadaOrigen = $(comboBoxA).val();
             let paradas = [];
             let agregar = false;

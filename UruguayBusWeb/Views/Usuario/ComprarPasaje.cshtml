@@ -123,9 +123,34 @@
         </div>
         <!-- Fin datos basicos para buscar viaje -->
 
+        <!-- Inicio busqueda de viaje y resultados -->
         <div id="nav-seleccionar-viaje" aria-labelledby="nav-seleccionar-viaje-tab" class="tab-pane fade" role="tabpanel">
-            Elegir viaje
+            <div class="col-12 col-md-10 col-lg-8 mx-auto">
+                <table id="tblViajesDisponibles" class="table table-bordered">
+                    <thead>
+                        <tr class="table-primary">
+                            <th>Hora</th>
+                            <th>Precio</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ... -->
+                    </tbody>
+                </table>
+                
+                <!-- botones atras / siguiente -->
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <button type="button" class="btn btn-lg" onclick="buscarViajes()">Volver</button>
+                        <span><!--span de relleno--></span>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- Fin busqueda de viaje y resultados -->
+        
+        
         <div id="nav-seleccionar-asiento" aria-labelledby="nav-seleccionar-asiento-tab" class="tab-pane fade" role="tabpanel">
             Elegir asiento
         </div>
@@ -140,23 +165,6 @@
         <h4>Buscar viajes</h4>
         <hr />
 
-
-        <!-- Inicio busqueda de viaje y resultados -->
-
-        <table id="tblViajesDisponibles" class="table table-bordered">
-            <thead>
-                <tr class="table-primary">
-                    <th>Hora</th>
-                    <th>Precio</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- ... -->
-            </tbody>
-        </table>
-
-        <!-- Fin busqueda de viaje y resultados -->
         <!-- Inicio detalle del viaje y seleccion de asiento -->
         <h3>Compruebe la información</h3>
         <div class="form-group row">
@@ -326,7 +334,9 @@
                 .append($('<tr>')
                     .append($('<td>').text(datosFila.horaStr))
                     .append($('<td>').text(datosFila.precio))
-                    .append($('<td>').append(htmlBoton))
+                    .append($('<td>')
+                        .addClass('text-center')
+                        .append(htmlBoton))
                 );
         }
 

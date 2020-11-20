@@ -94,5 +94,17 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
+        public async Task RegistrarPasoPorParada(int idParada, int idViaje)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync(basicPath + "RegistrarParada/" + idParada + "/" + idViaje, null);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

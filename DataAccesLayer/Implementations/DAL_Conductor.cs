@@ -65,7 +65,7 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    ICollection<viaje> ret = new List<viaje>();
+                    ICollection<Viaje> ret = new List<Viaje>();
                     conductor c = db.conductor.Find(idConductor);
 
                     if (c == null)
@@ -75,14 +75,18 @@ namespace DataAccesLayer.Implementations
                     {
                         foreach (var v in h.viaje)
                         {
-                            if(v.fecha.CompareTo(DateTime.Today) == 0 && v.finalizado != true)
+                            if(v.fecha.CompareTo(DateTime.Today) == 0 && v.finalizado == null)
                             {
-                                ret.Add(v);
+                                Viaje Vi = ViajeConverter.convert(v);
+                                Vi.horario = HorarioConverter.convert(v.horario);
+                                Vi.horario.linea = LineaConverter.convert(v.horario.linea);
+                                
+                                ret.Add(Vi);
                             }
                         }
                     }
 
-                    return ViajeConverter.convert(ret);
+                    return ret;
                 }
                 catch (Exception e)
                 {
@@ -100,9 +104,14 @@ namespace DataAccesLayer.Implementations
                     IDAL_Global blg = new DAL_Global();
                     ICollection<usuario> retSinConvertir = new List<usuario>();
                     viaje v = db.viaje.Find(idViaje);
+                    parada p = db.parada.Find(idParada);
 
                     if (v == null)
                         throw new Exception("No se encontro ningun viaje con ese ID");
+
+                    if (p == null)
+                        throw new Exception("No se encontro ninguna parada con ese ID");
+
 
                     ICollection<parada> paradasOrdenadas = ParadaConverter.convert(blg.obtenerParadasDeLinea(v.horario.linea.id));
 
@@ -135,6 +144,16 @@ namespace DataAccesLayer.Implementations
                         nuevo.persona = PersonaConverter.convert(item.persona);
                         retConvertido.Add(nuevo);
                     }
+
+
+                    paso_por_parada ppp = new paso_por_parada()
+                    {
+                        fecha_hora = DateTime.Now,
+                        viaje = v,
+                        parada = p
+                    };
+                    db.paso_por_parada.Add(ppp);
+                    db.SaveChanges();
 
                     return retConvertido;
                 }
@@ -176,7 +195,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
 
         public Viaje ObtenerViajeActual(int idConductor)
         {

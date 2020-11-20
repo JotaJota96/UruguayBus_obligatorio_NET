@@ -147,6 +147,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ModificarLinea.cs" />
     <Compile Include="Models\PasoParadaModel.cs" />
+    <Compile Include="Models\ProximoVehiculoModel.cs" />
     <Compile Include="Models\Proxy\AsignarRolDTO.cs" />
     <Compile Include="Models\Proxy\IniciarSesionDTO.cs" />
     <Compile Include="Models\Proxy\ListarViajesDisponiblesDTO.cs" />
@@ -259,6 +260,7 @@
     <Content Include="Views\Admin\Linea\ModificarLinea.cshtml" />
     <Content Include="Views\Conductor\IniciarViaje.cshtml" />
     <Content Include="Views\Conductor\PasoPorParada.cshtml" />
+    <Content Include="Views\Usuario\ProximoVehiculo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

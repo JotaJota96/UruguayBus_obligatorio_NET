@@ -30,6 +30,7 @@ namespace UruguayBusWeb.Controllers
             ComprarPasajeModel cpm = new ComprarPasajeModel();
             cpm.fecha = DateTime.Today;
             cpm.lineas = (List<Share.Entities.Linea>) await gp.ListarLinea();
+            cpm.precioElegirAsiento = await up.PrecioParaElegirAsiento();
 
             return View(cpm);
         }
@@ -41,6 +42,7 @@ namespace UruguayBusWeb.Controllers
             try
             {
                 cpm.lineas = (List<Share.Entities.Linea>)await gp.ListarLinea();
+                cpm.precioElegirAsiento = await up.PrecioParaElegirAsiento();
 
                 // calidacion
                 if (TryValidateModel(cpm, nameof(ComprarPasaje))){

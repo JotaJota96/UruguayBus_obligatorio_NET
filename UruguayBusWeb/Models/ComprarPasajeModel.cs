@@ -29,11 +29,13 @@ namespace UruguayBusWeb.Models
         [DisplayName("Parada de destino")]
         public int idParadaDestino { get; set; }
 
-        // propiedades auxiliares
+        [Required]
+        [DisplayName("Asiento")]
+        public int asiento { get; set; } = 0;
 
+        // propiedades auxiliares
+        public decimal precioElegirAsiento { get; set; }
         public List<Linea> lineas { get; set; } = new List<Linea>();
-        public List<Parada> paradasOrigen { get; set; } = new List<Parada>();
-        public List<Parada> paradasDestino { get; set; } = new List<Parada>();
 
     }
 }

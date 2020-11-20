@@ -65,6 +65,8 @@
         </div>
         
         <!-- Fin datos basicos para buscar viaje -->
+
+        <!-- Inicio busqueda de viaje y resultados -->
         
         <div class="form-group row">
             <div class="col-md-2"></div>
@@ -87,6 +89,45 @@
             </tbody>
         </table>
 
+        <!-- Fin busqueda de viaje y resultados -->
+        
+        <!-- Inicio detalle del viaje y seleccion de asiento -->
+        <h3>Compruebe la información</h3>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Fecha</label>
+            <div class="col-md-10">
+                <input id="mostrarFecha" type="date" class="form-control" disabled/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Linea</label>
+            <div class="col-md-10">
+                <input id="mostrarLinea" type="text" class="form-control" disabled/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Origen</label>
+            <div class="col-md-10">
+                <input id="mostrarOrigen" type="text" class="form-control" disabled/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Destino</label>
+            <div class="col-md-10">
+                <input id="mostrarDestino" type="text" class="form-control" disabled/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.asiento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.asiento, new List<SelectListItem>(), "Seleccione un asiento", new { @class = "custom-select" })
+                @Html.ValidationMessageFor(model => model.asiento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Fin detalle del viaje y seleccion de asiento -->
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Reservar" class="btn btn-default" />
@@ -100,13 +141,21 @@
 @section Scripts{
 
     <script type="text/javascript">
+        const precioElegirAsiento = @Html.Raw(Model == null ? "0" : Model.precioElegirAsiento.ToString ("0.##") ); // imprimo dentro del script el valor de la variable;
         const txtFecha = "#fecha";
         const cmbLinea = "#idLinea";
         const cmbParadaOrigen = "#idParadaOrigen";
         const cmbParadaDestino = "#idParadaDestino";
+        const cmbAsiento = "#asiento";
         const spnBuscarViajesError = "#buscarViajesError";
+        let lstParadas = [];
         const tblViajesDisponibles = "#tblViajesDisponibles";
+        let lstViajesDisponibles = [];
 
+
+        // ***** ***** ***** ***** Funciones generales ***** ***** ***** *****
+
+        // validacion de form antes de buscar
         function validarParaBuscarViaje() {
             let validar = true;
             validar = validar && $(txtFecha).val() != "";
@@ -120,73 +169,7 @@
             }
             return validar;
         }
-
-        function vaciarTabla(mostrarMensaje = false) {
-            $(tblViajesDisponibles + ' tbody').empty();
-            if (mostrarMensaje == false) return;
-
-            $(tblViajesDisponibles).find('tbody')
-                .append($('<tr>')
-                    .append($('<td>')
-                        .append($('<span>').text('No hay ningún resultado'))
-                    )
-                );
-        }
-
-        function insertarFila(datosFila) {
-            // hora
-            // precio
-            // viaje_id
-            console.log(datosFila);
-            $(tblViajesDisponibles).find('tbody')
-                .append($('<tr>')
-                    .append($('<td>').text(datosFila.horaStr))
-                    .append($('<td>').text(datosFila.precio))
-                    .append($('<td>').text(datosFila.viaje_id ))
-                );
-        }
-
-        function buscarViajes() {
-            vaciarTabla(false);
-
-            if ( ! validarParaBuscarViaje()) return;
-
-            // datos para mandar a buscar
-            let datosBuscar = {
-                fecha: $(txtFecha).val(),
-                idLinea: $(cmbLinea).val(),
-                idParadaOrigen: $(cmbParadaOrigen).val(),
-                idParadaDestino: $(cmbParadaDestino).val(),
-            };
-
-            $.ajax({ // realiza una peticion ajax
-                type: 'POST', // metodo HTTP a utilizar
-                url: '@Url.Action("BuscarViajesAjax")', // ¡¡OJO que esto no es JQuery!! Nombre de la funcion a llamar (dentro del controlador que cargo esta vista)
-                dataType: 'json', // creo que esto es que espera obtener un JSON como respuesta
-                data: datosBuscar, // Obtiene el valor seleccionado en el primer combobox y lo manda con la clave 'id'
-                success: function (respuesta) { // esta funcion se ejecutara al obtener la respuesta
-                    if (respuesta.length == 0) {
-                        vaciarTabla(true);
-                    } else {
-                        vaciarTabla(false);
-                        $.each(respuesta, function (i, item) {
-                            insertarFila(item);
-                        });
-
-                    }
-                },
-                error: function (ex) { // en caso de que haya un error
-                    alert('Fallo al buscar viajes: ' + ex);
-                }
-            });
-        }
-
-
-        // ***** ***** ***** ***** Interaccion entre combobox ***** ***** ***** *****
-
-        // lista de paradas (se carga con AJAX)
-        let lstParadas = [];
-
+        
         // Funcion para rellenar un combobox y seleccionar un elemento
         function rellenarComboBox(idComboBox, items, idSeleccionado = undefined) {
             // para cada elemento en la coleccion
@@ -207,6 +190,119 @@
             $(idComboBox).empty();
             $(idComboBox).append('<option value="">' + placeholder + '</option>');
         }
+
+        // devuelve 'ventana' o 'pasillo' segun el numero del asiento
+        function ventabaOPasillo(n) {
+            if (n < 2) return 'pasillo';
+            if (n == 2 || n == 3) return 'ventana';
+            return ventabaOPasillo(n - 4);
+        }
+
+        // ***** ***** ***** ***** Llenado de tabla y selección de viaje ***** ***** ***** *****
+        
+        function seleccionarViajeDisponible(idViaje) {
+            // obtengo del array el viaje seleccionado segun su ID
+            let viaje = lstViajesDisponibles.find(elem => elem.viaje_id == idViaje);
+            
+            // informacion que se va a mostrar
+            let mostrarFecha = $(txtFecha).val();
+            let mostrarLinea = $(cmbLinea + ' > option:selected').text();
+            let mostrarOrigen = $(cmbParadaOrigen + ' > option:selected').text();
+            let mostrarDestino = $(cmbParadaDestino + ' > option:selected').text();
+
+            // cargo la informacion en los inputs (deshabilitados)
+            $('#mostrarFecha').val(mostrarFecha);
+            $('#mostrarLinea').val(mostrarLinea);
+            $('#mostrarOrigen').val(mostrarOrigen);
+            $('#mostrarDestino').val(mostrarDestino);
+
+            // segun el precio del viaje elegido
+            if (viaje.precio >= precioElegirAsiento) {
+                // permito elegir asiento
+                vaciarComboBox(cmbAsiento, "Seleccione un asiento");
+
+                let items = [];
+                $.each(viaje.asientos_disponibles, function (i, item) {
+                    items.push({
+                        Value: item,
+                        Text: item + ' (' + ventabaOPasillo(item) + ')',
+                    });
+                });
+
+                rellenarComboBox(cmbAsiento, items);
+
+                $(cmbAsiento).prop("disabled", false);
+            } else {
+                // no permito elegir asiento
+                vaciarComboBox(cmbAsiento, "No puede seleccionar asiento");
+                $(cmbAsiento).prop("disabled", true);
+            }
+        }
+        
+        // limpia la filas de la tabla
+        function vaciarTabla(mostrarMensaje = false) {
+            $(tblViajesDisponibles + ' tbody').empty();
+            if (mostrarMensaje == false) return;
+
+            $(tblViajesDisponibles).find('tbody')
+                .append($('<tr>')
+                    .append($('<td>')
+                        .append($('<span>').text('No hay ningún resultado'))
+                    )
+                );
+        }
+
+        // inserta una fila en la tabla
+        function insertarFila(datosFila) {
+            // Los datos que interesan de 'datosFila' son: hora, precio, viaje_id
+            let htmlBoton = '<button type="button" class="btn btn-light" onclick="seleccionarViajeDisponible(' + datosFila.viaje_id + ')">Seleccionar</button>';
+            $(tblViajesDisponibles).find('tbody')
+                .append($('<tr>')
+                    .append($('<td>').text(datosFila.horaStr))
+                    .append($('<td>').text(datosFila.precio))
+                    .append($('<td>').append(htmlBoton))
+                );
+        }
+
+        // busca los viajes y manda a mostrarlos
+        function buscarViajes() {
+            vaciarTabla(false);
+
+            if ( ! validarParaBuscarViaje()) return;
+
+            // datos para mandar a buscar
+            let datosBuscar = {
+                fecha: $(txtFecha).val(),
+                idLinea: $(cmbLinea).val(),
+                idParadaOrigen: $(cmbParadaOrigen).val(),
+                idParadaDestino: $(cmbParadaDestino).val(),
+            };
+
+            $.ajax({ // realiza una peticion ajax
+                type: 'POST', // metodo HTTP a utilizar
+                url: '@Url.Action("BuscarViajesAjax")', // ¡¡OJO que esto no es JQuery!! Nombre de la funcion a llamar (dentro del controlador que cargo esta vista)
+                dataType: 'json', // creo que esto es que espera obtener un JSON como respuesta
+                data: datosBuscar, // Obtiene el valor seleccionado en el primer combobox y lo manda con la clave 'id'
+                success: function (respuesta) { // esta funcion se ejecutara al obtener la respuesta
+                    lstViajesDisponibles = [];
+                    if (respuesta.length == 0) {
+                        vaciarTabla(true);
+                    } else {
+                        vaciarTabla(false);
+                        $.each(respuesta, function (i, item) {
+                            insertarFila(item);
+                            lstViajesDisponibles.push(item);
+                        });
+                    }
+                },
+                error: function (ex) { // en caso de que haya un error
+                    alert('Fallo al buscar viajes: ' + ex);
+                }
+            });
+        }
+
+
+        // ***** ***** ***** ***** Interaccion entre combobox ***** ***** ***** *****
 
         // Funcion para obtener las Paradas de una linea
         let actualizarComboboxParadasOrigen = function () {

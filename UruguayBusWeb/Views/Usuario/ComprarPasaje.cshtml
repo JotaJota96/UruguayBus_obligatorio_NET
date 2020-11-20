@@ -20,6 +20,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <!-- reemplazar todas las apariciones de la palabra 'identificador' para agregar una seccion nueva-->
     <!--
@@ -61,10 +62,67 @@
     </ul>
 
     <!-- agregar la clase "show active" al elemento seleccionado -->
-    <div class="tab-content">
+    <div class="tab-content mt-5">
+
+        <!-- Inicio datos basicos para buscar viaje -->
         <div id="nav-datos-viaje" aria-labelledby="nav-datos-viaje-tab" class="tab-pane fade show active" role="tabpanel">
-            Buscar viaje
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+
+                <!-- fecha -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control col-12", @Type = "date" } })
+                        @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- linea -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.idLinea, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.idLinea, lstLineas, "Seleccione una linea", new { @class = "custom-select col-12" })
+                        @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- parada origen -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.idParadaOrigen, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.idParadaOrigen, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select col-12" })
+                        @Html.ValidationMessageFor(model => model.idParadaOrigen, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- parada destino -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.idParadaDestino, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.idParadaDestino, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select col-12" })
+                        @Html.ValidationMessageFor(model => model.idParadaDestino, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Error -->
+                <div class="form-group row">
+                    <label class="control-label col-md-5"></label>
+                    <div class="col-md-7">
+                        <span id="buscarViajesError" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- botones atras / siguiente -->
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <span><!--span de relleno--></span>
+                        <button type="button" class="btn btn-primary btn-lg" onclick="buscarViajes()">Buscar</button>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- Fin datos basicos para buscar viaje -->
+
         <div id="nav-seleccionar-viaje" aria-labelledby="nav-seleccionar-viaje-tab" class="tab-pane fade" role="tabpanel">
             Elegir viaje
         </div>
@@ -81,55 +139,9 @@
     <div class="form-horizontal">
         <h4>Buscar viajes</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <!-- Inicio datos basicos para buscar viaje -->
-        <!-- fecha -->
-        <div class="form-group row">
-            @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control", @Type = "date" } })
-                @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <!-- linea -->
-        <div class="form-group row">
-            @Html.LabelFor(model => model.idLinea, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.idLinea, lstLineas, "Seleccione una linea", new { @class = "custom-select" })
-                @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- parada origen -->
-        <div class="form-group row">
-            @Html.LabelFor(model => model.idParadaOrigen, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.idParadaOrigen, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select" })
-                @Html.ValidationMessageFor(model => model.idParadaOrigen, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- parada destino -->
-        <div class="form-group row">
-            @Html.LabelFor(model => model.idParadaDestino, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.idParadaDestino, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select" })
-                @Html.ValidationMessageFor(model => model.idParadaDestino, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- Fin datos basicos para buscar viaje -->
         <!-- Inicio busqueda de viaje y resultados -->
-
-        <div class="form-group row">
-            <div class="col-md-2"></div>
-            <div class="col-md-10">
-                <button type="button" class="btn btn-primary btn-lg" onclick="buscarViajes()">Buscar viajes</button>
-                <span id="buscarViajesError" class="text-danger"></span>
-            </div>
-        </div>
 
         <table id="tblViajesDisponibles" class="table table-bordered">
             <thead>

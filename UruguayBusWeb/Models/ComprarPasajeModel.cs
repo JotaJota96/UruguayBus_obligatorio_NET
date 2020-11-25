@@ -37,5 +37,8 @@ namespace UruguayBusWeb.Models
         public decimal precioElegirAsiento { get; set; }
         public List<Linea> lineas { get; set; } = new List<Linea>();
 
+
+        [DisplayName("Precio")]
+        public decimal precio { get; set; }
     }
 }

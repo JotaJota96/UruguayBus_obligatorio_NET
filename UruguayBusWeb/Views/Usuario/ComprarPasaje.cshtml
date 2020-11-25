@@ -167,13 +167,19 @@
                 <div class="form-group row">
                     <label class="control-label col-md-5">Origen</label>
                     <div class="col-md-7">
-                        <input id="mostrarOrigen" type="text" class="form-control" disabled />
+                        <input id="mostrarOrigen" type="text" class="form-control" readonly />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-md-5">Destino</label>
                     <div class="col-md-7">
                         <input id="mostrarDestino" type="text" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control col-12", @readonly="readonly" } })
                     </div>
                 </div>
 
@@ -285,12 +291,15 @@
             let mostrarLinea = $(cmbLinea + ' > option:selected').text();
             let mostrarOrigen = $(cmbParadaOrigen + ' > option:selected').text();
             let mostrarDestino = $(cmbParadaDestino + ' > option:selected').text();
+            let mostrarPrecio = viaje.precio;
 
             // cargo la informacion en los inputs (deshabilitados)
             $('#mostrarFecha').val(mostrarFecha);
             $('#mostrarLinea').val(mostrarLinea);
             $('#mostrarOrigen').val(mostrarOrigen);
             $('#mostrarDestino').val(mostrarDestino);
+            $('#precio').val(mostrarPrecio);
+            
             $("#scriptMercadoPago").attr("data-transaction-amount", viaje.precio);
 
             // segun el precio del viaje elegido

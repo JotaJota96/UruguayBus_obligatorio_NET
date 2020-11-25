@@ -1,0 +1,28 @@
+﻿@model UruguayBusWeb.Models.ComprarPasajeModel
+
+@{
+    ViewBag.Title = "ConfirmarPago";
+}
+
+<h2>ConfirmarPago</h2>
+
+<div>
+    <h4>ComprarPasajeModel</h4>
+    
+    <form action="ConfirmarPago" method="post">
+        @Html.HiddenFor(model => model.fecha)
+        @Html.HiddenFor(model => model.idLinea)
+        @Html.HiddenFor(model => model.idParadaOrigen)
+        @Html.HiddenFor(model => model.idParadaDestino)
+        @Html.HiddenFor(model => model.asiento)
+        @Html.HiddenFor(model => model.precio)
+        <script src="https://www.mercadopago.com.uy/integrations/v1/web-tokenize-checkout.js"
+                data-public-key="TEST-9c480fb8-9a27-4866-8858-9e05e78a59f3"
+                data-transaction-amount="@Model.precio">
+        </script>
+    </form>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -45,13 +45,11 @@ namespace UruguayBusWeb.Controllers
                 cpm.precioElegirAsiento = await up.PrecioParaElegirAsiento();
 
                 // calidacion
-                if (TryValidateModel(cpm, nameof(ComprarPasaje))){
+                if ( ! TryValidateModel(cpm, nameof(ComprarPasaje))){
                     return View(cpm);
                 }
 
-                // hacer cosas ...
-
-                return View(cpm);
+                return View("ConfirmarPago", cpm);
             }
             catch (Exception)
             {
@@ -103,6 +101,23 @@ namespace UruguayBusWeb.Controllers
             catch (Exception)
             {
                 return Json(new List<SelectListItem>(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        // POST: Usuario/ConfirmarPago
+        [HttpPost]
+        public async Task<ActionResult> ConfirmarPago(ComprarPasajeModel cpm)
+        {
+            try
+            {
+                // hacer cosas ...
+
+                return View(cpm);
+            }
+            catch (Exception)
+            {
+                return View(cpm);
             }
         }
 

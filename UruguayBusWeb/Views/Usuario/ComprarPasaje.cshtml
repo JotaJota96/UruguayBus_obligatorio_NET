@@ -17,6 +17,7 @@
 
 <h2>Comprar pasaje</h2>
 
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -42,22 +43,17 @@
     <ul id="nav-tabs" class="nav nav-pills nav-fill">
         <li class="nav-item">
             <a id="nav-datos-viaje-tab" href="#nav-datos-viaje" aria-controls="nav-datos-viaje" aria-selected="true" class="nav-link active" role="tab">
-                Buscar viaje
+                1. Buscar viaje
             </a>
         </li>
         <li class="nav-item">
             <a id="nav-seleccionar-viaje-tab" href="#nav-seleccionar-viaje" aria-controls="nav-seleccionar-viaje" aria-selected="false" class="nav-link" role="tab">
-                Elegir viaje
+                2. Elegir viaje
             </a>
         </li>
         <li class="nav-item">
             <a id="nav-seleccionar-asiento-tab" href="#nav-seleccionar-asiento" aria-controls="nav-seleccionar-asiento" aria-selected="false" class="nav-link" role="tab">
-                Elegir asiento
-            </a>
-        </li>
-        <li class="nav-item">
-            <a id="nav-pagar-tab" href="#nav-pagar" aria-controls="nav-pagar" aria-selected="false" class="nav-link" role="tab">
-                Pagar
+                3. Elegir asiento
             </a>
         </li>
     </ul>
@@ -194,34 +190,17 @@
                     <div class="col-12 d-flex justify-content-between">
                         <button type="button" class="btn" onclick="irATab(1)">Volver</button>
                         <span><!--span de relleno--></span>
-                        <button type="button" class="btn btn-primary btn-lg" onclick="irATab(3)">Confirmar</button>
+                        <input type="submit" value="Confirmar" class="btn btn-primary btn-lg"/>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Fin detalle del viaje y seleccion de asiento -->
 
-        <!-- Inicio pago -->
-        <div id="nav-pagar" aria-labelledby="nav-pagar-tab" class="tab-pane fade" role="tabpanel">
-            
-            <!-- botones atras / siguiente -->
-            <div class="form-group row">
-                <div class="col-12 d-flex justify-content-between">
-                    <button type="button" class="btn" onclick="irATab(2)">Volver</button>
-                    <span><!--span de relleno--></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Reservar" class="btn btn-primary btn-lg" />
-                </div>
-            </div>
-        </div>
-        <!-- Fin pago -->
     </div>
 
 }
+
 
 <!-- ***** ***** scripts ***** ***** -->
 
@@ -241,6 +220,9 @@
         const tblViajesDisponibles = "#tblViajesDisponibles";
         let lstViajesDisponibles = [];
 
+        function getPrecio() {
+            return 123.45;
+        }
 
         // ***** ***** ***** ***** Funciones generales ***** ***** ***** *****
 
@@ -309,6 +291,7 @@
             $('#mostrarLinea').val(mostrarLinea);
             $('#mostrarOrigen').val(mostrarOrigen);
             $('#mostrarDestino').val(mostrarDestino);
+            $("#scriptMercadoPago").attr("data-transaction-amount", viaje.precio);
 
             // segun el precio del viaje elegido
             if (viaje.precio >= precioElegirAsiento) {

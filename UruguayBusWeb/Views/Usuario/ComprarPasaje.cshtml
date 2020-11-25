@@ -38,24 +38,25 @@
     </div>
     -->
     <!-- agregar la clase "active" al elemento seleccionado -->
-    <ul class="nav nav-pills nav-fill">
+    <!-- agregar la propiedad data-toggle="tab" para poder seleccionar con clic-->
+    <ul id="nav-tabs" class="nav nav-pills nav-fill">
         <li class="nav-item">
-            <a id="nav-datos-viaje-tab" href="#nav-datos-viaje" aria-controls="nav-datos-viaje" aria-selected="true" class="nav-link active" data-toggle="tab" role="tab">
+            <a id="nav-datos-viaje-tab" href="#nav-datos-viaje" aria-controls="nav-datos-viaje" aria-selected="true" class="nav-link active" role="tab">
                 Buscar viaje
             </a>
         </li>
         <li class="nav-item">
-            <a id="nav-seleccionar-viaje-tab" href="#nav-seleccionar-viaje" aria-controls="nav-seleccionar-viaje" aria-selected="false" class="nav-link" data-toggle="tab" role="tab">
+            <a id="nav-seleccionar-viaje-tab" href="#nav-seleccionar-viaje" aria-controls="nav-seleccionar-viaje" aria-selected="false" class="nav-link" role="tab">
                 Elegir viaje
             </a>
         </li>
         <li class="nav-item">
-            <a id="nav-seleccionar-asiento-tab" href="#nav-seleccionar-asiento" aria-controls="nav-seleccionar-asiento" aria-selected="false" class="nav-link" data-toggle="tab" role="tab">
+            <a id="nav-seleccionar-asiento-tab" href="#nav-seleccionar-asiento" aria-controls="nav-seleccionar-asiento" aria-selected="false" class="nav-link" role="tab">
                 Elegir asiento
             </a>
         </li>
         <li class="nav-item">
-            <a id="nav-pagar-tab" href="#nav-pagar" aria-controls="nav-pagar" aria-selected="false" class="nav-link" data-toggle="tab" role="tab">
+            <a id="nav-pagar-tab" href="#nav-pagar" aria-controls="nav-pagar" aria-selected="false" class="nav-link" role="tab">
                 Pagar
             </a>
         </li>
@@ -142,7 +143,7 @@
                 <!-- botones atras / siguiente -->
                 <div class="form-group row">
                     <div class="col-12 d-flex justify-content-between">
-                        <button type="button" class="btn btn-lg" onclick="buscarViajes()">Volver</button>
+                        <button type="button" class="btn btn-lg" onclick="irATab(0)">Volver</button>
                         <span><!--span de relleno--></span>
                     </div>
                 </div>
@@ -151,63 +152,75 @@
         <!-- Fin busqueda de viaje y resultados -->
         
         
-        <div id="nav-seleccionar-asiento" aria-labelledby="nav-seleccionar-asiento-tab" class="tab-pane fade" role="tabpanel">
-            Elegir asiento
-        </div>
-        <div id="nav-pagar" aria-labelledby="nav-pagar-tab" class="tab-pane fade" role="tabpanel">
-            Pagar
-        </div>
-    </div>
-
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-
-    <div class="form-horizontal">
-        <h4>Buscar viajes</h4>
-        <hr />
-
         <!-- Inicio detalle del viaje y seleccion de asiento -->
-        <h3>Compruebe la información</h3>
-        <div class="form-group row">
-            <label class="control-label col-md-2">Fecha</label>
-            <div class="col-md-10">
-                <input id="mostrarFecha" type="date" class="form-control" disabled />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="control-label col-md-2">Linea</label>
-            <div class="col-md-10">
-                <input id="mostrarLinea" type="text" class="form-control" disabled />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="control-label col-md-2">Origen</label>
-            <div class="col-md-10">
-                <input id="mostrarOrigen" type="text" class="form-control" disabled />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="control-label col-md-2">Destino</label>
-            <div class="col-md-10">
-                <input id="mostrarDestino" type="text" class="form-control" disabled />
-            </div>
-        </div>
+        <div id="nav-seleccionar-asiento" aria-labelledby="nav-seleccionar-asiento-tab" class="tab-pane fade" role="tabpanel">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+                
+                <div class="form-group row">
+                    <label class="control-label col-md-5">Fecha</label>
+                    <div class="col-md-7">
+                        <input id="mostrarFecha" type="date" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-5">Linea</label>
+                    <div class="col-md-7">
+                        <input id="mostrarLinea" type="text" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-5">Origen</label>
+                    <div class="col-md-7">
+                        <input id="mostrarOrigen" type="text" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-5">Destino</label>
+                    <div class="col-md-7">
+                        <input id="mostrarDestino" type="text" class="form-control" disabled />
+                    </div>
+                </div>
 
-        <div class="form-group row">
-            @Html.LabelFor(model => model.asiento, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.asiento, new List<SelectListItem>(), "Seleccione un asiento", new { @class = "custom-select" })
-                @Html.ValidationMessageFor(model => model.asiento, "", new { @class = "text-danger" })
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.asiento, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.asiento, new List<SelectListItem>(), "Seleccione un asiento", new { @class = "custom-select" })
+                        @Html.ValidationMessageFor(model => model.asiento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+                <!-- botones atras / siguiente -->
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <button type="button" class="btn" onclick="irATab(1)">Volver</button>
+                        <span><!--span de relleno--></span>
+                        <button type="button" class="btn btn-primary btn-lg" onclick="irATab(3)">Confirmar</button>
+                    </div>
+                </div>
             </div>
         </div>
-
         <!-- Fin detalle del viaje y seleccion de asiento -->
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Reservar" class="btn btn-default" />
+        <!-- Inicio pago -->
+        <div id="nav-pagar" aria-labelledby="nav-pagar-tab" class="tab-pane fade" role="tabpanel">
+            
+            <!-- botones atras / siguiente -->
+            <div class="form-group row">
+                <div class="col-12 d-flex justify-content-between">
+                    <button type="button" class="btn" onclick="irATab(2)">Volver</button>
+                    <span><!--span de relleno--></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Reservar" class="btn btn-primary btn-lg" />
+                </div>
             </div>
         </div>
+        <!-- Fin pago -->
     </div>
+
 }
 
 <!-- ***** ***** scripts ***** ***** -->
@@ -215,6 +228,8 @@
 @section Scripts{
 
     <script type="text/javascript">
+        const navTabs = "#nav-tabs";
+
         const precioElegirAsiento = @Html.Raw(Model == null ? "0" : Model.precioElegirAsiento.ToString ("0.##") ); // imprimo dentro del script el valor de la variable;
         const txtFecha = "#fecha";
         const cmbLinea = "#idLinea";
@@ -272,6 +287,11 @@
             return ventabaOPasillo(n - 4);
         }
 
+        // muestra la tab especificada (indice comienza en 0)
+        function irATab(index) {
+            $(navTabs + ' li:eq(' + index + ') a').tab('show');
+        }
+
         // ***** ***** ***** ***** Llenado de tabla y selección de viaje ***** ***** ***** *****
 
         function seleccionarViajeDisponible(idViaje) {
@@ -311,6 +331,7 @@
                 vaciarComboBox(cmbAsiento, "No puede seleccionar asiento");
                 $(cmbAsiento).prop("disabled", true);
             }
+            irATab(2);
         }
 
         // limpia la filas de la tabla
@@ -360,6 +381,7 @@
                 dataType: 'json', // creo que esto es que espera obtener un JSON como respuesta
                 data: datosBuscar, // Obtiene el valor seleccionado en el primer combobox y lo manda con la clave 'id'
                 success: function (respuesta) { // esta funcion se ejecutara al obtener la respuesta
+                    irATab(1);
                     lstViajesDisponibles = [];
                     if (respuesta.length == 0) {
                         vaciarTabla(true);

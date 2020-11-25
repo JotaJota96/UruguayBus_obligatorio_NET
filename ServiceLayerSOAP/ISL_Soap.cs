@@ -49,6 +49,12 @@ namespace ServiceLayerSOAP
         [OperationContract]
         decimal PrecioParaElegirAsiento();
 
+        /// <summary>
+        /// Lista todas las paradas del sistema
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        ICollection<Parada> ListarParadas();
     }
 
 }

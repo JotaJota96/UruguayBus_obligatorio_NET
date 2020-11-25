@@ -21,14 +21,39 @@ namespace TerminalAutogestion
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static bool cerrarEnCascada = false;
+        public static Exception excepcion = null;
+
         public MainWindow()
         {
             InitializeComponent();
+            lbError.Visibility = Visibility.Hidden;
         }
 
         private void btnSiguiente_Click(object sender, RoutedEventArgs e)
         {
-            new WinIngresarDatosViaje().ShowDialog();
+            try
+            {
+                MainWindow.cerrarEnCascada = false;
+                new WinIngresarDatosViaje().ShowDialog();
+                if (MainWindow.excepcion != null) throw excepcion;
+            }
+            catch (Exception)
+            {
+                // creo un Timer para ocultar el mensaje de error despues de unos segundos
+                System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+                dispatcherTimer.Start();
+
+                lbError.Visibility = Visibility.Visible;
+            }
+        }
+
+        // evento de Timer para ocultar mensaje
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            lbError.Visibility = Visibility.Hidden;
         }
     }
 }

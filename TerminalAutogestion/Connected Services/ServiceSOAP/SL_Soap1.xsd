@@ -64,4 +64,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ListarParadas">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListarParadasResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Share.Entities" minOccurs="0" name="ListarParadasResult" nillable="true" type="q4:ArrayOfParada" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

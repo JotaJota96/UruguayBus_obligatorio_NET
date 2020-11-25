@@ -6,16 +6,38 @@
         xmlns:local="clr-namespace:TerminalAutogestion.Ventanas"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
-    <Grid>
-        <Grid Height="172" Margin="0,548,0,0" VerticalAlignment="Bottom">
+    <Grid Background="#FF2C69A5">
+        <TextBlock Margin="30" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" Text="Seleccione un viaje" Foreground="White"/>
+        <Grid Margin="10,134,10,104">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="28,10,8,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" Foreground="White" Text="Viaje" Height="48"/>
+            <DataGrid x:Name="dgViajes" IsReadOnly="True" Margin="10,74,10,10" SelectionChanged="dgViajes_SelectionChanged" FontSize="22" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" MinColumnWidth="150" ColumnWidth="*" GridLinesVisibility="None">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Hora"     Binding="{Binding hora}"/>
+                    <DataGridTextColumn Header="Linea"    Binding="{Binding linea_nombre}"/>
+                    <DataGridTextColumn Header="Precio"   Binding="{Binding precio}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36" Foreground="White" Text="Asiento" Height="48" Grid.Column="1"/>
+            <DataGrid x:Name="dgAsientos" IsReadOnly="True"  FontSize="22" Margin="10,74,10,10" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" ColumnWidth="*" GridLinesVisibility="None" Grid.Column="1" SelectionChanged="dgAsientos_SelectionChanged" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Número"      Binding="{Binding numero}"/>
+                    <DataGridTextColumn Header="Descripcion" Binding="{Binding descripcion}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid Height="99" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" Click="btnVolver_Click" VerticalAlignment="Bottom"/>
-            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Click="btnSiguiente_Click" Grid.Column="1"/>
+            <Button x:Name="btnVolver" Content="&lt; Volver" Height="93" FontSize="48" VerticalAlignment="Bottom" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnVolver_Click"/>
+            <Button x:Name="btnSiguiente" Content="Siguiente &gt;" Height="93" FontSize="48" VerticalAlignment="Bottom" Grid.Column="1" Background="#FF05427D" Foreground="#FFDEE5EE" Click="btnSiguiente_Click" IsEnabled="False"/>
         </Grid>
-        <TextBlock Margin="30" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" Text="Seleccione un viaje"/>
 
     </Grid>
 </Window>

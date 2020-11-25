@@ -20,7 +20,10 @@ namespace DataAccesLayer.Implementations
                     ICollection<parada> ret = new List<parada>();
                     IDictionary<int, parada> dicParada = new SortedDictionary<int,parada>();
 
-                    linea l = db.linea.Find(idLinea);
+                    linea l = db.linea.Where(x => x.id == idLinea).FirstOrDefault();
+                    
+                    if (l == null)
+                        throw new Exception("No se encontró ninguna linea con ese ID");
 
                     foreach (var item in l.tramo)
                     {
@@ -37,5 +40,23 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
+
+        public ICollection<Parada> ListarParadas()
+        {
+            try
+            {
+                using (uruguay_busEntities db = new uruguay_busEntities())
+                {
+                    ICollection<parada> lstParadas = (ICollection<parada>)db.parada.ToList();
+                    Console.WriteLine(lstParadas.Count());
+                    return ParadaConverter.convert(lstParadas);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

@@ -8,7 +8,8 @@
         Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Button x:Name="btnSiguiente" Content="Reservar pasaje &gt;" Height="93" FontSize="48" Click="btnSiguiente_Click" VerticalAlignment="Bottom" Background="#FF2C69A5" Foreground="#FFDEE5EE"/>
-        <Image x:Name="imgPortada" Source="marcopoloparadiso1350_aguiabranca2_41594274fda0993c1ca73fbb03f4736c.jpg" IsEnabled="False" Stretch="Fill" StretchDirection="UpOnly" Cursor="None" Margin="0,0,0,93"/>
+        <Image x:Name="imgPortada" Source="Multimedia/marcopoloparadiso1350_aguiabranca2_41594274fda0993c1ca73fbb03f4736c.jpg" IsEnabled="False" Stretch="Fill" StretchDirection="UpOnly" Cursor="None" Margin="0,0,0,93"/>
+        <Label x:Name="lbError" Content="Lo sentimos, ha ocurrido un error" HorizontalAlignment="Center" Margin="239,247,239,335" VerticalAlignment="Center" RenderTransformOrigin="-2.953,-2.774" Background="Red" Foreground="White" FontSize="48" Width="802" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="138"/>
 
     </Grid>
 </Window>

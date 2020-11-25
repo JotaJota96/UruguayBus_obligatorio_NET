@@ -12,31 +12,17 @@ namespace DataAccesLayer.Implementations
 {
     public class DAL_Admin : IDAL_Admin
     {
-        public ICollection<Parada> ListarParadas()
-        {
-            try
-            {
-                using (uruguay_busEntities db = new uruguay_busEntities())
-                {
-                    ICollection<parada> lstParadas = (ICollection<parada>) db.parada.ToList();
-                    Console.WriteLine(lstParadas.Count());
-                    return ParadaConverter.convert(lstParadas);
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
         public Vehiculo ModificarVehiculo(Vehiculo v)
         {
-            vehiculo veh = VehiculoConverter.convert(v);
-
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
                 try
                 {
+                    if (v == null || db.vehiculo.Find(v.id) == null)
+                        throw new Exception("No se encontro ningun vehiculo con ese ID");
+
+                    vehiculo veh = VehiculoConverter.convert(v);
+
                     db.Entry(veh).State = EntityState.Modified;
                     db.SaveChanges();
                     return VehiculoConverter.convert(veh);
@@ -58,6 +44,13 @@ namespace DataAccesLayer.Implementations
                     hor.conductor = db.conductor.Find(h.conductor.id);
                     hor.linea     = db.linea.Find(h.linea.id);
                     hor.vehiculo  = db.vehiculo.Find(h.vehiculo.id);
+
+                    if (hor.conductor == null)
+                        throw new Exception("No se encontro ningun conductor con ese ID");
+                    if (hor.linea == null)
+                        throw new Exception("No se encontro ninguna linea con ese ID");
+                    if (hor.vehiculo == null)
+                        throw new Exception("No se encontro ningun vehiculo con ese ID");
 
                     db.horario.Add(hor);
                     db.SaveChanges();
@@ -84,9 +77,15 @@ namespace DataAccesLayer.Implementations
                     linea lin = LineaConverter.convert(l);
                     foreach (var t in l.tramos)
                     {
+
                         tramo tra = TramoConverter.convert(t);
                         lin.tramo.Add(tra);
-                        tra.parada = db.parada.Find(t.parada.id);
+
+                        parada par = db.parada.Find(t.parada.id);
+                        if (par == null)
+                            throw new Exception("No se encontro ninguna parada con ese ID");
+                        tra.parada = par;
+
                         tra.precio.Add(PrecioConverter.convert(t.precio.First()));
                     }
 
@@ -127,12 +126,12 @@ namespace DataAccesLayer.Implementations
 
         public Parada RegistrarParada(Parada p)
         {
-            parada par = ParadaConverter.convert(p);
-
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
                 try
                 {
+                    parada par = ParadaConverter.convert(p);
+
                     db.parada.Add(par);
                     db.SaveChanges();
 
@@ -147,12 +146,12 @@ namespace DataAccesLayer.Implementations
 
         public Vehiculo RegistrarVehiculo(Vehiculo v)
         {
-            vehiculo veh = VehiculoConverter.convert(v);
-
             using (uruguay_busEntities db = new uruguay_busEntities())
             {
                 try
                 {
+                    vehiculo veh = VehiculoConverter.convert(v);
+
                     db.vehiculo.Add(veh);
                     db.SaveChanges();
 
@@ -171,8 +170,11 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    ICollection<viaje> viajes = ViajeConverter.convert(vs);
                     horario hor = db.horario.Find(idHorario);
+                    if (hor == null)
+                        throw new Exception("No se encontro ningun horario con ese ID");
+                    
+                    ICollection<viaje> viajes = ViajeConverter.convert(vs);
 
                     foreach (var via in viajes)
                     {

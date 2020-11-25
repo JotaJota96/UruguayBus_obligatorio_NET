@@ -68,6 +68,9 @@
     <Compile Include="Ventanas\WinIngresarDinero.xaml.cs">
       <DependentUpon>WinIngresarDinero.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\WinIngresarDocumento.xaml.cs">
+      <DependentUpon>WinIngresarDocumento.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\WinSeleccionarViaje.xaml.cs">
       <DependentUpon>WinSeleccionarViaje.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\WinIngresarDinero.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\WinIngresarDocumento.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -133,12 +140,9 @@
     <None Include="Connected Services\ServiceSOAP\SL_Soap5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServiceSOAP\TerminalAutogestion.ServiceSOAP.Pasaje.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ServiceSOAP\TerminalAutogestion.ServiceSOAP.ViajeDisponibleDTO.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
+    <None Include="Properties\DataSources\Share.DTOs.ViajeDisponibleDTO.datasource" />
+    <None Include="Properties\DataSources\Share.Entities.Parada.datasource" />
+    <None Include="Properties\DataSources\Share.Entities.Pasaje.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -169,7 +173,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="marcopoloparadiso1350_aguiabranca2_41594274fda0993c1ca73fbb03f4736c.jpg" />
+    <Resource Include="Multimedia\marcopoloparadiso1350_aguiabranca2_41594274fda0993c1ca73fbb03f4736c.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Share\Share.csproj">
+      <Project>{619a73c9-6372-450d-9b3d-a85ce18f043b}</Project>
+      <Name>Share</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Multimedia\dinero.png" />
+    <Resource Include="Multimedia\pasaje.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

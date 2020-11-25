@@ -61,7 +61,7 @@ namespace BusinessLayer.Interfaces
         Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, TipoDocumento tipoDocumento, int? asiento = null);
 
         /// <summary>
-        /// Devuelve el costo minimo a partir del cual el uuario puede elegir asiento
+        /// Devuelve el costo minimo a partir del cual el usuario puede elegir asiento
         /// </summary>
         /// <returns></returns>
         decimal PrecioParaElegirAsiento();

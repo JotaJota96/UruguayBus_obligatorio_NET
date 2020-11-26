@@ -1,7 +1,8 @@
-﻿@model UruguayBusWeb.Models.ComprarPasajeModel
+﻿@model UruguayBusWeb.Models.ConfirmarPagoModel
 
 @{
     ViewBag.Title = "ConfirmarPago";
+    String keyMP = System.Configuration.ConfigurationManager.AppSettings["MercadoPagoPublicKey"];
 }
 
 <h2>ConfirmarPago</h2>
@@ -17,7 +18,7 @@
         @Html.HiddenFor(model => model.asiento)
         @Html.HiddenFor(model => model.precio)
         <script src="https://www.mercadopago.com.uy/integrations/v1/web-tokenize-checkout.js"
-                data-public-key="TEST-9c480fb8-9a27-4866-8858-9e05e78a59f3"
+                data-public-key="@keyMP"
                 data-transaction-amount="@Model.precio">
         </script>
     </form>

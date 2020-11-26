@@ -1,7 +1,11 @@
-﻿using Share.DTOs;
+﻿using MercadoPago.Common;
+using MercadoPago.DataStructures.Payment;
+using MercadoPago.Resources;
+using Share.DTOs;
 using Share.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -49,7 +53,17 @@ namespace UruguayBusWeb.Controllers
                     return View(cpm);
                 }
 
-                return View("ConfirmarPago", cpm);
+                ConfirmarPagoModel confPago = new ConfirmarPagoModel()
+                {
+                    fecha = cpm.fecha,
+                    idLinea = cpm.idLinea,
+                    idParadaOrigen = cpm.idParadaOrigen,
+                    idParadaDestino = cpm.idParadaDestino,
+                    asiento = cpm.asiento,
+                    precio = cpm.precio,
+                };
+
+                return View("ConfirmarPago", confPago);
             }
             catch (Exception)
             {
@@ -107,16 +121,51 @@ namespace UruguayBusWeb.Controllers
 
         // POST: Usuario/ConfirmarPago
         [HttpPost]
-        public async Task<ActionResult> ConfirmarPago(ComprarPasajeModel cpm)
+        public async Task<ActionResult> ConfirmarPago(ConfirmarPagoModel cpm)
         {
             try
             {
-                // hacer cosas ...
+                Payment payment = new Payment()
+                {
+                    TransactionAmount = float.Parse("170"),
+                    Token = cpm.token,
+                    Description = "Pasaje de UruguayBus",
+                    Installments = cpm.installments,
+                    PaymentMethodId = cpm.payment_method_id,
+                    IssuerId = cpm.issuer_id,
+                    Payer = new Payer()
+                    {
+                        Email = ConfigurationManager.AppSettings["UnobtrusivePayerEmail"],
+                    }
+                };
+                payment.Save();
+
+                var ps = payment.Status;
+
+                // pending      => El usuario no completo el proceso de pago todavía.
+                // approved     => El pago fue aprobado y acreditado.
+                // authorized   => El pago fue autorizado pero no capturado todavía.
+                // in_process   => El pago está en revisión.
+                // in_mediation => El usuario inició una disputa.
+                // rejected     => El pago fue rechazado.El usuario podría reintentar el pago.
+                // cancelled    => El pago fue cancelado por una de las partes o el pago expiró.
+                // refunded     => El pago fue devuelto al usuario.
+                // charged_back => Se ha realizado un contracargo en la tarjeta de crédito del comprador
+
+                if (payment.Status == PaymentStatus.approved)
+                {
+                    //ok
+                }
+                else
+                {
+                    //error
+                }
 
                 return View(cpm);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                string s = e.Message;
                 return View(cpm);
             }
         }

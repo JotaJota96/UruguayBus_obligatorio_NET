@@ -33,12 +33,13 @@ namespace UruguayBusWeb.Models
         [DisplayName("Asiento")]
         public int asiento { get; set; } = 0;
 
+        [DisplayName("Precio")]
+        public decimal precio { get; set; }
+
         // propiedades auxiliares
         public decimal precioElegirAsiento { get; set; }
         public List<Linea> lineas { get; set; } = new List<Linea>();
 
 
-        [DisplayName("Precio")]
-        public decimal precio { get; set; }
     }
 }

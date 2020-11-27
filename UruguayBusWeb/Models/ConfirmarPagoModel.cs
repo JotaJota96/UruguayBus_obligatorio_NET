@@ -11,6 +11,20 @@ namespace UruguayBusWeb.Models
 
         public ConfirmarPagoResult accion { get; set; } = ConfirmarPagoResult.ConfirmarDatos;
 
+        // Informacion para mostrarle al usuario
+
+        [DisplayName("Linea")]
+        public string nombreLinea { get; set; }
+
+
+        [DisplayName("Parada de origen")]
+        public string nombreParadaOrigen { get; set; }
+
+
+        [DisplayName("Parada de destino")]
+        public string nombreParadaDestino { get; set; }
+
+
         // Información necesaria para el funcionamiento
 
         [DisplayName("ID viaje")]

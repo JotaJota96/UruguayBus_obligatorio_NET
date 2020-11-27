@@ -56,13 +56,16 @@ namespace UruguayBusWeb.Controllers
 
                 ConfirmarPagoModel confPago = new ConfirmarPagoModel()
                 {
-                    fecha = cpm.fecha,
-                    idViaje = cpm.idViaje,
-                    idLinea = cpm.idLinea,
-                    idParadaOrigen = cpm.idParadaOrigen,
-                    idParadaDestino = cpm.idParadaDestino,
-                    asiento = cpm.asiento,
-                    precio = cpm.precio,
+                    fecha               = cpm.fecha,
+                    idViaje             = cpm.idViaje,
+                    idLinea             = cpm.idLinea,
+                    idParadaOrigen      = cpm.idParadaOrigen,
+                    idParadaDestino     = cpm.idParadaDestino,
+                    asiento             = cpm.asiento,
+                    precio              = cpm.precio,
+                    nombreLinea         = Task.Run(() => gp.obtenerLinea(cpm.idLinea)).Result.nombre,
+                    nombreParadaOrigen  = Task.Run(() => gp.obtenerParada(cpm.idParadaOrigen)).Result.nombre,
+                    nombreParadaDestino = Task.Run(() => gp.obtenerParada(cpm.idParadaDestino)).Result.nombre,
                 };
 
                 return View("ConfirmarPago", confPago);

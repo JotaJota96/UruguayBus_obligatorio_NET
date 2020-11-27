@@ -3,26 +3,91 @@
 @{
     ViewBag.Title = "ConfirmarPago";
     String keyMP = System.Configuration.ConfigurationManager.AppSettings["MercadoPagoPublicKey"];
+    String textAsiento = Model.asiento == 0 ? "Sin asiento" : Model.asiento.ToString();
 }
 
-<h2>ConfirmarPago</h2>
+<h2>Confirmar Pago</h2>
 
-<div>
-    <h4>ComprarPasajeModel</h4>
-    
-    <form action="ConfirmarPago" method="post">
-        @Html.HiddenFor(model => model.fecha)
-        @Html.HiddenFor(model => model.idViaje)
-        @Html.HiddenFor(model => model.idLinea)
-        @Html.HiddenFor(model => model.idParadaOrigen)
-        @Html.HiddenFor(model => model.idParadaDestino)
-        @Html.HiddenFor(model => model.asiento)
-        @Html.HiddenFor(model => model.precio)
-        <script src="https://www.mercadopago.com.uy/integrations/v1/web-tokenize-checkout.js"
-                data-public-key="@keyMP"
-                data-transaction-amount="@Model.precio">
-        </script>
-    </form>
+<div class="row">
+    @if (Model.accion == UruguayBusWeb.Models.ConfirmarPagoResult.ConfirmarDatos)
+    {
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+            <div class="form-group row">
+                @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control col-12", @type = "date", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.nombreLinea, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.nombreLinea, new { htmlAttributes = new { @class = "form-control col-12", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.nombreParadaOrigen, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.nombreParadaOrigen, new { htmlAttributes = new { @class = "form-control col-12", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.nombreParadaDestino, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.nombreParadaDestino, new { htmlAttributes = new { @class = "form-control col-12", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.asiento, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => textAsiento, new { htmlAttributes = new { @class = "form-control col-12", @type = "text", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control col-12", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <!-- botones atras / siguiente -->
+            <div class="form-group row">
+                <div class="col-md-5"></div>
+                <div class="col-md-7 d-flex justify-content-end">
+                    <form action="ConfirmarPago" method="post">
+                        @Html.HiddenFor(model => model.fecha)
+                        @Html.HiddenFor(model => model.idViaje)
+                        @Html.HiddenFor(model => model.idLinea)
+                        @Html.HiddenFor(model => model.idParadaOrigen)
+                        @Html.HiddenFor(model => model.idParadaDestino)
+                        @Html.HiddenFor(model => model.asiento)
+                        @Html.HiddenFor(model => model.precio)
+                        @Html.HiddenFor(model => model.nombreLinea)
+                        @Html.HiddenFor(model => model.nombreParadaOrigen)
+                        @Html.HiddenFor(model => model.nombreParadaDestino)
+                        <script src="https://www.mercadopago.com.uy/integrations/v1/web-tokenize-checkout.js"
+                                data-public-key="@keyMP"
+                                data-transaction-amount="@Model.precio">
+                        </script>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.accion == UruguayBusWeb.Models.ConfirmarPagoResult.Ok)
+    {
+        <h1>Confirmado</h1>
+    }
+    else if (Model.accion == UruguayBusWeb.Models.ConfirmarPagoResult.Error)
+    {
+        <h1>Ocurrio un error</h1>
+    }
+
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

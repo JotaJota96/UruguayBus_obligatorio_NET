@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewBag.Title = "PanelDeVehiculos";
+    ICollection<Share.Entities.Parada> lstParada = (ICollection<Share.Entities.Parada>)ViewBag.ListaParada;
+    ICollection<Share.Entities.Vehiculo> lstVehiculo = (ICollection<Share.Entities.Vehiculo>)ViewBag.ListaVehiculo;
+}
+<style>
+    #map {
+        height: 500px;
+        width: 500px
+    }
+</style>
+
+<h2>Panel de control de vehiculos</h2>
+
+<div class="form-horizontal">
+    <hr />
+    <div>
+        <div id="map" style='width: 100%; height: 500px;'>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoicHJpY2tnIiwiYSI6ImNraHdvOWJvazFmZ3oydG9jcDUxcnY5Z3kifQ.yg08zjxxfc68gbfLkdBYng'; // Nuestro Token de acceso
+
+        /* Map: This represents the map on the page. */
+        var map = new mapboxgl.Map({
+            container: "map",
+            style: "mapbox://styles/mapbox/dark-v10",
+            zoom: 8,
+            center: [-56.732051948450575, -34.33235873819117]
+        });
+
+        map.on("load", function () {
+            /* Image: An image is loaded and added to the map. */
+            map.loadImage("https://img.icons8.com/emoji/24/000000/bus-stop-emoji.png", function (error, image) {
+                if (error) throw error;
+                map.addImage("custom-marker", image);
+                /* Style layer: A style layer ties together the source and image and specifies how they are displayed on the map. */
+                map.addLayer({
+                    id: "markers",
+                    type: "symbol",
+                    /* Source: A data source specifies the geographic coordinate where the image marker gets placed. */
+                    source: {
+                        type: "geojson",
+                        data: {
+                            type: 'FeatureCollection',
+                            features: [
+                                @foreach (var item in lstParada)
+                                {
+                                    @Html.Raw("{");
+                                    @Html.Raw("type: 'Feature',");
+                                    @Html.Raw("properties: { },");
+                                    @Html.Raw("geometry:");
+                                    @Html.Raw("{");
+                                           @Html.Raw("type: \"Point\",");
+
+                                    string latitud = ""+item.latitud;
+                                    string retLatitud = "";
+                                    for (int i = 0; i < latitud.Length; i++)
+                                    {
+                                        if (latitud[i] == ',')
+                                        {
+                                            retLatitud += '.';
+                                        }
+                                        else
+                                        {
+                                            retLatitud += latitud[i];
+                                        }
+                                    }
+
+
+                                    string longitud = "" + item.longitud;
+                                    string retLongitud = "";
+                                    for (int i = 0; i < longitud.Length; i++)
+                                    {
+                                        if (longitud[i] == ',')
+                                        {
+                                            retLongitud += '.';
+                                        }
+                                        else
+                                        {
+                                            retLongitud += longitud[i];
+                                        }
+                                    }
+
+                                    @Html.Raw("coordinates:[" + retLongitud + "," + retLatitud + "]");
+                                    @Html.Raw("}");
+                                    @Html.Raw("},");
+                                }
+                            ]
+                        }
+                    },
+                    layout: {
+                        "icon-image": "custom-marker",
+                    }
+                });
+            });
+        });
+
+        map.on("load", function () {
+            /* Image: An image is loaded and added to the map. */
+            map.loadImage("https://img.icons8.com/fluent/48/000000/bus-stop.png", function (error, image) {
+                if (error) throw error;
+                map.addImage("custom-marker", image);
+                /* Style layer: A style layer ties together the source and image and specifies how they are displayed on the map. */
+                map.addLayer({
+                    id: "markers",
+                    type: "symbol",
+                    /* Source: A data source specifies the geographic coordinate where the image marker gets placed. */
+                    source: {
+                        type: "geojson",
+                        data: {
+                            type: 'FeatureCollection',
+                            features: [
+                                @foreach (var item in lstVehiculo)
+                                {
+                                    @Html.Raw("{");
+                                    @Html.Raw("type: 'Feature',");
+                                    @Html.Raw("properties: { },");
+                                    @Html.Raw("geometry:");
+                                    @Html.Raw("{");
+                                           @Html.Raw("type: \"Point\",");
+
+                                    string latitud = ""+item.latitud;
+                                    string retLatitud = "";
+                                    for (int i = 0; i < latitud.Length; i++)
+                                    {
+                                        if (latitud[i] == ',')
+                                        {
+                                            retLatitud += '.';
+                                        }
+                                        else
+                                        {
+                                            retLatitud += latitud[i];
+                                        }
+                                    }
+
+
+                                    string longitud = "" + item.longitud;
+                                    string retLongitud = "";
+                                    for (int i = 0; i < longitud.Length; i++)
+                                    {
+                                        if (longitud[i] == ',')
+                                        {
+                                            retLongitud += '.';
+                                        }
+                                        else
+                                        {
+                                            retLongitud += longitud[i];
+                                        }
+                                    }
+
+                                    @Html.Raw("coordinates:[" + retLongitud + "," + retLatitud + "]");
+                                    @Html.Raw("}");
+                                    @Html.Raw("},");
+                                }
+                            ]
+                        }
+                    },
+                    layout: {
+                        "icon-image": "custom-marker",
+                    }
+                });
+            });
+        });
+    </script>
+}

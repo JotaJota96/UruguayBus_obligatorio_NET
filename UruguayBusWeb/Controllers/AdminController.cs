@@ -677,6 +677,16 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
+        // GET: Admin/RegistrarLinea
+        public async Task<ActionResult> PanelDeControl()
+        {
+            ICollection<Parada> lstParada = await gp.ListarParadas();
+            ICollection<Vehiculo> lstVehiculo = await gp.ListarVehiculos();
+            ViewBag.ListaParada = lstParada;
+            ViewBag.ListaVehiculo = lstVehiculo;
+
+            return View("PanelDeControl");
+        }
         // **** **** Fin de seccion de Lucas **** ****
 
     }

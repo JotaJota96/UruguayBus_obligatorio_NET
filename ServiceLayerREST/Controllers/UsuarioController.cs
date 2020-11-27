@@ -109,6 +109,20 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("api/Usuario/CancelarPasaje/{idPasaje}")]
+        public Pasaje CancelarPasaje([FromUri] int idPasaje)
+        {
+            try
+            {
+                return blu.CancelarPasaje(idPasaje);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
         [HttpGet]
         [Route("api/Usuario/CorreoExiste/{correo}")]
         public bool CorreoExiste([FromUri] string correo)

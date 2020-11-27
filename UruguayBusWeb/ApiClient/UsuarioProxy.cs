@@ -155,5 +155,21 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+
+        public async Task<Pasaje> CancelarPasaje(int idPasaje)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsync(basePath + "CancelarPasaje/" + idPasaje, null);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Pasaje>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

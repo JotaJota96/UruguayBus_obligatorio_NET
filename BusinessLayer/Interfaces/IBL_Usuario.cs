@@ -59,6 +59,14 @@ namespace BusinessLayer.Interfaces
         /// <returns></returns>
         Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, TipoDocumento tipoDocumento, int? asiento = null);
 
+
+        /// <summary>
+        /// Cancela la reservacion de un pasaje
+        /// </summary>
+        /// <param name="idPasaje">ID del pasaje a cancelar</param>
+        /// <returns></returns>
+        Pasaje CancelarPasaje(int idPasaje);
+
         /// <summary>
         /// Devuelve el costo minimo a partir del cual el usuario puede elegir asiento
         /// </summary>

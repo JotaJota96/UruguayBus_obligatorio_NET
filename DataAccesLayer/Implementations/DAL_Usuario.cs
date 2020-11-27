@@ -398,6 +398,30 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
+        public Pasaje CancelarPasaje(int idPasaje)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    pasaje pasaje = db.pasaje.FirstOrDefault(x => x.id == idPasaje);
+
+                    if (pasaje == null)
+                        return null;
+
+                    Pasaje ret = PasajeConverter.convert(pasaje);
+
+                    db.pasaje.Remove(pasaje);
+                    db.SaveChanges();
+
+                    return ret;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
         public bool CorreoExiste(string correo)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())

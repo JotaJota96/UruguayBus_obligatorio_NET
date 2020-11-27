@@ -136,6 +136,8 @@
                     </tbody>
                 </table>
                 
+                @Html.HiddenFor(model => model.idViaje);
+
                 <!-- botones atras / siguiente -->
                 <div class="form-group row">
                     <div class="col-12 d-flex justify-content-between">
@@ -217,6 +219,7 @@
 
         const precioElegirAsiento = @Html.Raw(Model == null ? "0" : Model.precioElegirAsiento.ToString ("0.##") ); // imprimo dentro del script el valor de la variable;
         const txtFecha = "#fecha";
+        const hdnIdViaje = "#idViaje";
         const cmbLinea = "#idLinea";
         const cmbParadaOrigen = "#idParadaOrigen";
         const cmbParadaDestino = "#idParadaDestino";
@@ -285,6 +288,8 @@
         function seleccionarViajeDisponible(idViaje) {
             // obtengo del array el viaje seleccionado segun su ID
             let viaje = lstViajesDisponibles.find(elem => elem.viaje_id == idViaje);
+
+            $(hdnIdViaje).val(viaje.viaje_id);
 
             // informacion que se va a mostrar
             let mostrarFecha = $(txtFecha).val();

@@ -12,6 +12,7 @@
     
     <form action="ConfirmarPago" method="post">
         @Html.HiddenFor(model => model.fecha)
+        @Html.HiddenFor(model => model.idViaje)
         @Html.HiddenFor(model => model.idLinea)
         @Html.HiddenFor(model => model.idParadaOrigen)
         @Html.HiddenFor(model => model.idParadaDestino)

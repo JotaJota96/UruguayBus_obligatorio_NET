@@ -18,6 +18,10 @@ namespace UruguayBusWeb.Models
         public DateTime fecha { get; set; }
 
         [Required]
+        [DisplayName("Vinea")]
+        public int idViaje { get; set; }
+
+        [Required]
         [DisplayName("Linea")]
         public int idLinea { get; set; }
 

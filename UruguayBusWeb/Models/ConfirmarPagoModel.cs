@@ -9,22 +9,33 @@ namespace UruguayBusWeb.Models
     public class ConfirmarPagoModel
     {
 
+        public ConfirmarPagoResult accion { get; set; } = ConfirmarPagoResult.ConfirmarDatos;
+
         // Información necesaria para el funcionamiento
+
+        [DisplayName("ID viaje")]
+        public int idViaje { get; set; }
+
 
         [DisplayName("Fecha")]
         public DateTime fecha { get; set; }
 
-        [DisplayName("Linea")]
+
+        [DisplayName("ID linea")]
         public int idLinea { get; set; }
 
-        [DisplayName("Parada de origen")]
+
+        [DisplayName("ID parada de origen")]
         public int idParadaOrigen { get; set; }
 
-        [DisplayName("Parada de destino")]
+
+        [DisplayName("ID parada de destino")]
         public int idParadaDestino { get; set; }
+
 
         [DisplayName("Asiento")]
         public int asiento { get; set; } = 0;
+
 
         [DisplayName("Precio")]
         public decimal precio { get; set; }
@@ -56,5 +67,14 @@ namespace UruguayBusWeb.Models
         [DisplayName("ID del emisor de la tarjeta")]
         public string issuer_id { get; set; }
 
+    }
+
+    // ***** ***** ***** ***** ***** ***** ***** *****
+
+    public enum ConfirmarPagoResult
+    {
+        Error = 0,
+        Ok = 1,
+        ConfirmarDatos = 2,
     }
 }

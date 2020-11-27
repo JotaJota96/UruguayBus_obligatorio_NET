@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using UruguayBusWeb.ApiClient;
 using UruguayBusWeb.Models;
+using UruguayBusWeb.Models.Proxy;
 
 namespace UruguayBusWeb.Controllers
 {
@@ -56,6 +57,7 @@ namespace UruguayBusWeb.Controllers
                 ConfirmarPagoModel confPago = new ConfirmarPagoModel()
                 {
                     fecha = cpm.fecha,
+                    idViaje = cpm.idViaje,
                     idLinea = cpm.idLinea,
                     idParadaOrigen = cpm.idParadaOrigen,
                     idParadaDestino = cpm.idParadaDestino,
@@ -123,13 +125,42 @@ namespace UruguayBusWeb.Controllers
         [HttpPost]
         public async Task<ActionResult> ConfirmarPago(ConfirmarPagoModel cpm)
         {
+            Pasaje pasaje = new Pasaje();
             try
             {
+                // Pseudocodigo:
+                // obtener datos del usuario y de pasaje a reservar
+                // Realizar la reserva
+                // Verificar el estado del pago, si es correcto:
+                //     mostrar mensaje ok
+                // si no:
+                //     cancelar la reserva
+                //     mostrar mensaje error
+
+                // obtengo al usuario logueado
+                Usuario u = (Usuario) Session["datosLogeados"];
+
+                // completo los datos necesarios para reservar
+                ReservarPasajeDTO rpdto = new ReservarPasajeDTO()
+                {
+                    idViaje = cpm.idViaje,
+                    idParadaOrigen = cpm.idParadaOrigen,
+                    idParadaDestino = cpm.idParadaDestino,
+                    asiento = cpm.asiento,
+                    idUsuario = u.id,
+                    documento = u.persona.documento,
+                    tipoDocumento = u.persona.tipo_documento,
+                };
+
+                // realizo la reserva, si falla, en el catch la cancelo
+                pasaje = await up.ReservarPasaje(rpdto);
+
+                // creo un objeto Pago con la informacion necesaria
                 Payment payment = new Payment()
                 {
-                    TransactionAmount = float.Parse("170"),
+                    TransactionAmount = (float?) cpm.precio,
                     Token = cpm.token,
-                    Description = "Pasaje de UruguayBus",
+                    Description = "Reserva de pasaje en UruguayBus",
                     Installments = cpm.installments,
                     PaymentMethodId = cpm.payment_method_id,
                     IssuerId = cpm.issuer_id,
@@ -138,34 +169,44 @@ namespace UruguayBusWeb.Controllers
                         Email = ConfigurationManager.AppSettings["UnobtrusivePayerEmail"],
                     }
                 };
+
+                // confirma el pago
                 payment.Save();
 
-                var ps = payment.Status;
+                /**
+                 * pending      => El usuario no completo el proceso de pago todavía.
+                 * approved     => El pago fue aprobado y acreditado.
+                 * authorized   => El pago fue autorizado pero no capturado todavía.
+                 * in_process   => El pago está en revisión.
+                 * in_mediation => El usuario inició una disputa.
+                 * rejected     => El pago fue rechazado.El usuario podría reintentar el pago.
+                 * cancelled    => El pago fue cancelado por una de las partes o el pago expiró.
+                 * refunded     => El pago fue devuelto al usuario.
+                 * charged_back => Se ha realizado un contracargo en la tarjeta de crédito del comprador
+                 */
 
-                // pending      => El usuario no completo el proceso de pago todavía.
-                // approved     => El pago fue aprobado y acreditado.
-                // authorized   => El pago fue autorizado pero no capturado todavía.
-                // in_process   => El pago está en revisión.
-                // in_mediation => El usuario inició una disputa.
-                // rejected     => El pago fue rechazado.El usuario podría reintentar el pago.
-                // cancelled    => El pago fue cancelado por una de las partes o el pago expiró.
-                // refunded     => El pago fue devuelto al usuario.
-                // charged_back => Se ha realizado un contracargo en la tarjeta de crédito del comprador
-
+                // verifico el estado del pago
                 if (payment.Status == PaymentStatus.approved)
-                {
-                    //ok
+                { // todo bien
+                    cpm.accion = ConfirmarPagoResult.Ok;
                 }
                 else
                 {
-                    //error
+                    cpm.accion = ConfirmarPagoResult.Error;
+                    await up.CancelarPasaje(pasaje.id);
                 }
-
                 return View(cpm);
             }
             catch (Exception e)
             {
-                string s = e.Message;
+                try
+                {
+                    await up.CancelarPasaje(pasaje.id);
+                }
+                catch (Exception)
+                {
+                }
+                cpm.accion = ConfirmarPagoResult.Error;
                 return View(cpm);
             }
         }

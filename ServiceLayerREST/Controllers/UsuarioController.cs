@@ -94,7 +94,8 @@ namespace ServiceLayerREST.Controllers
         {
             try
             {
-                if (dto.documento == null && dto.tipoDocumento == null && dto.idUsuario != null)
+                // si idUsuario es distino de null, entonces se trata de un usuario registrado
+                if (dto.idUsuario != null)
                 {
                     return blu.ReservarPasaje(dto.idViaje, dto.idParadaOrigen, dto.idParadaDestino, (int)dto.idUsuario, dto.asiento);
                 }

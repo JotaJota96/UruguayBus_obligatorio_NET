@@ -18,6 +18,7 @@ namespace UruguayBusWeb.Controllers
 
         UsuarioProxy up = new UsuarioProxy();
         GlobalProxy gp = new GlobalProxy();
+        SuperadminProxy sap = new SuperadminProxy();
 
         public GlobalController()
         {
@@ -79,7 +80,24 @@ namespace UruguayBusWeb.Controllers
 
         // **** **** Fin de seccion de Juan **** ****
         // **** **** Inicio de seccion de Sebastian **** ****
+        // POST: Admin/AsignarRol/5
+        [HttpPut]
+        public async Task<ActionResult> AsignarRol(int id, Rol rol)
+        {
+            // recibe los datos del elemento a registrar y redirige al listado
+            try
+            {
 
+                var res = await sap.AsignarRol(id,rol,DateTime.Now);
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                // redirigir segun el error 
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("InternalServerError", "Error", new { area = "" });
+            }
+        }
         // **** **** Fin de seccion de Sebastian **** ****
         // **** **** Inicio de seccion de Lucas **** ****
         public ActionResult Login()

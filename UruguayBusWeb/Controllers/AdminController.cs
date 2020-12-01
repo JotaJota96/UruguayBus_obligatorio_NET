@@ -38,16 +38,6 @@ namespace UruguayBusWeb.Controllers
             return View("Vehiculo/ListarVehiculos", lst);
         }
 
-        // GET: Admin/ListarVehiculos
-        public async Task<ActionResult> ListarParadas()
-        {
-            // obtiene el listado y lo pasa a la vista
-
-            ICollection<Parada> lst = await gp.ListarParadas();
-            // carga la vista y pasandole el modelo
-            return View("Parada/ListarParadas", lst);
-        }
-
         // GET: Admin/RegistrarVehiculo
         public ActionResult RegistrarVehiculo()
         {
@@ -92,32 +82,6 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
-        // POST: Admin/RegistrarParada
-        [HttpPost]
-        public async Task<ActionResult> RegistrarParada(FormCollection collection)
-        {
-            // recibe los datos del elemento a registrar y redirige al listado
-            try
-            {
-                Parada P = new Parada()
-                {
-                    latitud = int.Parse(collection["latitud"]),
-                    longitud = int.Parse(collection["longitud"]),
-                    nombre = collection["nombre"],
-                };
-
-                P = await ap.RegistrarParada(P);
-
-                // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("ListarParadas");
-            }
-            catch
-            {
-                // redirigir segun ele rror
-                // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("ListarParadas");
-            }
-        }
 
         // GET: Admin/ModificarParada/5
         public async Task<ActionResult> ModificarParada(int id)
@@ -138,32 +102,6 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
-        // POST: Admin/ModificarParada/5
-        [HttpPost]
-        public async Task<ActionResult> ModificarParada(int id, FormCollection collection)
-        {
-            // recibe los datos del elemento a modificar y redirige al listado
-            try
-            {
-                Parada P = new Parada()
-                {
-                    id = id,
-                    latitud = int.Parse(collection["latitud"]),
-                    longitud = int.Parse(collection["longitud"]),
-                    nombre = collection["nombre"],
-                };
-
-                P = await ap.ModificarParada(P);
-
-                // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("ListarVehiculos");
-            }
-            catch
-            {
-                // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("ModificarParada");
-            }
-        }
 
         // GET: Admin/ModificarVehiculo/5
         public async Task<ActionResult> ModificarVehiculo(int id)
@@ -297,6 +235,70 @@ namespace UruguayBusWeb.Controllers
 
         // **** **** Fin de seccion de Juan **** ****
         // **** **** Inicio de seccion de Sebastian **** ****
+
+        // POST: Admin/ModificarParada/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarParada(int id, FormCollection collection)
+        {
+            // recibe los datos del elemento a modificar y redirige al listado
+            try
+            {
+                Parada P = new Parada()
+                {
+                    id = id,
+                    latitud = int.Parse(collection["latitud"]),
+                    longitud = int.Parse(collection["longitud"]),
+                    nombre = collection["nombre"],
+                };
+
+                P = await ap.ModificarParada(P);
+
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ListarVehiculos");
+            }
+            catch
+            {
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ModificarParada");
+            }
+        }
+
+        // GET: Admin/ListarVehiculos
+        public async Task<ActionResult> ListarParadas()
+        {
+            // obtiene el listado y lo pasa a la vista
+
+            ICollection<Parada> lst = await gp.ListarParadas();
+            // carga la vista y pasandole el modelo
+            return View("Parada/ListarParadas", lst);
+        }
+
+        // POST: Admin/RegistrarParada
+        [HttpPost]
+        public async Task<ActionResult> RegistrarParada(FormCollection collection)
+        {
+            // recibe los datos del elemento a registrar y redirige al listado
+            try
+            {
+                Parada P = new Parada()
+                {
+                    latitud = int.Parse(collection["latitud"]),
+                    longitud = int.Parse(collection["longitud"]),
+                    nombre = collection["nombre"],
+                };
+
+                P = await ap.RegistrarParada(P);
+
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ListarParadas");
+            }
+            catch
+            {
+                // redirigir segun ele rror
+                // Llama a la funcion de este controlador (no es una ruta)
+                return RedirectToAction("ListarParadas");
+            }
+        }
 
         // **** **** Fin de seccion de Sebastian **** ****
         // **** **** Inicio de seccion de Lucas **** ****

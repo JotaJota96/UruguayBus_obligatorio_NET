@@ -144,6 +144,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ConductorController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\GlobalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -152,6 +153,7 @@
     </Compile>
     <Compile Include="Models\ComprarPasajeModel.cs" />
     <Compile Include="Models\ConfirmarPagoModel.cs" />
+    <Compile Include="Models\AsignarRolModel.cs" />
     <Compile Include="Models\ListarViajesModel.cs" />
     <Compile Include="Models\CrearConductorModel.cs" />
     <Compile Include="Models\CrearHorariosModel.cs" />
@@ -249,6 +251,9 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Parada\RegistrarParada.cshtml" />
+    <Content Include="Views\Admin\Parada\ListarParadas.cshtml" />
+    <Content Include="Views\Admin\Parada\ModificarParada.cshtml" />
     <Content Include="Views\Global\RegistrarUsuario.cshtml" />
     <Content Include="Views\Global\Login.cshtml" />
     <Content Include="Views\Admin\Horario\ListarHorarios.cshtml" />
@@ -263,10 +268,12 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Usuario\ComprarPasaje.cshtml" />
     <Content Include="Views\Usuario\ConfirmarPago.cshtml" />
+    <Content Include="Views\Superadmin\Index.cshtml" />
+    <Content Include="Views\Superadmin\Roles\ListarUsuario.cshtml" />
+    <Content Include="Views\Superadmin\Roles\AsignarRol.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Superadmin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

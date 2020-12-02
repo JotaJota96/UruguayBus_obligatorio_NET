@@ -121,6 +121,31 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+
+        public async Task<Usuario> ObtenerUsuario(int id)
+        {
+            try
+            {
+                Usuario ret = null;
+                ICollection<Usuario> lst = await ListarUsuario();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == id)
+                    {
+                        ret = item;
+                    }
+                }
+
+                return ret;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
         public async Task<Parada> obtenerParada(int idParada)
         {
             try

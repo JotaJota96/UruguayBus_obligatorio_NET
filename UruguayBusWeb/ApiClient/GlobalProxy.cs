@@ -93,6 +93,20 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+        public async Task<ICollection<Parada>> obtenerParadasDeLinea(int idLinea)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "Lineas/" + idLinea + "/Paradas");
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<ICollection<Parada>>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public async Task<Usuario> ObtenerUsuario(string correo)
         {
             try

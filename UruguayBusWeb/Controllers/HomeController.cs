@@ -1,4 +1,4 @@
-﻿using Share.Entities;
+using Share.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +18,6 @@ namespace UruguayBusWeb.Controllers
 
         public ActionResult About()
         {
-            // Task.Run(() => gp.ListarParadasAsync()).Result;
-
             ViewBag.Message = "Mensaje de ejemplo";
 
             return View();

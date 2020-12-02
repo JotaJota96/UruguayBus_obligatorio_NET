@@ -94,7 +94,8 @@ namespace ServiceLayerREST.Controllers
         {
             try
             {
-                if (dto.documento == null && dto.tipoDocumento == null && dto.idUsuario != null)
+                // si idUsuario es distino de null, entonces se trata de un usuario registrado
+                if (dto.idUsuario != null)
                 {
                     return blu.ReservarPasaje(dto.idViaje, dto.idParadaOrigen, dto.idParadaDestino, (int)dto.idUsuario, dto.asiento);
                 }
@@ -102,6 +103,20 @@ namespace ServiceLayerREST.Controllers
                 {
                     return blu.ReservarPasaje(dto.idViaje, dto.idParadaOrigen, dto.idParadaDestino, dto.documento, (TipoDocumento)dto.tipoDocumento, dto.asiento); 
                 }
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Usuario/CancelarPasaje/{idPasaje}")]
+        public Pasaje CancelarPasaje([FromUri] int idPasaje)
+        {
+            try
+            {
+                return blu.CancelarPasaje(idPasaje);
             }
             catch (Exception e)
             {

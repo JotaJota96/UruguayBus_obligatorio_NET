@@ -12,10 +12,12 @@ namespace Share.DTOs
     public class ViajeDisponibleDTO
     {
         public int viaje_id { get; set; }
+        public int linea_id { get; set; }
         public string linea_nombre { get; set; }
         public int parada_id_origen { get; set; }
         public int parada_id_destino { get; set; }
         public TimeSpan hora { get; set; }
+        public string horaStr { get; set; } // usado para la vista
         public decimal precio { get; set; }
         public ICollection<int> asientos_disponibles { get; set; } = new List<int>();
     }

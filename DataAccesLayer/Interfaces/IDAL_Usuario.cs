@@ -18,6 +18,7 @@ namespace DataAccesLayer.Interfaces
         decimal PrecioParaElegirAsiento();
         Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int idUsuario, int? asiento = null);
         Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, TipoDocumento tipoDocumento, int? asiento = null);
+        Pasaje CancelarPasaje(int idPasaje);
         Boolean CorreoExiste(string correo);
     }
 }

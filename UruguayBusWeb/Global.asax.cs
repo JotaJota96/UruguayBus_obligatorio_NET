@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,9 @@ namespace UruguayBusWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // Establece el access token leyendolo desde la configuracion
+            MercadoPago.SDK.SetAccessToken(ConfigurationManager.AppSettings["MercadoPagoAccessToken"]);
         }
     }
 }

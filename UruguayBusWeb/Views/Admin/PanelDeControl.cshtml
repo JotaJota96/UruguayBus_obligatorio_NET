@@ -6,19 +6,30 @@
 }
 <style>
     #map {
-        height: 500px;
-        width: 500px
+        height: 520px;
+        width: 100%;
+    }
+    .mapboxgl-ctrl-logo {
+        display: none !important;
+    }
+    .parada {
+        height: 48px;
+        width: 48px;
+        background-image: url("../../Content/img/Parada.png");
+        cursor: pointer;
+    }
+    .vheiculo {
+        height: 48px;
+        width: 48px;
+        background-image: url("../../Content/img/bus.png");
+        cursor: pointer;
     }
 </style>
 
 <h2>Panel de control de vehiculos</h2>
-
+<hr />
 <div class="form-horizontal">
-    <hr />
-    <div>
-        <div id="map" style='width: 100%; height: 500px;'>
-        </div>
-    </div>
+        <div id="map"></div>
 </div>
 
 
@@ -32,18 +43,43 @@
         var map = new mapboxgl.Map({
             container: "map",
             style: "mapbox://styles/mapbox/dark-v10",
-            zoom: 8,
+            zoom: 6,
             center: [-56.732051948450575, -34.33235873819117]
         });
 
+
+        //Agregar controles al mapa con geolocalización y la opcion de pantalla completa
+        map.addControl(new mapboxgl.NavigationControl());
+        map.addControl(new mapboxgl.FullscreenControl());
+
+         function sinC(str) {
+            return str.replace(",",".");
+         }
+
+        var ParadaIcon;
+        var VheiculoIcon;
+
+
+        @foreach (var item in lstParada)
+        {
+            <Text> ParadaIcon = document.createElement('div'); ParadaIcon.classList.add("parada"); new mapboxgl.Marker(ParadaIcon,{ draggable: false }).setLngLat([sinC("@item.longitud"), sinC("@item.latitud")]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h5> Parada: ' + "@item.nombre" + '</h5>')).addTo(map); </Text>
+         }
+
+        @foreach (var item in lstVehiculo)
+         {
+            <Text> VheiculoIcon = document.createElement('div'); VheiculoIcon.classList.add("vheiculo"); new mapboxgl.Marker(VheiculoIcon,{ draggable: false }).setLngLat([sinC("@item.longitud"), sinC("@item.latitud")]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h5> Matricula: ' + "@item.matricula" + '</h5>')).addTo(map); </Text>
+         }
+    </script>
+}
+<!--
+    
         map.on("load", function () {
-            /* Image: An image is loaded and added to the map. */
             map.loadImage("https://img.icons8.com/emoji/24/000000/bus-stop-emoji.png", function (error, image) {
                 if (error) throw error;
                 map.addImage("custom-marker", image);
                 /* Style layer: A style layer ties together the source and image and specifies how they are displayed on the map. */
                 map.addLayer({
-                    id: "markers",
+                    id: "markersP",
                     type: "symbol",
                     /* Source: A data source specifies the geographic coordinate where the image marker gets placed. */
                     source: {
@@ -102,72 +138,4 @@
                 });
             });
         });
-
-        map.on("load", function () {
-            /* Image: An image is loaded and added to the map. */
-            map.loadImage("https://img.icons8.com/fluent/48/000000/bus-stop.png", function (error, image) {
-                if (error) throw error;
-                map.addImage("custom-marker", image);
-                /* Style layer: A style layer ties together the source and image and specifies how they are displayed on the map. */
-                map.addLayer({
-                    id: "markers",
-                    type: "symbol",
-                    /* Source: A data source specifies the geographic coordinate where the image marker gets placed. */
-                    source: {
-                        type: "geojson",
-                        data: {
-                            type: 'FeatureCollection',
-                            features: [
-                                @foreach (var item in lstVehiculo)
-                                {
-                                    @Html.Raw("{");
-                                    @Html.Raw("type: 'Feature',");
-                                    @Html.Raw("properties: { },");
-                                    @Html.Raw("geometry:");
-                                    @Html.Raw("{");
-                                           @Html.Raw("type: \"Point\",");
-
-                                    string latitud = ""+item.latitud;
-                                    string retLatitud = "";
-                                    for (int i = 0; i < latitud.Length; i++)
-                                    {
-                                        if (latitud[i] == ',')
-                                        {
-                                            retLatitud += '.';
-                                        }
-                                        else
-                                        {
-                                            retLatitud += latitud[i];
-                                        }
-                                    }
-
-
-                                    string longitud = "" + item.longitud;
-                                    string retLongitud = "";
-                                    for (int i = 0; i < longitud.Length; i++)
-                                    {
-                                        if (longitud[i] == ',')
-                                        {
-                                            retLongitud += '.';
-                                        }
-                                        else
-                                        {
-                                            retLongitud += longitud[i];
-                                        }
-                                    }
-
-                                    @Html.Raw("coordinates:[" + retLongitud + "," + retLatitud + "]");
-                                    @Html.Raw("}");
-                                    @Html.Raw("},");
-                                }
-                            ]
-                        }
-                    },
-                    layout: {
-                        "icon-image": "custom-marker",
-                    }
-                });
-            });
-        });
-    </script>
-}
+-->

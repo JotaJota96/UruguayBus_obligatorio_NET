@@ -52,9 +52,16 @@ namespace UruguayBusWeb.Controllers
         {
             try
             {
-
                 await cp.IniciarViaje(dto.id);
                 Session["idViajeIniciado"] = dto.id;
+
+                Viaje v = await gp.obtenerViaje(dto.id);
+                int idLinea = v.horario.linea.id;
+
+                ICollection<Parada> lstParada = await gp.obtenerParadasDeLinea(idLinea);
+
+                await cp.RegistrarPasoPorParada(lstParada.First().id, dto.id);
+                Session["idUltimaParada"] = lstParada.First().id;
 
                 return View("index");
             }
@@ -78,12 +85,12 @@ namespace UruguayBusWeb.Controllers
                 {
                     return View("index");
                 }
+
                 PasoParadaModel ppp = new PasoParadaModel()
                 {
-                    idViaje = (int)Session["idViajeIniciado"],
-                    idUltimaParada = -1
+                    idViaje = (int)Session["idViajeIniciado"]
                 };
-                Session["idUltimaParada"] = -1;
+
 
                 return View("PasoPorParada", ppp);
             }
@@ -99,38 +106,34 @@ namespace UruguayBusWeb.Controllers
         {
             try
             {
-                ppp.idUltimaParada = (int)Session["idViajeIniciado"];
-                Viaje v = await gp.obtenerViaje(ppp.idViaje);
+                int idUltimaParada = (int)Session["idUltimaParada"];
+                int idViaje = ppp.idViaje;
+                Viaje v = await gp.obtenerViaje(idViaje);
                 int idLinea = v.horario.linea.id;
+
                 ICollection<Parada> lstParada = await gp.obtenerParadasDeLinea(idLinea);
 
-                if((int)Session["idUltimaParada"] == -1)
-                {
-                    await cp.RegistrarPasoPorParada(lstParada.First().id, ppp.idViaje);
-                    Session["idUltimaParada"] = lstParada.First().id;
-                }
-
                 bool accion = false;
+
                 foreach (var item in lstParada)
                 {
                     if (accion)
                     {
-                        await cp.RegistrarPasoPorParada(item.id, ppp.idViaje);
                         Session["idUltimaParada"] = item.id;
+                        await cp.RegistrarPasoPorParada(item.id, idViaje);
+                        accion = false; 
 
                         if (lstParada.Last() == item)
                         {
                             await cp.FinalizarViaje(ppp.idViaje);
-                            Session["idUltimaParada"] = -1;
+                            Session["idUltimaParada"] = null;
                             Session["idViajeIniciado"] = null;
                             return View("index");
                         }
-
-                        accion = false; 
                         return View("PasoPorParada", ppp);
                     }
 
-                    if (item.id == (int)Session["idUltimaParada"])
+                    if (item.id == idUltimaParada)
                     {
                         accion = true;
                     }

@@ -105,12 +105,27 @@ namespace DataAccesLayer.Implementations
                     ICollection<usuario> retSinConvertir = new List<usuario>();
                     viaje v = db.viaje.Find(idViaje);
                     parada p = db.parada.Find(idParada);
-
+                    
                     if (v == null)
                         throw new Exception("No se encontro ningun viaje con ese ID");
 
                     if (p == null)
                         throw new Exception("No se encontro ninguna parada con ese ID");
+                    
+                    vehiculo vh = v.horario.vehiculo;
+
+                    paso_por_parada ppp = new paso_por_parada()
+                    {
+                        fecha_hora = DateTime.Now,
+                        viaje = v,
+                        parada = p
+                    };
+
+                    db.paso_por_parada.Add(ppp);
+
+                    vh.latitud = p.latitud;
+                    vh.longitud = p.longitud;
+                    db.SaveChanges();
 
 
                     ICollection<parada> paradasOrdenadas = ParadaConverter.convert(blg.obtenerParadasDeLinea(v.horario.linea.id));
@@ -144,16 +159,6 @@ namespace DataAccesLayer.Implementations
                         nuevo.persona = PersonaConverter.convert(item.persona);
                         retConvertido.Add(nuevo);
                     }
-
-
-                    paso_por_parada ppp = new paso_por_parada()
-                    {
-                        fecha_hora = DateTime.Now,
-                        viaje = v,
-                        parada = p
-                    };
-                    db.paso_por_parada.Add(ppp);
-                    db.SaveChanges();
 
                     return retConvertido;
                 }

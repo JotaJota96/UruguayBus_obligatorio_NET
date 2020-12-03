@@ -196,5 +196,19 @@ namespace ServiceLayerREST.Controllers
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
             }
         }
+
+        [HttpPut]
+        [Route("api/Admin/ModificarTramo")]
+        public Tramo ModificarTramo([FromBody] Precio p)
+        {
+            try
+            {
+                return bla.ModificarTramo(p);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
     }
 }

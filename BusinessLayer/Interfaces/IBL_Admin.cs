@@ -85,7 +85,18 @@ namespace BusinessLayer.Interfaces
         /// <returns></returns>
         ICollection<Viaje> ListarViajes();
 
+
+        /// <summary>
+        /// Modifica la linea pasada por parametro
+        /// </summary>
+        /// <returns></returns>
         Linea ModificarLinea(Linea l);
+
+        /// <summary>
+        /// Modifica el Tramo vinculado al precio pasada por parametro
+        /// </summary>
+        /// <returns></returns>
+        Tramo ModificarTramo(Precio p);
 
         // Faltan un par de funciones para los reportes...
 

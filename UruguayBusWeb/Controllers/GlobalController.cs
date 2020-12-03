@@ -22,7 +22,7 @@ namespace UruguayBusWeb.Controllers
         SuperadminProxy sap = new SuperadminProxy();
 
         // GET: Global
-        [AuthorizeRoles(usuario = true, admin = true, superadmin = true, conductor = true)]
+        [AuthorizeRoles(usuario = true)]
         public ActionResult Index()
         {
             return View();
@@ -37,7 +37,7 @@ namespace UruguayBusWeb.Controllers
             return View();
         }
 
-        // POST: Admin/RegistrarUsuario
+        // POST: Global/RegistrarUsuario
         [HttpPost]
         [AuthorizeRoles(logueado = false)]
         public async Task<ActionResult> RegistrarUsuario(RegistrarUsuarioModel rum)
@@ -77,9 +77,26 @@ namespace UruguayBusWeb.Controllers
         }
 
 
+        // GET: Global/Logout/
+        [AuthorizeRoles(usuario = true)]
+        public ActionResult Logout()
+        {
+            try
+            {
+                // limpia las varibles de sesion
+                Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
         // **** **** Fin de seccion de Juan **** ****
         // **** **** Inicio de seccion de Sebastian **** ****
-        // POST: Admin/AsignarRol/5
+        // POST: Global/AsignarRol/5
         [HttpPut]
         public async Task<ActionResult> AsignarRol(int id, Rol rol)
         {

@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    Share.Entities.Usuario u = Session["datosLogeados"] as Share.Entities.Usuario;
+}
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -23,6 +26,18 @@
                     <li class="nav-item">@Html.ActionLink("Acerca", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
+                <ul class="navbar-nav ml-auto">
+                    @if (u == null)
+                    {
+                        <li class="nav-item">@Html.ActionLink("Registrarse", "RegistrarUsuario", "Global", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Iniciar sesión", "Login", "Global", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">@Html.ActionLink("Cerrar sesión", "Logout", "Global", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                </ul>
+
             </div>
         </div>
     </nav>

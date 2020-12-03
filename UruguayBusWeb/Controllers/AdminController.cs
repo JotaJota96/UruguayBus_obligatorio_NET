@@ -682,6 +682,14 @@ namespace UruguayBusWeb.Controllers
         {
             ICollection<Parada> lstParada = await gp.ListarParadas();
             ICollection<Vehiculo> lstVehiculo = await gp.ListarVehiculos();
+            decimal desplasar = 0.00001M;
+
+            foreach (var item in lstVehiculo)
+            {
+                item.longitud += desplasar;
+                desplasar += 0.00001M; 
+            }
+
             ViewBag.ListaParada = lstParada;
             ViewBag.ListaVehiculo = lstVehiculo;
 

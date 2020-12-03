@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using UruguayBusWeb.ApiClient;
+using UruguayBusWeb.Helpers;
 using UruguayBusWeb.Models;
 
 namespace UruguayBusWeb.Controllers
 {
+    [AuthorizeRoles(admin = true)]
     public class AdminController : Controller
     {
         AdminProxy ap = new AdminProxy();

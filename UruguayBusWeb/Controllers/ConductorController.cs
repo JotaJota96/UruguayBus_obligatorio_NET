@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UruguayBusWeb.ApiClient;
+using UruguayBusWeb.Helpers;
 
 namespace UruguayBusWeb.Controllers
 {
+    [AuthorizeRoles(conductor = true)]
     public class ConductorController : Controller
     {
         ConductorProxy cp = new ConductorProxy();

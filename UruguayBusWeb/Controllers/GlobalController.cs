@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using UruguayBusWeb.ApiClient;
+using UruguayBusWeb.Helpers;
 using UruguayBusWeb.Models;
 using UruguayBusWeb.Models.Proxy;
 
@@ -20,12 +21,8 @@ namespace UruguayBusWeb.Controllers
         GlobalProxy gp = new GlobalProxy();
         SuperadminProxy sap = new SuperadminProxy();
 
-        public GlobalController()
-        {
-            //
-        }
-
         // GET: Global
+        [AuthorizeRoles(usuario = true, admin = true, superadmin = true, conductor = true)]
         public ActionResult Index()
         {
             return View();
@@ -34,6 +31,7 @@ namespace UruguayBusWeb.Controllers
         // **** **** Inicio de seccion de Juan **** ****
 
         // GET: Global/RegistrarUsuario
+        [AuthorizeRoles(logueado =false)]
         public ActionResult RegistrarUsuario()
         {
             return View();
@@ -41,6 +39,7 @@ namespace UruguayBusWeb.Controllers
 
         // POST: Admin/RegistrarUsuario
         [HttpPost]
+        [AuthorizeRoles(logueado = false)]
         public async Task<ActionResult> RegistrarUsuario(RegistrarUsuarioModel rum)
         {
             // recibe los datos del elemento a registrar y redirige al listado
@@ -100,12 +99,15 @@ namespace UruguayBusWeb.Controllers
         }
         // **** **** Fin de seccion de Sebastian **** ****
         // **** **** Inicio de seccion de Lucas **** ****
+
+        [AuthorizeRoles(logueado = false)]
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AuthorizeRoles(logueado = false)]
         public async Task<ActionResult> Login(LoginModel dto)
         {
             // recibe los datos del elemento

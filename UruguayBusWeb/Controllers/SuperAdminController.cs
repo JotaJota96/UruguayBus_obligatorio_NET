@@ -8,11 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using UruguayBusWeb.ApiClient;
+using UruguayBusWeb.Helpers;
 using UruguayBusWeb.Models;
 using UruguayBusWeb.Models.Proxy;
 
 namespace UruguayBusWeb.Controllers
 {
+    [AuthorizeRoles(superadmin = true)]
     public class SuperAdminController : Controller
     {
 

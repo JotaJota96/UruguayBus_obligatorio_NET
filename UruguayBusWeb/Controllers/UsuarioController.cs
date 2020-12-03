@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using UruguayBusWeb.ApiClient;
+using UruguayBusWeb.Helpers;
 using UruguayBusWeb.Models;
 using UruguayBusWeb.Models.Proxy;
 
 namespace UruguayBusWeb.Controllers
 {
+    [AuthorizeRoles(usuario =true)]
     public class UsuarioController : Controller
     {
         UsuarioProxy up = new UsuarioProxy();

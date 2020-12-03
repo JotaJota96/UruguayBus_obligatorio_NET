@@ -130,21 +130,10 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
-        public async Task<Pasaje> ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, int idUsuario, int? asiento = null)
+        public async Task<Pasaje> ReservarPasaje(ReservarPasajeDTO rv)
         {
             try
             {
-                ReservarPasajeDTO rv = new ReservarPasajeDTO()
-                {
-                    idViaje = idViaje,
-                    idParadaOrigen = idParadaOrigen,
-                    idParadaDestino = idParadaDestino,
-                    idUsuario = idUsuario,
-                    asiento = asiento,
-                    documento = null,
-                    tipoDocumento = null,
-                };
-
                 HttpResponseMessage response = await client.PostAsJsonAsync(basePath + "ReservarPasaje", rv);
                 response.EnsureSuccessStatusCode();
 
@@ -155,5 +144,21 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
+
+        public async Task<Pasaje> CancelarPasaje(int idPasaje)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsync(basePath + "CancelarPasaje/" + idPasaje, null);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Pasaje>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

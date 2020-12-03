@@ -230,6 +230,7 @@ namespace DataAccesLayer.Implementations
                     var res = viajes.Select(x => new ViajeDisponibleDTO()
                     {
                         viaje_id = x.id,
+                        linea_id = x.horario.linea.id,
                         linea_nombre = x.horario.linea.nombre,
                         parada_id_destino = idParadaDestino,
                         parada_id_origen = idParadaOrigen,
@@ -390,6 +391,30 @@ namespace DataAccesLayer.Implementations
                     db.pasaje.Add(pasaje);
                     db.SaveChanges();
                     return PasajeConverter.convert(pasaje);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+        public Pasaje CancelarPasaje(int idPasaje)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    pasaje pasaje = db.pasaje.FirstOrDefault(x => x.id == idPasaje);
+
+                    if (pasaje == null)
+                        return null;
+
+                    Pasaje ret = PasajeConverter.convert(pasaje);
+
+                    db.pasaje.Remove(pasaje);
+                    db.SaveChanges();
+
+                    return ret;
                 }
                 catch (Exception e)
                 {

@@ -6,8 +6,8 @@
 <h2>Panel de administración</h2>
 
 <div class="list-group">
-    <a href="/Superadmin/ListarUsuario" class="list-group-item list-group-item-action">
-        Gestión de roles
-    </a>
+
+    @Html.ActionLink("Gestión de roles", "ListarUsuario", "Superadmin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
 </div>
 

@@ -6,13 +6,11 @@
 <h2>Panel de conductor</h2>
 
 <div class="list-group">
-    <a href="IniciarViaje" class="list-group-item list-group-item-action">
-        Iniciar viaje
-    </a>
 
-    <a href="PasoPorParada" class="list-group-item list-group-item-action">
-        Paso por parada
-    </a>
+    @Html.ActionLink("Iniciar viaje", "IniciarViaje", "Conductor", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Paso por parada", "PasoPorParada", "Conductor", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
 </div>
 
 

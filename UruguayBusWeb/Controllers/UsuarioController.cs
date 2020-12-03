@@ -194,6 +194,11 @@ namespace UruguayBusWeb.Controllers
                 if (payment.Status == PaymentStatus.approved)
                 { // todo bien
                     cpm.accion = ConfirmarPagoResult.Ok;
+                    try
+                    {
+                        // mando el correo con el pasaje
+                        new EmailHelper().EnviarPasajeReservado(u, pasaje);
+                    } catch (Exception) { }
                 }
                 else
                 {
@@ -202,7 +207,7 @@ namespace UruguayBusWeb.Controllers
                 }
                 return View(cpm);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 try
                 {

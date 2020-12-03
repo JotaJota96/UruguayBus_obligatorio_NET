@@ -13,7 +13,7 @@ namespace UruguayBusWeb.Helpers
     {
 
 
-        public string GenerarPDF(Pasaje pasaje)
+        public string GenerarPasaje(Usuario usuario, Pasaje pasaje)
         {
             // creo un documento
             Document doc = new Document(PageSize.A5, 18, 18, 16, 0);

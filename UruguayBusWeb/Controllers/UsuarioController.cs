@@ -55,7 +55,7 @@ namespace UruguayBusWeb.Controllers
                 if ( ! TryValidateModel(cpm, nameof(ComprarPasaje))){
                     return View(cpm);
                 }
-
+                
                 ConfirmarPagoModel confPago = new ConfirmarPagoModel()
                 {
                     fecha               = cpm.fecha,
@@ -68,6 +68,7 @@ namespace UruguayBusWeb.Controllers
                     nombreLinea         = Task.Run(() => gp.obtenerLinea(cpm.idLinea)).Result.nombre,
                     nombreParadaOrigen  = Task.Run(() => gp.obtenerParada(cpm.idParadaOrigen)).Result.nombre,
                     nombreParadaDestino = Task.Run(() => gp.obtenerParada(cpm.idParadaDestino)).Result.nombre,
+                    hora                = Task.Run(() => gp.obtenerViaje(cpm.idViaje)).Result.horario.hora,
                 };
 
                 return View("ConfirmarPago", confPago);
@@ -194,6 +195,11 @@ namespace UruguayBusWeb.Controllers
                 if (payment.Status == PaymentStatus.approved)
                 { // todo bien
                     cpm.accion = ConfirmarPagoResult.Ok;
+                    try
+                    {
+                        // mando el correo con el pasaje
+                        new EmailHelper().EnviarPasajeReservado(u, pasaje, cpm);
+                    } catch (Exception) { }
                 }
                 else
                 {
@@ -202,7 +208,7 @@ namespace UruguayBusWeb.Controllers
                 }
                 return View(cpm);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 try
                 {

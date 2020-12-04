@@ -18,6 +18,13 @@
                     @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control col-12", @type = "date", @readonly = "readonly" } })
                 </div>
             </div>
+            
+            <div class="form-group row">
+                @Html.LabelFor(model => model.hora, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.hora, new { htmlAttributes = new { @class = "form-control col-12", @readonly = "readonly" } })
+                </div>
+            </div>
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.nombreLinea, htmlAttributes: new { @class = "control-label col-md-5" })
@@ -60,6 +67,7 @@
                 <div class="col-md-7 d-flex justify-content-end">
                     <form action="ConfirmarPago" method="post">
                         @Html.HiddenFor(model => model.fecha)
+                        @Html.HiddenFor(model => model.hora)
                         @Html.HiddenFor(model => model.idViaje)
                         @Html.HiddenFor(model => model.idLinea)
                         @Html.HiddenFor(model => model.idParadaOrigen)

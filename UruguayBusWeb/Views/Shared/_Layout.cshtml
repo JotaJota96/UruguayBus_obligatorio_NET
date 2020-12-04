@@ -1,5 +1,16 @@
 ﻿@{ 
     Share.Entities.Usuario u = Session["datosLogeados"] as Share.Entities.Usuario;
+
+    bool rolConductor, rolAdmin, rolSuperadmin;
+    rolConductor = rolAdmin = rolSuperadmin = false;
+
+    if (u != null)
+    {
+        List<Share.Enums.Rol> roles = u.persona.GetRoles();
+        rolConductor = roles.Contains(Share.Enums.Rol.CONDUCTOR);
+        rolAdmin = roles.Contains(Share.Enums.Rol.ADMIN);
+        rolSuperadmin = roles.Contains(Share.Enums.Rol.SUPERADMIN);
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -10,16 +21,11 @@
     <title>@ViewBag.Title - UruguayBus</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet'/>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body class="m-0 p-0">
-
-    <style>
-        .barraMenu {
-            background-color: #043486;
-        }
-    </style>
 
     <nav class="navbar navbar-expand-md navbar-dark  barraMenu">
         <div class="container">
@@ -34,9 +40,30 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-                    <li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Acerca", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (u != null)
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Seccion de usuario", "index", "Usuario", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+                        if (rolConductor)
+                        {
+                            <li class="nav-item">
+                                 @Html.ActionLink("Panel de conductor", "index", "Conductor", new { area = "" }, new { @class = "nav-link" })
+                            </li>
+                        }
+                        if (rolAdmin)
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Panel de administrador", "index", "Admin", new { area = "" }, new { @class = "nav-link" })
+                            </li>
+                        }
+                        if (rolSuperadmin)
+                        {
+                            <li class="nav-item">
+                                  @Html.ActionLink("Panel de Superadmin", "index", "Superadmin", new { area = "" }, new { @class = "nav-link" })
+                            </li>
+                        }
+                    }
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @if (u == null)

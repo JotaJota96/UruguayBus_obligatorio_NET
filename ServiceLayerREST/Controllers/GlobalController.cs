@@ -14,6 +14,12 @@ namespace ServiceLayerREST.Controllers
     {
         IBL_Global blg = new BL_Global();
 
+        [HttpGet]
+        [Route("api/")]
+        public string test()
+        {
+            return "API funcionando";
+        }
 
         [HttpGet]
         [Route("api/Global/Paradas")]

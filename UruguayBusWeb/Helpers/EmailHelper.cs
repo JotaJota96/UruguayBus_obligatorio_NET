@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
+using UruguayBusWeb.Models;
 
 namespace UruguayBusWeb.Helpers
 {
@@ -35,12 +36,12 @@ namespace UruguayBusWeb.Helpers
         /// </summary>
         /// <param name="u">Usuario al que se le envia el correo</param>
         /// <param name="p">Pasaje a enviar en el correo</param>
-        public void EnviarPasajeReservado(Usuario u, Pasaje p)
+        public void EnviarPasajeReservado(Usuario u, Pasaje p, ConfirmarPagoModel cpm)
         {
             try
             {
                 // obtengo el pasaje en PDF en base64
-                string pdfBase64 = new PdfHelper().GenerarPasaje(u, p);
+                string pdfBase64 = new PdfHelper().GenerarPasaje(u, p, cpm);
 
                 // crea el correo para enviar
                 EmailDTO email = new EmailDTO()

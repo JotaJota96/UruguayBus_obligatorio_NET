@@ -205,7 +205,7 @@ namespace UruguayBusWeb.Controllers
 
                 return RedirectToAction("ListarViajes");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // redirigir segun ele rror
                 // Llama a la funcion de este controlador (no es una ruta)

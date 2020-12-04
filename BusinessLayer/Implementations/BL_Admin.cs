@@ -289,5 +289,17 @@ namespace BusinessLayer.Implementations
                 throw new Exception("Ocurrio un error al intentar modificar la linea. " + e.Message);
             }
         }
+
+        public Tramo ModificarTramo(Precio p)
+        {
+            try
+            {
+                return dal.ModificarTramo(p);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ocurrio un error al intentar modificar el tramo. " + e.Message);
+            }
+        }
     }
 }

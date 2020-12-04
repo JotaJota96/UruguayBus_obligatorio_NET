@@ -6,15 +6,13 @@
 <h2>Panel de usuario</h2>
 
 <div class="list-group">
-    <a href="Usuario/ComprarPasaje" class="list-group-item list-group-item-action">
-        Comprar pasaje
-    </a>
-    <a href="#" class="list-group-item list-group-item-action">
-        Opcion 2
-    </a>
-    <a href="#" class="list-group-item list-group-item-action">
-        Opcion 3
-    </a>
+
+    @Html.ActionLink("Comprar pasaje", "ComprarPasaje", "Usuario", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Proximos vehiculos", "ProximoVehiculo", "Usuario", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Opcion 3", "#", "Usuario", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
 </div>
 
 

@@ -227,7 +227,48 @@ namespace UruguayBusWeb.Controllers
 
         // **** **** Fin de seccion de Sebastian **** ****
         // **** **** Inicio de seccion de Lucas **** ****
+        public async Task<ActionResult> ProximoVehiculo()
+        {
+            ICollection<Parada> lstParada = await gp.ListarParadas();
+            ViewBag.listaParada = lstParada;
+            return View("ProximoVehiculo",null);
+        }
 
+        [HttpPost]
+        public async Task<ActionResult> ProximoVehiculo(int idParada)
+        {
+            ICollection<Parada> lstParada = await gp.ListarParadas();
+            ViewBag.listaParada = lstParada;
+
+
+            Usuario u = Session["datosLogeados"] as Usuario;
+
+            if (u == null)
+            {
+                return View("ProximoVehiculo", null);
+            }
+
+            ICollection<VehiculoCercanoDTO> lstViajes = await up.ListarVehiculosCercanos(idParada,u.id);
+            if (lstViajes == null)
+            {
+                return View("ProximoVehiculo", null);
+            }
+
+            ICollection<ProximoVehiculoModel> lstRet = new List<ProximoVehiculoModel>();
+            foreach (var item in lstViajes)
+            {
+                Vehiculo v = await gp.obtenerVehiculo(item.vehiculo_id);
+                ProximoVehiculoModel pv = new ProximoVehiculoModel()
+                {
+                    Vehiculo = v,
+                    pasaje_reservado = item.pasaje_reservado,
+                    latitud = item.latitud,
+                    longitud = item.longitud
+                };
+                lstRet.Add(pv);
+            }
+            return View("ProximoVehiculo", lstRet);
+        }
         // **** **** Fin de seccion de Lucas **** ****
 
     }

@@ -166,7 +166,11 @@
     <Compile Include="Models\ListarViajesModel.cs" />
     <Compile Include="Models\CrearConductorModel.cs" />
     <Compile Include="Models\CrearHorariosModel.cs" />
+    <Compile Include="Models\CrearLineaModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ModificarLinea.cs" />
+    <Compile Include="Models\PasoParadaModel.cs" />
+    <Compile Include="Models\ProximoVehiculoModel.cs" />
     <Compile Include="Models\Proxy\AsignarRolDTO.cs" />
     <Compile Include="Models\Proxy\IniciarSesionDTO.cs" />
     <Compile Include="Models\Proxy\ListarViajesDisponiblesDTO.cs" />
@@ -186,6 +190,10 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\bus.png" />
+    <Content Include="Content\img\fondo.jpg" />
+    <Content Include="Content\img\Parada.png" />
+    <Content Include="Content\img\UruguayBus_logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -276,6 +284,14 @@
     <Content Include="Views\Conductor\Index.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Usuario\ComprarPasaje.cshtml" />
+    <Content Include="Views\Admin\Linea\ListarLinea.cshtml" />
+    <Content Include="Views\Admin\Linea\RegistrarLinea.cshtml" />
+    <Content Include="Views\Admin\Linea\DetallesLinea.cshtml" />
+    <Content Include="Views\Admin\Linea\ModificarLinea.cshtml" />
+    <Content Include="Views\Conductor\IniciarViaje.cshtml" />
+    <Content Include="Views\Conductor\PasoPorParada.cshtml" />
+    <Content Include="Views\Usuario\ProximoVehiculo.cshtml" />
+    <Content Include="Views\Superadmin\PanelDeControl.cshtml" />
     <Content Include="Views\Usuario\ConfirmarPago.cshtml" />
     <Content Include="Views\Superadmin\Index.cshtml" />
     <Content Include="Views\Superadmin\Roles\ListarUsuario.cshtml" />

@@ -6,23 +6,17 @@
 <h2>Panel de administración</h2>
 
 <div class="list-group">
-    <a href="/Admin/ListarVehiculos" class="list-group-item list-group-item-action">
-        Gestión de vehículos
-    </a>
-    <a href="/Admin/ListarParadas" class="list-group-item list-group-item-action">
-        Gestión de paradas
-    </a>
-    <a href="#" class="list-group-item list-group-item-action">
-        Gestión de lineas
-    </a>
-    <a href="/Admin/ListarConductores" class="list-group-item list-group-item-action">
-        Gestión de conductores
-    </a>
-    <a href="/Admin/ListarHorarios" class="list-group-item list-group-item-action">
-        Gestión de horarios
-    </a>
-    <a href="/Admin/ListarViajes" class="list-group-item list-group-item-action">
-        Gestión de viajes
-    </a>
+
+    @Html.ActionLink("Gestión de vehículos", "ListarVehiculos", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Gestión de paradas", "ListarParadas", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Gestión de lineas", "ListarLineas", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Gestión de conductores", "ListarConductores", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Gestión de horarios", "ListarHorarios", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Gestión de viajes", "ListarViajes", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
 </div>
 

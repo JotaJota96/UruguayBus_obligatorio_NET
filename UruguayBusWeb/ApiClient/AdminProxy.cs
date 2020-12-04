@@ -213,7 +213,7 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
-
+       
         public async Task<Linea> ModificarLinea(Linea l)
         {
             try
@@ -222,6 +222,21 @@ namespace UruguayBusWeb.ApiClient
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsAsync<Linea>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<Tramo> ModificarTramo(Precio p)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync(basicPath + "ModificarTramo", p);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Tramo>();
             }
             catch (Exception e)
             {

@@ -160,7 +160,7 @@ namespace UruguayBusWeb.Controllers
                 //Guarda los datos en la variable de sesion
 
                 //redirige al inicio
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
 using DataAccesLayer.Interfaces;
+using ServiceLayerREST.Auth;
 using ServiceLayerREST.Models;
 using Share.DTOs;
 using Share.Entities;
@@ -38,7 +39,17 @@ namespace ServiceLayerREST.Controllers
         {
             try
             {
-                return blu.IniciarSesion(dto.correo, dto.contrasenia);
+                Usuario u = blu.IniciarSesion(dto.correo, dto.contrasenia);
+
+                if (u == null) return null;
+
+                u.persona.contrasenia = null;
+
+                var token = TokenGenerator.GenerateTokenJwt(u.persona.correo);
+
+                // aca hay que devolver el token junto con el usuario
+
+                return u;
             }
             catch (Exception e)
             {

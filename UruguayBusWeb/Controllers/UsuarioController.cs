@@ -55,7 +55,7 @@ namespace UruguayBusWeb.Controllers
                 if ( ! TryValidateModel(cpm, nameof(ComprarPasaje))){
                     return View(cpm);
                 }
-                
+
                 ConfirmarPagoModel confPago = new ConfirmarPagoModel()
                 {
                     fecha               = cpm.fecha,

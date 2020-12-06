@@ -1,6 +1,7 @@
-﻿using BusinessLayer.Implementations;
+using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
 using DataAccesLayer.Interfaces;
+using ServiceLayerREST.Auth;
 using ServiceLayerREST.Models;
 using Share.DTOs;
 using Share.Entities;
@@ -14,17 +15,27 @@ using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
 {
+    [Authorize]
     public class UsuarioController : ApiController
     {
         IBL_Usuario blu = new BL_Usuario();
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/Usuario/RegistrarUsuario")]
         public Usuario RegistrarUsuario([FromBody] Usuario u)
         {
             try
             {
-                return blu.RegistrarUsuario(u);
+                u = blu.RegistrarUsuario(u);
+
+                if (u == null) return null;
+                u.persona.contrasenia = null;
+
+                var token = TokenGenerator.GenerateTokenJwt(u);
+                u.persona.contrasenia = token;
+
+                return u;
             }
             catch (Exception e)
             {
@@ -32,13 +43,22 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/Usuario/IniciarSesion")]
         public Usuario IniciarSesion([FromBody] IniciarSesionDTO dto)
         {
             try
             {
-                return blu.IniciarSesion(dto.correo, dto.contrasenia);
+                Usuario u = blu.IniciarSesion(dto.correo, dto.contrasenia);
+
+                if (u == null) return null;
+                u.persona.contrasenia = null;
+
+                var token = TokenGenerator.GenerateTokenJwt(u);
+                u.persona.contrasenia = token;
+
+                return u;
             }
             catch (Exception e)
             {
@@ -124,6 +144,7 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/Usuario/CorreoExiste/{correo}")]
         public bool CorreoExiste([FromUri] string correo)

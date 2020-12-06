@@ -65,8 +65,10 @@ namespace UruguayBusWeb.Controllers
                 
                 u = await up.RegistrarUsuario(u);
 
-                // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("Index", "Home", new { area = "" });
+                Session["datosLogeados"] = u;
+                Session["token"] = u.persona.contrasenia;
+
+                return RedirectToAction("Index", "Usuario");
             }
             catch
             {
@@ -150,14 +152,13 @@ namespace UruguayBusWeb.Controllers
                 }
 
                 Session["datosLogeados"] = u;
+                Session["token"] = u.persona.contrasenia;
 
                 // si solo tiene un rol, es un usuario comun, y se le redirige a su pagina de inicio
                 if (u.persona.GetRoles().Count == 1)
                 {
                     return RedirectToAction("Index", "Usuario");
                 }
-
-                //Guarda los datos en la variable de sesion
 
                 //redirige al inicio
                 return RedirectToAction("Index", "Home");

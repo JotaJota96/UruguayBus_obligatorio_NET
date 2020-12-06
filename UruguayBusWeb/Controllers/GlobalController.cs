@@ -161,7 +161,7 @@ namespace UruguayBusWeb.Controllers
                 }
 
                 //redirige al inicio
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

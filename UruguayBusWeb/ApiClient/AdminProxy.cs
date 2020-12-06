@@ -2,6 +2,7 @@
 using Share.Enums;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,7 +22,7 @@ namespace UruguayBusWeb.ApiClient
 
         public AdminProxy(string tkn = null)
         {
-            client.BaseAddress = new Uri("https://localhost:44349");
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["UruguayBusApiBaseAddress"]);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")

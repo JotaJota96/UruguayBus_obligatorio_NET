@@ -3,11 +3,13 @@
     ViewBag.Title = "Panel de administración interna";
 }
 
-<h2>Panel de administración</h2>
+<h2 class="mt-3">Panel de administración</h2>
 
 <div class="list-group">
 
     @Html.ActionLink("Gestión de roles", "ListarUsuario", "Superadmin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+
+    @Html.ActionLink("Panel de control", "PanelDeControl", "Superadmin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
 
 </div>
 

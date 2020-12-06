@@ -14,13 +14,23 @@ namespace UruguayBusWeb.ApiClient
     {
         HttpClient client = new HttpClient();
         string basicPath = "/api/Conductor/";
-        public ConductorProxy()
+        string token = null;
+
+        public ConductorProxy(string tkn = null)
         {
             client.BaseAddress = new Uri("https://localhost:44349/api/Conductor");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
             );
+
+            if (tkn != null) this.token = tkn;
+            else
+                try { this.token = HttpContext.Current == null ? null : (string)HttpContext.Current.Session["token"]; }
+                catch { this.token = null; }
+
+            if (!String.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public async Task FinalizarViaje(int idViaje)

@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
 {
+    [Authorize]
     public class ConductorController : ApiController
     {
         IBL_Conductor blc = new BL_Conductor();

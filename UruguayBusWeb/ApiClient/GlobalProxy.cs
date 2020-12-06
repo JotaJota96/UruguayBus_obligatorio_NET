@@ -14,13 +14,23 @@ namespace UruguayBusWeb.ApiClient
     {
         HttpClient client = new HttpClient();
         string basicPath = "/api/Global/";
-        public GlobalProxy()
+        string token = null;
+
+        public GlobalProxy(string tkn = null)
         {
             client.BaseAddress = new Uri("https://localhost:44349");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
             );
+
+            if (tkn != null) this.token = tkn;
+            else
+                try { this.token = HttpContext.Current == null ? null : (string)HttpContext.Current.Session["token"]; }
+                catch { this.token = null; }
+
+            if (!String.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public async Task<ICollection<Parada>> ListarParadasAsync()
@@ -173,7 +183,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                AdminProxy ap = new AdminProxy();
+                AdminProxy ap = new AdminProxy(this.token);
                 Conductor ret = null;
                 ICollection<Conductor> lst = await ap.ListarConductores();
 
@@ -197,7 +207,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                AdminProxy ap = new AdminProxy();
+                AdminProxy ap = new AdminProxy(this.token);
                 Viaje ret = null;
                 ICollection<Viaje> lst = await ap.ListarViajes();
 
@@ -221,7 +231,7 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
-                AdminProxy ap = new AdminProxy();
+                AdminProxy ap = new AdminProxy(this.token);
                 Horario ret = null;
                 ICollection<Horario> lst = await ap.ListarHorarios();
 

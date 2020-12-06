@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using Share.Entities;
 
 namespace ServiceLayerREST.Auth
 {
@@ -11,8 +12,11 @@ namespace ServiceLayerREST.Auth
     /// </summary>
     internal static class TokenGenerator
     {
-        public static string GenerateTokenJwt(string username)
+        public static string GenerateTokenJwt(Usuario u)
         {
+            if (u == null || u.persona == null)
+                throw new Exception("Ni el Usuario ni la Persona no puede sre null");
+
             // appsetting for Token JWT
             var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"];
             var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
@@ -23,7 +27,10 @@ namespace ServiceLayerREST.Auth
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
             // create a claimsIdentity
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) });
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] {
+                new Claim(ClaimTypes.Email, u.persona.correo),
+                new Claim(ClaimTypes.Role, TokenGenerator.RolesDelUsuario(u)),
+            });
 
             // create token to the user
             var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
@@ -37,6 +44,15 @@ namespace ServiceLayerREST.Auth
 
             var jwtTokenString = tokenHandler.WriteToken(jwtSecurityToken);
             return jwtTokenString;
+        }
+
+        private static string RolesDelUsuario(Usuario u)
+        {
+            string roles = "usuario";
+            if (u.persona.admin != null)     roles += ",admin";
+            if (u.persona.conductor != null) roles += ",conductor";
+            if (u.persona.superadmin!= null) roles += ",superadmin";
+            return roles;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Implementations;
+using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
 using DataAccesLayer.Interfaces;
 using ServiceLayerREST.Auth;
@@ -15,17 +15,27 @@ using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
 {
+    [Authorize]
     public class UsuarioController : ApiController
     {
         IBL_Usuario blu = new BL_Usuario();
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/Usuario/RegistrarUsuario")]
         public Usuario RegistrarUsuario([FromBody] Usuario u)
         {
             try
             {
-                return blu.RegistrarUsuario(u);
+                u = blu.RegistrarUsuario(u);
+
+                if (u == null) return null;
+                u.persona.contrasenia = null;
+
+                var token = TokenGenerator.GenerateTokenJwt(u);
+                u.persona.contrasenia = token;
+
+                return u;
             }
             catch (Exception e)
             {
@@ -33,6 +43,7 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/Usuario/IniciarSesion")]
         public Usuario IniciarSesion([FromBody] IniciarSesionDTO dto)
@@ -42,12 +53,10 @@ namespace ServiceLayerREST.Controllers
                 Usuario u = blu.IniciarSesion(dto.correo, dto.contrasenia);
 
                 if (u == null) return null;
-
                 u.persona.contrasenia = null;
 
-                var token = TokenGenerator.GenerateTokenJwt(u.persona.correo);
-
-                // aca hay que devolver el token junto con el usuario
+                var token = TokenGenerator.GenerateTokenJwt(u);
+                u.persona.contrasenia = token;
 
                 return u;
             }

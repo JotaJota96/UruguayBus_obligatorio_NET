@@ -144,6 +144,7 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/Usuario/CorreoExiste/{correo}")]
         public bool CorreoExiste([FromUri] string correo)

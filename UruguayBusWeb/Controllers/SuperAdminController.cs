@@ -8,11 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using UruguayBusWeb.ApiClient;
+using UruguayBusWeb.Helpers;
 using UruguayBusWeb.Models;
 using UruguayBusWeb.Models.Proxy;
 
 namespace UruguayBusWeb.Controllers
 {
+    [AuthorizeRoles(superadmin = true)]
     public class SuperAdminController : Controller
     {
 
@@ -83,6 +85,24 @@ namespace UruguayBusWeb.Controllers
         }
         // **** **** Fin de seccion de Sebastian **** ****
         // **** **** Inicio de seccion de Lucas **** ****
+
+        public async Task<ActionResult> PanelDeControl()
+        {
+            ICollection<Parada> lstParada = await gp.ListarParadas();
+            ICollection<Vehiculo> lstVehiculo = await gp.ListarVehiculos();
+            decimal desplasar = 0.00001M;
+
+            foreach (var item in lstVehiculo)
+            {
+                item.longitud += desplasar;
+                desplasar += 0.00001M;
+            }
+
+            ViewBag.ListaParada = lstParada;
+            ViewBag.ListaVehiculo = lstVehiculo;
+
+            return View("PanelDeControl");
+        }
         // **** **** Fin de seccion de Lucas **** ****
 
     }

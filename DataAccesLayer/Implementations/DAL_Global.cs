@@ -4,8 +4,6 @@ using Share.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccesLayer.Implementations
 {
@@ -105,8 +103,22 @@ namespace DataAccesLayer.Implementations
                 using (uruguay_busEntities db = new uruguay_busEntities())
                 {
                     ICollection<linea> lst = (ICollection<linea>)db.linea.ToList();
-                    
-                    return LineaConverter.convert(lst);
+                    ICollection<Linea> ret = new List<Linea>();
+
+                    foreach (var item in lst)
+                    {
+                        Linea l = LineaConverter.convert(item);
+                        
+                        foreach (var t in item.tramo)
+                        {
+                            Tramo nuevo = TramoConverter.convert(t);
+                            nuevo.parada = ParadaConverter.convert(t.parada);
+                            l.tramos.Add(nuevo);
+                        }
+                        ret.Add(l);
+                    }
+
+                    return ret;
                 }
             }
             catch (Exception e)

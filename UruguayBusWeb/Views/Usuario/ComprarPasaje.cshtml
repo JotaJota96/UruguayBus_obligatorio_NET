@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Comprar pasaje";
-    
+
     List<SelectListItem> lstLineas = new List<SelectListItem>();
     foreach (var item in Model.lineas) //(ICollection<Share.Entities.Linea>)
     {
@@ -15,70 +15,240 @@
 
 }
 
-<h2>Comprar pasaje</h2>
+<h2 class="mt-3">Comprar pasaje</h2>
 
-@using (Html.BeginForm()) 
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ComprarPasajeModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        <!-- fecha -->
-        <div class="form-group row">
-            @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control", @Type = "date" } })
-                @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <!-- linea -->
-        <div class="form-group row">
-            @Html.LabelFor(model => model.idLinea, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.idLinea, lstLineas, "Seleccione una linea", new { @class = "custom-select" })
-                @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <!-- parada origen -->
-        <div class="form-group row">
-            @Html.LabelFor(model => model.idParadaOrigen, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.idParadaOrigen, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select" })
-                @Html.ValidationMessageFor(model => model.idParadaOrigen, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <!-- parada destino -->
-        <div class="form-group row">
-            @Html.LabelFor(model => model.idParadaDestino, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.idParadaDestino, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select" })
-                @Html.ValidationMessageFor(model => model.idParadaDestino, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Reservar" class="btn btn-default" />
-            </div>
+    <!-- reemplazar todas las apariciones de la palabra 'identificador' para agregar una seccion nueva-->
+    <!--
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <a id="nav-identificador-tab" href="#nav-identificador" aria-controls="nav-identificador" aria-selected="false" class="nav-link" data-toggle="tab" role="tab">
+                Nueva sección
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="nav-identificador" aria-labelledby="nav-identificador-tab" class="tab-pane fade" role="tabpanel">
+            <h3>Nueva sección</h3>
         </div>
     </div>
+    -->
+    <!-- agregar la clase "active" al elemento seleccionado -->
+    <!-- agregar la propiedad data-toggle="tab" para poder seleccionar con clic-->
+    <ul id="nav-tabs" class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <a id="nav-datos-viaje-tab" href="#nav-datos-viaje" aria-controls="nav-datos-viaje" aria-selected="true" class="nav-link active" role="tab">
+                1. Buscar viaje
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="nav-seleccionar-viaje-tab" href="#nav-seleccionar-viaje" aria-controls="nav-seleccionar-viaje" aria-selected="false" class="nav-link" role="tab">
+                2. Elegir viaje
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="nav-seleccionar-asiento-tab" href="#nav-seleccionar-asiento" aria-controls="nav-seleccionar-asiento" aria-selected="false" class="nav-link" role="tab">
+                3. Elegir asiento
+            </a>
+        </li>
+    </ul>
+
+    <!-- agregar la clase "show active" al elemento seleccionado -->
+    <div class="tab-content mt-5">
+
+        <!-- Inicio datos basicos para buscar viaje -->
+        <div id="nav-datos-viaje" aria-labelledby="nav-datos-viaje-tab" class="tab-pane fade show active" role="tabpanel">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+
+                <!-- fecha -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control col-12", @Type = "date" } })
+                        @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- linea -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.idLinea, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.idLinea, lstLineas, "Seleccione una linea", new { @class = "custom-select col-12" })
+                        @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- parada origen -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.idParadaOrigen, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.idParadaOrigen, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select col-12" })
+                        @Html.ValidationMessageFor(model => model.idParadaOrigen, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- parada destino -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.idParadaDestino, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.idParadaDestino, new List<SelectListItem>(), "Seleccione una parada", new { @class = "custom-select col-12" })
+                        @Html.ValidationMessageFor(model => model.idParadaDestino, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Error -->
+                <div class="form-group row">
+                    <label class="control-label col-md-5"></label>
+                    <div class="col-md-7">
+                        <span id="buscarViajesError" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- botones atras / siguiente -->
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <span><!--span de relleno--></span>
+                        <button type="button" class="btn btn-primary btn-lg" onclick="buscarViajes()">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin datos basicos para buscar viaje -->
+
+        <!-- Inicio busqueda de viaje y resultados -->
+        <div id="nav-seleccionar-viaje" aria-labelledby="nav-seleccionar-viaje-tab" class="tab-pane fade" role="tabpanel">
+            <div class="col-12 col-md-10 col-lg-8 mx-auto">
+                <table id="tblViajesDisponibles" class="table table-bordered">
+                    <thead>
+                        <tr class="table-primary">
+                            <th>Hora</th>
+                            <th>Precio</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ... -->
+                    </tbody>
+                </table>
+                
+                @Html.HiddenFor(model => model.idViaje);
+
+                <!-- botones atras / siguiente -->
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <button type="button" class="btn btn-lg" onclick="irATab(0)">Volver</button>
+                        <span><!--span de relleno--></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin busqueda de viaje y resultados -->
+        
+        
+        <!-- Inicio detalle del viaje y seleccion de asiento -->
+        <div id="nav-seleccionar-asiento" aria-labelledby="nav-seleccionar-asiento-tab" class="tab-pane fade" role="tabpanel">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+                
+                <div class="form-group row">
+                    <label class="control-label col-md-5">Fecha</label>
+                    <div class="col-md-7">
+                        <input id="mostrarFecha" type="date" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-5">Linea</label>
+                    <div class="col-md-7">
+                        <input id="mostrarLinea" type="text" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-5">Origen</label>
+                    <div class="col-md-7">
+                        <input id="mostrarOrigen" type="text" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-md-5">Destino</label>
+                    <div class="col-md-7">
+                        <input id="mostrarDestino" type="text" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control col-12", @readonly="readonly" } })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.asiento, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.asiento, new List<SelectListItem>(), "Seleccione un asiento", new { @class = "custom-select" })
+                        @Html.ValidationMessageFor(model => model.asiento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+                <!-- botones atras / siguiente -->
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <button type="button" class="btn" onclick="irATab(1)">Volver</button>
+                        <span><!--span de relleno--></span>
+                        <input type="submit" value="Confirmar" class="btn btn-primary btn-lg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin detalle del viaje y seleccion de asiento -->
+
+    </div>
+
 }
+
 
 <!-- ***** ***** scripts ***** ***** -->
 
 @section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
+        const navTabs = "#nav-tabs";
 
-        // lista de paradas (se carga con AJAX)
+        const precioElegirAsiento = @Html.Raw(Model == null ? "0" : Model.precioElegirAsiento.ToString ("0.##") ); // imprimo dentro del script el valor de la variable;
+        const txtFecha = "#fecha";
+        const hdnIdViaje = "#idViaje";
+        const cmbLinea = "#idLinea";
+        const cmbParadaOrigen = "#idParadaOrigen";
+        const cmbParadaDestino = "#idParadaDestino";
+        const cmbAsiento = "#asiento";
+        const spnBuscarViajesError = "#buscarViajesError";
         let lstParadas = [];
+        const tblViajesDisponibles = "#tblViajesDisponibles";
+        let lstViajesDisponibles = [];
+
+        function getPrecio() {
+            return 123.45;
+        }
+
+        // ***** ***** ***** ***** Funciones generales ***** ***** ***** *****
+
+        // validacion de form antes de buscar
+        function validarParaBuscarViaje() {
+            let validar = true;
+            validar = validar && $(txtFecha).val() != "";
+            validar = validar && $(cmbLinea).val() != "";
+            validar = validar && $(cmbParadaOrigen).val() != "";
+            validar = validar && $(cmbParadaDestino).val() != "";
+            if (validar) {
+                $(spnBuscarViajesError).text("");
+            } else {
+                $(spnBuscarViajesError).text("Debe completar los datos anteriores");
+            }
+            return validar;
+        }
 
         // Funcion para rellenar un combobox y seleccionar un elemento
         function rellenarComboBox(idComboBox, items, idSeleccionado = undefined) {
@@ -94,12 +264,140 @@
                 $(idComboBox).append(html);
             });
         }
-        
+
         // Funcion para vaciar combobox
         function vaciarComboBox(idComboBox, placeholder) {
             $(idComboBox).empty();
             $(idComboBox).append('<option value="">' + placeholder + '</option>');
         }
+
+        // devuelve 'ventana' o 'pasillo' segun el numero del asiento
+        function ventabaOPasillo(n) {
+            if (n < 2) return 'pasillo';
+            if (n == 2 || n == 3) return 'ventana';
+            return ventabaOPasillo(n - 4);
+        }
+
+        // muestra la tab especificada (indice comienza en 0)
+        function irATab(index) {
+            $(navTabs + ' li:eq(' + index + ') a').tab('show');
+        }
+
+        // ***** ***** ***** ***** Llenado de tabla y selección de viaje ***** ***** ***** *****
+
+        function seleccionarViajeDisponible(idViaje) {
+            // obtengo del array el viaje seleccionado segun su ID
+            let viaje = lstViajesDisponibles.find(elem => elem.viaje_id == idViaje);
+
+            $(hdnIdViaje).val(viaje.viaje_id);
+
+            // informacion que se va a mostrar
+            let mostrarFecha = $(txtFecha).val();
+            let mostrarLinea = $(cmbLinea + ' > option:selected').text();
+            let mostrarOrigen = $(cmbParadaOrigen + ' > option:selected').text();
+            let mostrarDestino = $(cmbParadaDestino + ' > option:selected').text();
+            let mostrarPrecio = viaje.precio;
+
+            // cargo la informacion en los inputs (deshabilitados)
+            $('#mostrarFecha').val(mostrarFecha);
+            $('#mostrarLinea').val(mostrarLinea);
+            $('#mostrarOrigen').val(mostrarOrigen);
+            $('#mostrarDestino').val(mostrarDestino);
+            $('#precio').val(mostrarPrecio);
+            
+            $("#scriptMercadoPago").attr("data-transaction-amount", viaje.precio);
+
+            // segun el precio del viaje elegido
+            if (viaje.precio >= precioElegirAsiento) {
+                // permito elegir asiento
+                vaciarComboBox(cmbAsiento, "Seleccione un asiento");
+
+                let items = [];
+                $.each(viaje.asientos_disponibles, function (i, item) {
+                    items.push({
+                        Value: item,
+                        Text: item + ' (' + ventabaOPasillo(item) + ')',
+                    });
+                });
+
+                rellenarComboBox(cmbAsiento, items);
+
+                $(cmbAsiento).prop("disabled", false);
+            } else {
+                // no permito elegir asiento
+                vaciarComboBox(cmbAsiento, "No puede seleccionar asiento");
+                $(cmbAsiento).prop("disabled", true);
+            }
+            irATab(2);
+        }
+
+        // limpia la filas de la tabla
+        function vaciarTabla(mostrarMensaje = false) {
+            $(tblViajesDisponibles + ' tbody').empty();
+            if (mostrarMensaje == false) return;
+
+            $(tblViajesDisponibles).find('tbody')
+                .append($('<tr>')
+                    .append($('<td>')
+                        .append($('<span>').text('No hay ningún resultado'))
+                    )
+                );
+        }
+
+        // inserta una fila en la tabla
+        function insertarFila(datosFila) {
+            // Los datos que interesan de 'datosFila' son: hora, precio, viaje_id
+            let htmlBoton = '<button type="button" class="btn btn-light" onclick="seleccionarViajeDisponible(' + datosFila.viaje_id + ')">Seleccionar</button>';
+            $(tblViajesDisponibles).find('tbody')
+                .append($('<tr>')
+                    .append($('<td>').text(datosFila.horaStr))
+                    .append($('<td>').text(datosFila.precio))
+                    .append($('<td>')
+                        .addClass('text-center')
+                        .append(htmlBoton))
+                );
+        }
+
+        // busca los viajes y manda a mostrarlos
+        function buscarViajes() {
+            vaciarTabla(false);
+
+            if ( ! validarParaBuscarViaje()) return;
+
+            // datos para mandar a buscar
+            let datosBuscar = {
+                fecha: $(txtFecha).val(),
+                idLinea: $(cmbLinea).val(),
+                idParadaOrigen: $(cmbParadaOrigen).val(),
+                idParadaDestino: $(cmbParadaDestino).val(),
+            };
+
+            $.ajax({ // realiza una peticion ajax
+                type: 'POST', // metodo HTTP a utilizar
+                url: '@Url.Action("BuscarViajesAjax")', // ¡¡OJO que esto no es JQuery!! Nombre de la funcion a llamar (dentro del controlador que cargo esta vista)
+                dataType: 'json', // creo que esto es que espera obtener un JSON como respuesta
+                data: datosBuscar, // Obtiene el valor seleccionado en el primer combobox y lo manda con la clave 'id'
+                success: function (respuesta) { // esta funcion se ejecutara al obtener la respuesta
+                    irATab(1);
+                    lstViajesDisponibles = [];
+                    if (respuesta.length == 0) {
+                        vaciarTabla(true);
+                    } else {
+                        vaciarTabla(false);
+                        $.each(respuesta, function (i, item) {
+                            insertarFila(item);
+                            lstViajesDisponibles.push(item);
+                        });
+                    }
+                },
+                error: function (ex) { // en caso de que haya un error
+                    alert('Fallo al buscar viajes: ' + ex);
+                }
+            });
+        }
+
+
+        // ***** ***** ***** ***** Interaccion entre combobox ***** ***** ***** *****
 
         // Funcion para obtener las Paradas de una linea
         let actualizarComboboxParadasOrigen = function () {
@@ -129,17 +427,17 @@
             return false;
         }
 
-        
+
         // Funcion para obtener las Paradas de una linea
         let actualizarComboboxParadasDestino = function () {
             let comboBoxA = "#idParadaOrigen"; // ID del elemento combobox que completa primero
             let comboBoxB = "#idParadaDestino"; // ID del elemento combobox que se rellena en funcion del primero
             let paradaDestinoeleccionada = @Html.Raw(Model == null ? "undefined" : "" + Model.idParadaDestino); // imprimo dentro del script el valor de la variable
-            
+
             vaciarComboBox(comboBoxB, "Seleccione una parada");
 
             if ($(comboBoxA).val() == "") return; // Si no se selecciono nada, termina aca
-            
+
             let idParadaOrigen = $(comboBoxA).val();
             let paradas = [];
             let agregar = false;
@@ -155,6 +453,7 @@
             return false;
         }
 
+        // ***** ***** ***** ***** Interaccion entre combobox ***** ***** ***** *****
 
         $(document).ready(function () { // luego de cargar el documento
             actualizarComboboxParadasOrigen();

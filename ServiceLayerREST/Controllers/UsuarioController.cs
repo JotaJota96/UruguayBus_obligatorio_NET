@@ -1,6 +1,7 @@
-﻿using BusinessLayer.Implementations;
+using BusinessLayer.Implementations;
 using BusinessLayer.Interfaces;
 using DataAccesLayer.Interfaces;
+using ServiceLayerREST.Auth;
 using ServiceLayerREST.Models;
 using Share.DTOs;
 using Share.Entities;
@@ -14,17 +15,27 @@ using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
 {
+    [Authorize]
     public class UsuarioController : ApiController
     {
         IBL_Usuario blu = new BL_Usuario();
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/Usuario/RegistrarUsuario")]
         public Usuario RegistrarUsuario([FromBody] Usuario u)
         {
             try
             {
-                return blu.RegistrarUsuario(u);
+                u = blu.RegistrarUsuario(u);
+
+                if (u == null) return null;
+                u.persona.contrasenia = null;
+
+                var token = TokenGenerator.GenerateTokenJwt(u);
+                u.persona.contrasenia = token;
+
+                return u;
             }
             catch (Exception e)
             {
@@ -32,13 +43,22 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/Usuario/IniciarSesion")]
         public Usuario IniciarSesion([FromBody] IniciarSesionDTO dto)
         {
             try
             {
-                return blu.IniciarSesion(dto.correo, dto.contrasenia);
+                Usuario u = blu.IniciarSesion(dto.correo, dto.contrasenia);
+
+                if (u == null) return null;
+                u.persona.contrasenia = null;
+
+                var token = TokenGenerator.GenerateTokenJwt(u);
+                u.persona.contrasenia = token;
+
+                return u;
             }
             catch (Exception e)
             {
@@ -94,7 +114,8 @@ namespace ServiceLayerREST.Controllers
         {
             try
             {
-                if (dto.documento == null && dto.tipoDocumento == null && dto.idUsuario != null)
+                // si idUsuario es distino de null, entonces se trata de un usuario registrado
+                if (dto.idUsuario != null)
                 {
                     return blu.ReservarPasaje(dto.idViaje, dto.idParadaOrigen, dto.idParadaDestino, (int)dto.idUsuario, dto.asiento);
                 }
@@ -109,6 +130,21 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("api/Usuario/CancelarPasaje/{idPasaje}")]
+        public Pasaje CancelarPasaje([FromUri] int idPasaje)
+        {
+            try
+            {
+                return blu.CancelarPasaje(idPasaje);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/Usuario/CorreoExiste/{correo}")]
         public bool CorreoExiste([FromUri] string correo)

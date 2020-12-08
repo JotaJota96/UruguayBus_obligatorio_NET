@@ -1,6 +1,7 @@
 ﻿using Share.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,13 +15,23 @@ namespace UruguayBusWeb.ApiClient
     {
         HttpClient client = new HttpClient();
         string basicPath = "/api/Conductor/";
-        public ConductorProxy()
+        string token = null;
+
+        public ConductorProxy(string tkn = null)
         {
-            client.BaseAddress = new Uri("https://localhost:44349/api/Conductor");
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["UruguayBusApiBaseAddress"]);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
             );
+
+            if (tkn != null) this.token = tkn;
+            else
+                try { this.token = HttpContext.Current == null ? null : (string)HttpContext.Current.Session["token"]; }
+                catch { this.token = null; }
+
+            if (!String.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public async Task FinalizarViaje(int idViaje)
@@ -94,5 +105,17 @@ namespace UruguayBusWeb.ApiClient
             }
         }
 
+        public async Task RegistrarPasoPorParada(int idParada, int idViaje)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync(basicPath + "RegistrarParada/" + idParada + "/" + idViaje, null);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

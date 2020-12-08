@@ -261,7 +261,6 @@ namespace DataAccesLayer.Implementations
             }
         }
 
-
         public Conductor ModificarConductor(Conductor c)
         {
             using (uruguay_busEntities db = new uruguay_busEntities())
@@ -289,7 +288,6 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-
 
         public ICollection<Horario> ListarHorarios()
         {
@@ -410,11 +408,18 @@ namespace DataAccesLayer.Implementations
                         throw new Exception("El nombre que se desa modificar no puede estar vacio");
                     }
 
-                    linea lineaModificada = db.linea.Find(l.id);
-                    lineaModificada.nombre = l.nombre;
+                    linea LinMod = db.linea.Find(l.id);
+
+                    if (LinMod == null)
+                    {
+                        throw new Exception("La linea que se desa modificar no existe");
+                    }
+
+                    LinMod.nombre = l.nombre;
+
                     db.SaveChanges();
 
-                    return LineaConverter.convert(lineaModificada); ;
+                    return LineaConverter.convert(LinMod);
                 }
                 catch (Exception e)
                 {
@@ -422,6 +427,53 @@ namespace DataAccesLayer.Implementations
                 }
             }
         }
-    
+
+        public Tramo ModificarTramo(Precio p)
+        {
+            using (uruguay_busEntities db = new uruguay_busEntities())
+            {
+                try
+                {
+                    if (p == null)
+                    {
+                        throw new Exception("Se deve enviar el objeto que deceas modificar");
+                    }
+
+                    if (p.tramo == null)
+                    {
+                        throw new Exception("Se deve enviar el objeto que deceas modificar");
+                    }
+
+                    tramo TramMod = db.tramo.Where(x => x.parada_id == p.tramo.parada.id && x.linea_id == p.tramo.linea.id).FirstOrDefault();
+
+                    if (TramMod == null)
+                    {
+                        throw new Exception("Se deve enviar el objeto que deceas modificar");
+                    }
+
+                    
+                    TramMod.tiempo = p.tramo.tiempo;
+                    if (p.valor >= 0)
+                    {
+                        precio pre = new precio() {
+                            fecha_validez = p.fecha_validez,
+                            valor = p.valor,
+                            tramo = TramMod,
+                            linea_id = TramMod.linea_id,
+                            parada_id = TramMod.parada_id
+                        };
+                        db.precio.Add(pre);
+                        TramMod.precio.Add(pre);
+                    }
+                    db.SaveChanges();
+
+                    return TramoConverter.convert(TramMod);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
     }
 }

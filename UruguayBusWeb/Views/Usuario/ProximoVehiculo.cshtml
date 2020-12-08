@@ -1,0 +1,81 @@
+﻿@model IEnumerable<UruguayBusWeb.Models.ProximoVehiculoModel>
+
+@{
+    ViewBag.Title = "ProximoVehiculo";
+
+
+    List<SelectListItem> listaParadas = new List<SelectListItem>();
+    foreach (var item in (ICollection<Share.Entities.Parada>)ViewBag.listaParada)
+    {
+        listaParadas.Add(new SelectListItem()
+        {
+            Text = item.nombre,
+            Value = "" + item.id,
+        });
+    }
+}
+
+<h2 class="mt-3">Proximo vehiculo</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>ModificarLinea</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+
+            <div class="col-md-10">
+                @Html.DropDownList("idParada", listaParadas, "Seleccione una parada", new { @class = "custom-select" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Buscar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehiculo.matricula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehiculo.marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehiculo.modelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pasaje_reservado)
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehiculo.matricula)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehiculo.marca)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehiculo.modelo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.pasaje_reservado)
+                </th>
+            </tr>
+        }
+    }
+
+</table>

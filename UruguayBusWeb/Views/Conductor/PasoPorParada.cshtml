@@ -1,0 +1,41 @@
+﻿@model UruguayBusWeb.Models.PasoParadaModel
+@{
+    ViewBag.Title = "PasoPorParada";
+    int i = (int) Session["idUltimaParada"];
+    string Mostrar = "";
+    if(i == -1)
+    {
+        Mostrar = "No a pasado por ninguna parada todavia";
+    }
+    else
+    {
+        Mostrar = "La ultima parada registrada fue " + i;
+    }
+}
+
+<h2 class="mt-3">Paso por parada</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.idViaje, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.HiddenFor(model => model.idUltimaParada, new { htmlAttributes = new { @class = "form-control" } })
+
+        <hr />
+        @Html.Label(Mostrar)
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Pase por la parada" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

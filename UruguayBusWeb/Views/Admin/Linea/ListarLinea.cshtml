@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Share.Entities.Linea>
+
+@{
+    ViewBag.Title = "ListarLinea";
+}
+
+<h2 class="mt-3">ListarLinea</h2>
+
+<p>
+    @Html.ActionLink("Crear", "RegistrarLinea")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tramos)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayName(item.tramos.Count().ToString())
+            </td>
+            <td>
+                @Html.ActionLink("Ver mas", "DetalleLinea", new { id = item.id }) | 
+                @Html.ActionLink("Modificar", "ModificarLinea", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

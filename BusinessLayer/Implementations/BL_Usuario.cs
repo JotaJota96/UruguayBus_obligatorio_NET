@@ -139,6 +139,21 @@ namespace BusinessLayer.Implementations
                 throw new Exception("No se pudo reservar el pasaje. " + e.Message);
             }
         }
+
+        public Pasaje CancelarPasaje(int idPasaje)
+        {
+            try
+            {
+                if (idPasaje < 1)
+                    throw new Exception("El ID del pasaje no es válido");
+                return dal.CancelarPasaje(idPasaje);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo cancelar el pasaje. " + e.Message);
+            }
+        }
+
         public bool CorreoExiste(string correo)
         {
             try

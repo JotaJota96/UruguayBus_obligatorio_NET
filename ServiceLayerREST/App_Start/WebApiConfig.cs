@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceLayerREST.Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -14,6 +15,9 @@ namespace ServiceLayerREST
 
             // Rutas de API web
             config.MapHttpAttributeRoutes();
+
+            // para el token
+            config.MessageHandlers.Add(new TokenValidationHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

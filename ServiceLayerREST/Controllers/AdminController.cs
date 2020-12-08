@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
 {
+    [Authorize]
     public class AdminController : ApiController
     {
         IBL_Admin bla = new BL_Admin();
@@ -190,6 +191,20 @@ namespace ServiceLayerREST.Controllers
             try
             {
                 return bla.ModificarLinea(l);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Admin/ModificarTramo")]
+        public Tramo ModificarTramo([FromBody] Precio p)
+        {
+            try
+            {
+                return bla.ModificarTramo(p);
             }
             catch (Exception e)
             {

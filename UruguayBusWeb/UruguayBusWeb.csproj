@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -47,10 +48,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MercadoPago, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\mercadopago-sdk.1.0.57\lib\net35\MercadoPago.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ObjectDumper, Version=1.0.0.12, Culture=neutral, PublicKeyToken=9e2fabf3af85dba9, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectDumper.1.0.0.12\lib\net35-Client\ObjectDumper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -142,10 +159,20 @@
     </Compile>
     <Compile Include="Models\AsignarRolModel.cs" />
     <Compile Include="Models\ComprarPasajeModel.cs" />
+    <Compile Include="Helpers\AuthorizeRoles.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
+    <Compile Include="Helpers\PdfHelper.cs" />
+    <Compile Include="Models\ComprarPasajeModel.cs" />
+    <Compile Include="Models\ConfirmarPagoModel.cs" />
+    <Compile Include="Models\AsignarRolModel.cs" />
     <Compile Include="Models\ListarViajesModel.cs" />
     <Compile Include="Models\CrearConductorModel.cs" />
     <Compile Include="Models\CrearHorariosModel.cs" />
+    <Compile Include="Models\CrearLineaModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ModificarLinea.cs" />
+    <Compile Include="Models\PasoParadaModel.cs" />
+    <Compile Include="Models\ProximoVehiculoModel.cs" />
     <Compile Include="Models\Proxy\AsignarRolDTO.cs" />
     <Compile Include="Models\Proxy\IniciarSesionDTO.cs" />
     <Compile Include="Models\Proxy\ListarViajesDisponiblesDTO.cs" />
@@ -165,6 +192,10 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\bus.png" />
+    <Content Include="Content\img\fondo.jpg" />
+    <Content Include="Content\img\Parada.png" />
+    <Content Include="Content\img\UruguayBus_logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -260,6 +291,19 @@
     <Content Include="Views\Usuario\ComprarPasaje.cshtml" />
     <Content Include="Views\Conductor\Validacion\ValidarPasaje.cshtml" />
     <Content Include="Views\Conductor\Validacion\TomarIdPasaje.cshtml" />
+    <Content Include="Views\Usuario\ComprarPasaje.cshtml" />
+    <Content Include="Views\Admin\Linea\ListarLinea.cshtml" />
+    <Content Include="Views\Admin\Linea\RegistrarLinea.cshtml" />
+    <Content Include="Views\Admin\Linea\DetallesLinea.cshtml" />
+    <Content Include="Views\Admin\Linea\ModificarLinea.cshtml" />
+    <Content Include="Views\Conductor\IniciarViaje.cshtml" />
+    <Content Include="Views\Conductor\PasoPorParada.cshtml" />
+    <Content Include="Views\Usuario\ProximoVehiculo.cshtml" />
+    <Content Include="Views\Superadmin\PanelDeControl.cshtml" />
+    <Content Include="Views\Usuario\ConfirmarPago.cshtml" />
+    <Content Include="Views\Superadmin\Index.cshtml" />
+    <Content Include="Views\Superadmin\Roles\ListarUsuario.cshtml" />
+    <Content Include="Views\Superadmin\Roles\AsignarRol.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -315,6 +359,7 @@
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.10.1\build\NUnit.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

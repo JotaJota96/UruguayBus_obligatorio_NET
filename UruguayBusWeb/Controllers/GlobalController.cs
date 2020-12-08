@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using UruguayBusWeb.ApiClient;
+using UruguayBusWeb.Helpers;
 using UruguayBusWeb.Models;
 using UruguayBusWeb.Models.Proxy;
 
@@ -20,12 +21,8 @@ namespace UruguayBusWeb.Controllers
         GlobalProxy gp = new GlobalProxy();
         SuperadminProxy sap = new SuperadminProxy();
 
-        public GlobalController()
-        {
-            //
-        }
-
         // GET: Global
+        [AuthorizeRoles(usuario = true)]
         public ActionResult Index()
         {
             return View();
@@ -34,13 +31,15 @@ namespace UruguayBusWeb.Controllers
         // **** **** Inicio de seccion de Juan **** ****
 
         // GET: Global/RegistrarUsuario
+        [AuthorizeRoles(logueado =false)]
         public ActionResult RegistrarUsuario()
         {
             return View();
         }
 
-        // POST: Admin/RegistrarUsuario
+        // POST: Global/RegistrarUsuario
         [HttpPost]
+        [AuthorizeRoles(logueado = false)]
         public async Task<ActionResult> RegistrarUsuario(RegistrarUsuarioModel rum)
         {
             // recibe los datos del elemento a registrar y redirige al listado
@@ -66,8 +65,10 @@ namespace UruguayBusWeb.Controllers
                 
                 u = await up.RegistrarUsuario(u);
 
-                // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("Index", "Home", new { area = "" });
+                Session["datosLogeados"] = u;
+                Session["token"] = u.persona.contrasenia;
+
+                return RedirectToAction("Index", "Usuario");
             }
             catch
             {
@@ -78,9 +79,26 @@ namespace UruguayBusWeb.Controllers
         }
 
 
+        // GET: Global/Logout/
+        [AuthorizeRoles(usuario = true)]
+        public ActionResult Logout()
+        {
+            try
+            {
+                // limpia las varibles de sesion
+                Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
         // **** **** Fin de seccion de Juan **** ****
         // **** **** Inicio de seccion de Sebastian **** ****
-        // POST: Admin/AsignarRol/5
+        // POST: Global/AsignarRol/5
         [HttpPut]
         public async Task<ActionResult> AsignarRol(int id, Rol rol)
         {
@@ -100,12 +118,15 @@ namespace UruguayBusWeb.Controllers
         }
         // **** **** Fin de seccion de Sebastian **** ****
         // **** **** Inicio de seccion de Lucas **** ****
+
+        [AuthorizeRoles(logueado = false)]
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AuthorizeRoles(logueado = false)]
         public async Task<ActionResult> Login(LoginModel dto)
         {
             // recibe los datos del elemento
@@ -131,6 +152,7 @@ namespace UruguayBusWeb.Controllers
                 }
 
                 Session["datosLogeados"] = u;
+                Session["token"] = u.persona.contrasenia;
 
                 // si solo tiene un rol, es un usuario comun, y se le redirige a su pagina de inicio
                 if (u.persona.GetRoles().Count == 1)
@@ -138,10 +160,8 @@ namespace UruguayBusWeb.Controllers
                     return RedirectToAction("Index", "Usuario");
                 }
 
-                //Guarda los datos en la variable de sesion
-
                 //redirige al inicio
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

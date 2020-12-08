@@ -258,6 +258,8 @@
     <Content Include="Views\Superadmin\Roles\ListarUsuario.cshtml" />
     <Content Include="Views\Superadmin\Roles\AsignarRol.cshtml" />
     <Content Include="Views\Usuario\ComprarPasaje.cshtml" />
+    <Content Include="Views\Conductor\Validacion\ValidarPasaje.cshtml" />
+    <Content Include="Views\Conductor\Validacion\TomarIdPasaje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

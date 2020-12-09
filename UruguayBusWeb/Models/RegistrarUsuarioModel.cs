@@ -32,7 +32,7 @@ namespace UruguayBusWeb.Models
 
         [DisplayName("Correo")]
         [Required]
-        [StringLength(20, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
         [EmailAddress]
         [CorreoDisponible(ErrorMessage ="Ya hay un usuario registrado con ese correo")]
         public string correo { get; set; }

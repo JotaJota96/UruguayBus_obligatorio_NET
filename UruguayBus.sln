@@ -19,6 +19,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayerREST", "ServiceLayerREST\ServiceLayerREST.csproj", "{49EDB36A-97BD-4490-A2BC-4B5DFA2D0769}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalAutogestion", "TerminalAutogestion\TerminalAutogestion.csproj", "{5EBC00CF-5AA9-4BAC-8543-EFAFC3F4A54C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C7080E3A-ADFE-4B45-9667-71A73F2AD63A} = {C7080E3A-ADFE-4B45-9667-71A73F2AD63A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UruguayBusWeb", "UruguayBusWeb\UruguayBusWeb.csproj", "{42DC7514-387A-44E3-9F7D-948F702F54A5}"
 EndProject

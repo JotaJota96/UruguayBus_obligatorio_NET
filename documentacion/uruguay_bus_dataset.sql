@@ -1,3 +1,39 @@
+
+--
+-- Vaciado de todas las tablas
+--
+BEGIN TRAN t;
+    DELETE FROM parametro
+    DELETE FROM pasaje;
+    DELETE FROM paso_por_parada;
+    DELETE FROM viaje;
+    DELETE FROM horario;
+    DELETE FROM precio;
+    DELETE FROM tramo;
+    DELETE FROM parada;
+    DELETE FROM linea;
+    DELETE FROM vehiculo;
+    DELETE FROM superadmin;
+    DELETE FROM conductor;
+    DELETE FROM admin;
+    DELETE FROM usuario;
+    DELETE FROM persona;
+COMMIT TRAN t;
+
+--
+-- Reinicio de contadores para ID incrementales
+--
+BEGIN TRAN t;
+    DBCC CHECKIDENT ('pasaje', RESEED, 1);
+    DBCC CHECKIDENT ('viaje', RESEED, 1);
+    DBCC CHECKIDENT ('horario', RESEED, 1);
+    DBCC CHECKIDENT ('precio', RESEED, 1);
+    DBCC CHECKIDENT ('parada', RESEED, 1);
+    DBCC CHECKIDENT ('linea', RESEED, 1);
+    DBCC CHECKIDENT ('vehiculo', RESEED, 1);
+    DBCC CHECKIDENT ('persona', RESEED, 1);
+COMMIT TRAN t;
+
 --
 -- tablINTO *********************************************************
 --a persona

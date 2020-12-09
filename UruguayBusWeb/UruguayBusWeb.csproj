@@ -157,6 +157,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AsignarRolModel.cs" />
+    <Compile Include="Models\ComprarPasajeModel.cs" />
     <Compile Include="Helpers\AuthorizeRoles.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\PdfHelper.cs" />
@@ -283,6 +285,11 @@
     <Content Include="Views\Global\Index.cshtml" />
     <Content Include="Views\Conductor\Index.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Superadmin\Index.cshtml" />
+    <Content Include="Views\Superadmin\Roles\ListarUsuario.cshtml" />
+    <Content Include="Views\Superadmin\Roles\AsignarRol.cshtml" />
+    <Content Include="Views\Usuario\ComprarPasaje.cshtml" />
+    <Content Include="Views\Conductor\Validacion\TomarIdPasaje.cshtml" />
     <Content Include="Views\Usuario\ComprarPasaje.cshtml" />
     <Content Include="Views\Admin\Linea\ListarLinea.cshtml" />
     <Content Include="Views\Admin\Linea\RegistrarLinea.cshtml" />

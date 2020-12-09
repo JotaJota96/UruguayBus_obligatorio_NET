@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class AdminController : ApiController
     {
         IBL_Admin bla = new BL_Admin();

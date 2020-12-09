@@ -132,7 +132,6 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
-
         public async Task<Usuario> ObtenerUsuario(int id)
         {
             try
@@ -143,102 +142,6 @@ namespace UruguayBusWeb.ApiClient
                 foreach (var item in lst)
                 {
                     if (item.id == id)
-                    {
-                        ret = item;
-                    }
-                }
-
-                return ret;
-            }
-            catch (Exception e)
-            {
-
-                throw e;
-            }
-        }
-
-        public async Task<Parada> obtenerParada(int idParada)
-        {
-            try
-            {
-                Parada ret = null;
-                ICollection<Parada> lst = await ListarParadas();
-
-                foreach (var item in lst)
-                {
-                    if (item.id == idParada)
-                    {
-                        ret = item;
-                    }
-                }
-
-                return ret;
-            }
-            catch (Exception e)
-            {
-
-                throw e;
-            }
-        }
-        public async Task<Conductor> obtenerConductor(int idConductor)
-        {
-            try
-            {
-                AdminProxy ap = new AdminProxy(this.token);
-                Conductor ret = null;
-                ICollection<Conductor> lst = await ap.ListarConductores();
-
-                foreach (var item in lst)
-                {
-                    if (item.id == idConductor)
-                    {
-                        ret = item;
-                    }
-                }
-
-                return ret;
-            }
-            catch (Exception e)
-            {
-
-                throw e;
-            }
-        }
-        public async Task<Viaje> obtenerViaje(int idViaje)
-        {
-            try
-            {
-                AdminProxy ap = new AdminProxy(this.token);
-                Viaje ret = null;
-                ICollection<Viaje> lst = await ap.ListarViajes();
-
-                foreach (var item in lst)
-                {
-                    if (item.id == idViaje)
-                    {
-                        ret = item;
-                    }
-                }
-
-                return ret;
-            }
-            catch (Exception e)
-            {
-
-                throw e;
-            }
-        }
-        public async Task<Horario> obtenerHorario(int idHorario)
-        {
-            try
-            {
-                AdminProxy ap = new AdminProxy(this.token);
-                Horario ret = null;
-                ICollection<Horario> lst = await ap.ListarHorarios();
-
-                foreach (var item in lst)
-                {
-                    if (item.id == idHorario)
                     {
                         ret = item;
                     }
@@ -295,6 +198,73 @@ namespace UruguayBusWeb.ApiClient
             catch (Exception e)
             {
 
+                throw e;
+            }
+        }
+        public async Task<Parada> obtenerParada(int idParada)
+        {
+            try
+            {
+                Parada ret = null;
+                ICollection<Parada> lst = await ListarParadas();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idParada)
+                    {
+                        ret = item;
+                    }
+                }
+
+                return ret;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
+        //******************** ULTIMAS MODIFICADAS ************************
+        public async Task<Conductor> obtenerConductor(int idConductor)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ObtenerConductor/" + idConductor);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Conductor>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<Viaje> obtenerViaje(int idViaje)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ObtenerViaje/" + idViaje);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Viaje>();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<Horario> obtenerHorario(int idHorario)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(basicPath + "ObtenerHorario/" + idHorario);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<Horario>();
+            }
+            catch (Exception e)
+            {
                 throw e;
             }
         }

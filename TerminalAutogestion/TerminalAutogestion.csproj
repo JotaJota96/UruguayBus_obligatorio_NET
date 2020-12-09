@@ -122,24 +122,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Connected Services\ServiceSOAP\SL_Soap.wsdl" />
-    <None Include="Connected Services\ServiceSOAP\SL_Soap.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServiceSOAP\SL_Soap1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServiceSOAP\SL_Soap2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServiceSOAP\SL_Soap3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServiceSOAP\SL_Soap4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServiceSOAP\SL_Soap5.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\DataSources\Share.DTOs.ViajeDisponibleDTO.datasource" />
     <None Include="Properties\DataSources\Share.Entities.Parada.datasource" />
     <None Include="Properties\DataSources\Share.Entities.Pasaje.datasource" />
@@ -156,9 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServiceSOAP\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServiceSOAP\SL_Soap.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ServiceSOAP\configuration91.svcinfo" />

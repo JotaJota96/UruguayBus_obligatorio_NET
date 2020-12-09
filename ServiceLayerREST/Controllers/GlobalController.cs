@@ -14,6 +14,7 @@ namespace ServiceLayerREST.Controllers
     public class GlobalController : ApiController
     {
         IBL_Global blg = new BL_Global();
+        IBL_Admin bla = new BL_Admin();
 
         [HttpGet]
         [Route("api/")]
@@ -94,7 +95,6 @@ namespace ServiceLayerREST.Controllers
             }
         }
 
-
         [HttpGet]
         [Route("api/Global/ListarParadas")]
         public ICollection<Parada> ListarParadas()
@@ -123,6 +123,84 @@ namespace ServiceLayerREST.Controllers
                 }
 
                 return ret;
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Global/ObtenerConductor/{idConductor}")]
+        public Conductor ObtenerConductor([FromUri] int idConductor)
+        {
+            try
+            {
+                Conductor c = null;
+                ICollection<Conductor> lst = bla.ListarConductores();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idConductor)
+                    {
+                        c = item;
+                        break;
+                    }
+                }
+
+                return c;
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Global/ObtenerViaje/{idViaje}")]
+        public Viaje ObtenerViaje([FromUri] int idViaje)
+        {
+            try
+            {
+                Viaje v = null;
+                ICollection<Viaje> lst = bla.ListarViajes();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idViaje)
+                    {
+                        v = item;
+                        break;
+                    }
+                }
+
+                return v;
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message));
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Global/ObtenerHorario/{idHorario}")]
+        public Horario ObtenerHorario([FromUri] int idHorario)
+        {
+            try
+            {
+                Horario h = null;
+                ICollection<Horario> lst = bla.ListarHorarios();
+
+                foreach (var item in lst)
+                {
+                    if (item.id == idHorario)
+                    {
+                        h = item;
+                        break;
+                    }
+                }
+
+                return h;
             }
             catch (Exception e)
             {

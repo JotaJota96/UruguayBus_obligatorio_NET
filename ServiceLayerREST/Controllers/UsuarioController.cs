@@ -15,7 +15,7 @@ using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "usuario")]
     public class UsuarioController : ApiController
     {
         IBL_Usuario blu = new BL_Usuario();

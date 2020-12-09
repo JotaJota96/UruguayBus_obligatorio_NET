@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ServiceLayerREST.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "superadmin")]
     public class SuperadminController : ApiController
     {
         IBL_Superadmin blsa = new BL_Superadmin();

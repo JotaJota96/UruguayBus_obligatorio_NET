@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
@@ -29,8 +30,13 @@ namespace ServiceLayerREST.Auth
             // create a claimsIdentity
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] {
                 new Claim(ClaimTypes.Email, u.persona.correo),
-                new Claim(ClaimTypes.Role, TokenGenerator.RolesDelUsuario(u)),
             });
+
+            // agrego los roles del usuario
+            foreach (var r in TokenGenerator.RolesDelUsuario(u))
+            {
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, r));
+            }
 
             // create token to the user
             var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
@@ -46,12 +52,16 @@ namespace ServiceLayerREST.Auth
             return jwtTokenString;
         }
 
-        private static string RolesDelUsuario(Usuario u)
+        private static ICollection<string> RolesDelUsuario(Usuario u)
         {
-            string roles = "usuario";
-            if (u.persona.admin != null)     roles += ",admin";
-            if (u.persona.conductor != null) roles += ",conductor";
-            if (u.persona.superadmin!= null) roles += ",superadmin";
+            ICollection<string> roles = new List<string>();
+
+            roles.Add("usuario");
+
+            if (u.persona.admin != null)     roles.Add("admin");
+            if (u.persona.conductor != null) roles.Add("conductor");
+            if (u.persona.superadmin!= null) roles.Add("superadmin");
+
             return roles;
         }
     }

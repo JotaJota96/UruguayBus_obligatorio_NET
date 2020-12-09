@@ -42,8 +42,7 @@ namespace UruguayBusWeb.Controllers
             int idViaje = (int)Session["idViajeIniciado"];
             var res = await cp.ValidarPasaje(id, idViaje, idUltimaParada);
             ViewBag.PasajeValido = res;
-            if (!res)
-                ViewBag.mensaje = "Pasaje Inválido";
+            ViewBag.mensaje = res ? "Pasaje Válido" : "Pasaje Inválido";
             // carga la vista y pasandole el modelo
             return View("Validacion/TomarIdPasaje");
         }

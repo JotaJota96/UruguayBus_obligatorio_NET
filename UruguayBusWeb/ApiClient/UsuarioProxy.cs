@@ -107,6 +107,9 @@ namespace UruguayBusWeb.ApiClient
         {
             try
             {
+                if (String.IsNullOrEmpty(correo))
+                    return false;
+
                 correo = correo.Replace(".", "~");
                 HttpResponseMessage response = await client.GetAsync(basePath + "CorreoExiste/" + correo);
                 response.EnsureSuccessStatusCode();

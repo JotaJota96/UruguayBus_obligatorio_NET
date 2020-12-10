@@ -13,12 +13,12 @@ namespace UruguayBusWeb.Models
     {
         [DisplayName("Nombre")]
         [Required]
-        [StringLength(20, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
         public string nombre { get; set; }
 
         [DisplayName("Apellido")]
         [Required]
-        [StringLength(20, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
         public string apellido { get; set; }
 
         [DisplayName("Tipo de documento")]
@@ -27,7 +27,7 @@ namespace UruguayBusWeb.Models
 
         [DisplayName("Documento")]
         [Required]
-        [StringLength(20, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
         public string documento { get; set; }
 
         [DisplayName("Correo")]
@@ -39,10 +39,10 @@ namespace UruguayBusWeb.Models
 
         [DisplayName("Contraseña")]
         [Required]
-        [StringLength(20, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = 3)]
         public string contrasenia { get; set; }
 
-        [DisplayName("Repetir")]
+        [DisplayName("Repetir contraseña")]
         [Required]
         [Compare("contrasenia", ErrorMessage ="Las contraseñas no coinciden")]
         public string contraseniaRepetir { get; set; }

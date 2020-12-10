@@ -17,18 +17,12 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    ICollection<persona> lst = db.persona.ToList();
-
-                    persona per = null;
-                    foreach (var x in lst)
-                    {
-                        if (x.correo == correo && x.contrasenia == contrasenia)
-                        {
-                            per = x;
-                        }
-                    }
+                    persona per = db.persona.Where(x => x.correo == correo).FirstOrDefault();
 
                     if (per == null)
+                        return null;
+
+                    if ( ! per.contrasenia.Equals(contrasenia))
                         return null;
 
                     //Persona personaRet = PersonaConverter.convert(per);

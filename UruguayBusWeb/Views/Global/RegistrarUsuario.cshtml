@@ -4,82 +4,76 @@
     ViewBag.Title = "Registrarse";
 }
 
-<h2 class="mt-3">Registrarse</h2>
-<h1>@ViewBag.algo</h1>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal mt-3">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
-            <h4>Persona</h4>
+            <h2>Registrarse</h2>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group row">
-                @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control col-12" } })
                     @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.apellido, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.apellido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.LabelFor(model => model.apellido, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.apellido, new { htmlAttributes = new { @class = "form-control col-12" } })
                     @Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })
                 </div>
             </div>
 
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.tipo_documento, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EnumDropDownListFor(model => model.tipo_documento, new { @class = "custom-select" })
+                @Html.LabelFor(model => model.tipo_documento, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EnumDropDownListFor(model => model.tipo_documento, new { @class = "custom-select col-12" })
                     @Html.ValidationMessageFor(model => model.tipo_documento, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.documento, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.documento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.LabelFor(model => model.documento, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.documento, new { htmlAttributes = new { @class = "form-control col-12" } })
                     @Html.ValidationMessageFor(model => model.documento, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.correo, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control", @Type = "email" } })
+                @Html.LabelFor(model => model.correo, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control col-12", @Type = "email" } })
                     @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.contrasenia, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.contrasenia, new { htmlAttributes = new { @class = "form-control", @Type = "password" } })
+                @Html.LabelFor(model => model.contrasenia, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.contrasenia, new { htmlAttributes = new { @class = "form-control col-12", @Type = "password" } })
                     @Html.ValidationMessageFor(model => model.contrasenia, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.contraseniaRepetir, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.contraseniaRepetir, new { htmlAttributes = new { @class = "form-control", @Type = "password" } })
+                @Html.LabelFor(model => model.contraseniaRepetir, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.contraseniaRepetir, new { htmlAttributes = new { @class = "form-control col-12", @Type = "password" } })
                     @Html.ValidationMessageFor(model => model.contraseniaRepetir, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Continuar" class="btn btn-default" />
+                <div class="col-md-offset-2 col-12 d-flex justify-content-end">
+                    <input type="submit" value="Registrarse" class="btn btn-primary" />
                 </div>
             </div>
         </div>
     </div>
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -24,25 +24,26 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Viaje</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <label class="control-label col-md-2" for="id">Viajes del dia:</label>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.id, listaViajes, "Seleccione un viaje", new { @class = "custom-select" })
-                @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+        <label class="control-label" for="id">Viajes del dia:</label>
+        <div class="row">
+            <div class="form-group col-md-10">
+                <div>
+                    @Html.DropDownListFor(model => model.id, listaViajes, "Seleccione un viaje", new { @class = "col-12 custom-select" })
+                    @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Iniciar" class="btn btn-default" />
+            <div class="form-group col-md-2">
+                <div>
+                    <input type="submit" value="Iniciar" class="btn btn-primary col-12" />
+                </div>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>

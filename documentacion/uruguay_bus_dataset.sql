@@ -48,6 +48,9 @@ INSERT INTO persona (nombre, apellido, correo, contrasenia, tipo_documento, docu
 INSERT INTO persona (nombre, apellido, correo, contrasenia, tipo_documento, documento) VALUES ('Lucia', 'Perez', 'LuPerez@gmail.com', '1234', 2, 'B1587');
 INSERT INTO persona (nombre, apellido, correo, contrasenia, tipo_documento, documento) VALUES ('Karen', 'Garcia', 'KGarcia@gmail.com', '1234', 1, '58635474');
 
+-- contrasenia '1234' para todos los usuarios
+UPDATE persona SET contrasenia = 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=';
+
 --
 -- tablINTO *********************************************************
 --a usuario

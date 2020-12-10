@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DataAccesLayer.Implementations
 {
@@ -22,7 +24,7 @@ namespace DataAccesLayer.Implementations
                     if (per == null)
                         return null;
 
-                    if ( ! per.contrasenia.Equals(contrasenia))
+                    if ( ! DAL_Usuario.CompareHash(contrasenia, per.contrasenia))
                         return null;
 
                     //Persona personaRet = PersonaConverter.convert(per);
@@ -274,6 +276,8 @@ namespace DataAccesLayer.Implementations
                     usuario usu = UsuarioConverter.convert(u);
                     persona per = PersonaConverter.convert(u.persona);
 
+                    per.contrasenia = DAL_Usuario.GetHash(per.contrasenia);
+
                     usu.persona = per;
                     per.usuario = usu;
 
@@ -426,10 +430,28 @@ namespace DataAccesLayer.Implementations
                 }
                 catch (Exception e)
                 {
-
                     throw e;
                 }
             }
+        }
+
+
+        // ***** ***** Funciones auxiliares***** ***** ***** ***** ***** ***** ***** *****  ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+        public static string GetHash(string password)
+        {
+            // Funcion basada en: https://stackoverflow.com/questions/8890902/c-comparing-the-password-hash-with-the-user-input-different-sizes-when-authe
+            byte[] unhashedBytes = Encoding.Unicode.GetBytes(String.Concat("panqueque secreto", password));
+            SHA256Managed sha256 = new SHA256Managed();
+            byte[] hashedBytes = sha256.ComputeHash(unhashedBytes);
+            string BytesInBase64 = Convert.ToBase64String(hashedBytes);
+            return BytesInBase64;
+        }
+
+        public static bool CompareHash(string attemptedPassword, string base64Hash)
+        {
+            // Funcion basada en: https://stackoverflow.com/questions/8890902/c-comparing-the-password-hash-with-the-user-input-different-sizes-when-authe
+            string base64AttemptedHash = GetHash(attemptedPassword);
+            return base64Hash == base64AttemptedHash;
         }
     }
 }

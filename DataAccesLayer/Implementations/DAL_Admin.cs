@@ -205,6 +205,8 @@ namespace DataAccesLayer.Implementations
                 try
                 {
                     vehiculo veh = VehiculoConverter.convert(v);
+                    veh.latitud = (decimal) -34.34;
+                    veh.longitud = (decimal) -56.71;
 
                     db.vehiculo.Add(veh);
                     db.SaveChanges();

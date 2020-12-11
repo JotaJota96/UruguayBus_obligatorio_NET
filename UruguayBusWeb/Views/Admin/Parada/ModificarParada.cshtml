@@ -4,7 +4,7 @@
     ViewBag.Title = "ModificarParada";
 }
 
-<h2 class="mt-3">ModificarParada</h2>
+<h2 class="mt-3">Modificar Parada</h2>
 
 
 @using (Html.BeginForm())
@@ -24,26 +24,27 @@
                 @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.latitud, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.latitud, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.latitud, "", new { @class = "text-danger" })
+        <!--
+            <div class="form-group">
+                @Html.LabelFor(model => model.latitud, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.latitud, new { htmlAttributes = new {@type="number", @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.latitud, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.longitud, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.longitud, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.longitud, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.longitud, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.longitud, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.longitud, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+        -->
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>

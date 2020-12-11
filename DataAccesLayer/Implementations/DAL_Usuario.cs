@@ -78,18 +78,17 @@ namespace DataAccesLayer.Implementations
         {
             DAL_Global DAL_G = new DAL_Global();
             var paradas = DAL_G.obtenerParadasDeLinea(idlinea).Select(x=> ParadaConverter.convert(x)).ToList();
-            parada ParadaAnterior = null;
-            foreach (var parada in paradas)
-            {
-                if (parada.id != idParada)
-                {
-                    return ParadaAnterior != null ? ParadaAnterior.id : 0;
-                } else
-                {
-                    ParadaAnterior = parada;
-                }
-            }
-            return ParadaAnterior != null ? ParadaAnterior.id : 0;
+
+            // obtengo laparada de referencia y luego obtengo su indice en la coleccion
+            parada paradaReferencia = paradas.Where(x => x.id == idParada).FirstOrDefault();
+            int indexParadaReferencia = paradas.IndexOf(paradaReferencia);
+
+            // si no se encuentra o si es la primera, devuelvo 0
+            // si se encuentra la ubico en la coleccion y devuelvo su ID
+            if (indexParadaReferencia <= 0)
+                return 0;
+            else
+                return paradas.ElementAt(indexParadaReferencia-1).id;
         }
         private bool ParadasOrdenadas(int idlinea, int idParadaOrigen, int idParadaDestino)
         {

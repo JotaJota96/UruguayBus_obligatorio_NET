@@ -19,6 +19,7 @@ namespace Share.Entities
         
         [DisplayName("Modelo")]
         public string modelo { get; set; }
+        [DisplayName("Cantidad de asientos")]
         public int cant_asientos { get; set; }
         public decimal? latitud { get; set; }
         public decimal? longitud { get; set; }

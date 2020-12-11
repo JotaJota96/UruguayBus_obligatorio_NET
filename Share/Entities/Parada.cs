@@ -18,12 +18,12 @@ namespace Share.Entities
 
         [DisplayName("Latitud")]
         [Required]
-        [StringLength(90, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = -90)]
+        //[StringLength(90, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = -90)]
         public decimal latitud { get; set; }
 
         [DisplayName("Longitud")]
         [Required]
-        [StringLength(180, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = -180)]
+        //[StringLength(180, ErrorMessage = "El campo {0} debe tener entre {2} y {1} caracteres", MinimumLength = -180)]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{#.#}")]
         public decimal longitud { get; set; }
 

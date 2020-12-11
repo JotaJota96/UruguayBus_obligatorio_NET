@@ -25,7 +25,9 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.latitud, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <br />
+            <span class="text-muted col-md-12">(Sparado por ',')</span>
+            <div class="col-md-10 mt-2">
                 @Html.EditorFor(model => model.latitud, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.latitud, "", new { @class = "text-danger" })
             </div>
@@ -33,7 +35,9 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.longitud, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <br />
+            <span class="text-muted col-md-12">(Sparado por ',')</span>
+            <div class="col-md-10 mt-2">
                 @Html.EditorFor(model => model.longitud, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.longitud, "", new { @class = "text-danger" })
             </div>

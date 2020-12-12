@@ -638,7 +638,6 @@ namespace UruguayBusWeb.Controllers
                 // obtiene el elemento a modificar y carga la vista de edicion
 
                 Linea l = await gp.obtenerLinea(id);
-                ICollection<Parada> lstParada = new List<Parada>();
 
                 if (l == null)
                     return HttpNotFound();
@@ -661,24 +660,13 @@ namespace UruguayBusWeb.Controllers
         {
             try
             {
-                // obtiene el elemento a modificar y carga la vista de edicion
-
                 Linea l = await gp.obtenerLinea(id);
-                ICollection<Parada> lstParada = new List<Parada>();
 
-                if (l == null)
-                    return HttpNotFound();
+                if (l == null) return HttpNotFound();
 
-                foreach (var item in l.tramos)
-                {
-                    lstParada.Add(item.parada);
-                }
+                await CargarViewBagParaModificarLinea(id);
 
-                ViewBag.listaParada = lstParada;
-
-                // carga la vista y pasandole el modelo
-                ModificarLineaPrecioModel ml = new ModificarLineaPrecioModel();
-                return View("Linea/ModificarLineaPrecio", ml);
+                return View("Linea/ModificarLineaPrecio");
             }
             catch (Exception)
             {
@@ -691,30 +679,20 @@ namespace UruguayBusWeb.Controllers
         {
             try
             {
-                // obtiene el elemento a modificar y carga la vista de edicion
-
                 Linea l = await gp.obtenerLinea(id);
-                ICollection<Parada> lstParada = new List<Parada>();
 
-                if (l == null)
-                    return HttpNotFound();
+                if (l == null) return HttpNotFound();
 
-                foreach (var item in l.tramos)
-                {
-                    lstParada.Add(item.parada);
-                }
+                await CargarViewBagParaModificarLinea(id);
 
-                ViewBag.listaParada = lstParada;
-
-                // carga la vista y pasandole el modelo
-                ModificarLineaTiempoModel ml = new ModificarLineaTiempoModel();
-                return View("Linea/ModificarLineaTiempo", ml);
+                return View("Linea/ModificarLineaTiempo");
             }
             catch (Exception)
             {
                 return RedirectToAction("ListarLineas");
             }
         }
+
 
         // POST: Admin/ModificarLinea/5
         [HttpPost]
@@ -723,7 +701,10 @@ namespace UruguayBusWeb.Controllers
             try
             {
                 if (!TryValidateModel(dto, nameof(ModificarLineaModel)))
+                {
+                    await CargarViewBagParaModificarLinea(id);
                     return View("Linea/ModificarLinea", dto);
+                }
 
                 Linea l = new Linea()
                 {
@@ -748,7 +729,10 @@ namespace UruguayBusWeb.Controllers
             try
             {
                 if (!TryValidateModel(dto, nameof(ModificarLineaPrecioModel)))
+                {
+                    await CargarViewBagParaModificarLinea(id);
                     return View("Linea/ModificarLineaPrecio", dto);
+                }
 
                 Linea l = await gp.obtenerLinea(id);
                 Tramo tramoModificar = l.tramos.Where(x => x.parada.id == dto.idParada).FirstOrDefault();
@@ -787,7 +771,10 @@ namespace UruguayBusWeb.Controllers
             try
             {
                 if (!TryValidateModel(dto, nameof(ModificarLineaTiempoModel)))
+                {
+                    await CargarViewBagParaModificarLinea(id);
                     return View("Linea/ModificarLineaTiempo", dto);
+                }
 
                 Linea l = await gp.obtenerLinea(id);
                 Tramo tramoModificar = l.tramos.Where(x => x.parada.id == dto.idParada).FirstOrDefault();
@@ -837,5 +824,12 @@ namespace UruguayBusWeb.Controllers
         }
         // **** **** Fin de seccion de Lucas **** ****
 
+
+        private async Task CargarViewBagParaModificarLinea(int id)
+        {
+            Linea l = await gp.obtenerLinea(id);
+            if (l == null) return;
+            ViewBag.listaParada = l.tramos.Select(x => x.parada).ToList();
+        }
     }
 }

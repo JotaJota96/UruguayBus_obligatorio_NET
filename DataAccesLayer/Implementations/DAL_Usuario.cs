@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DataAccesLayer.Implementations
 {
@@ -17,18 +19,12 @@ namespace DataAccesLayer.Implementations
             {
                 try
                 {
-                    ICollection<persona> lst = db.persona.ToList();
-
-                    persona per = null;
-                    foreach (var x in lst)
-                    {
-                        if (x.correo == correo && x.contrasenia == contrasenia)
-                        {
-                            per = x;
-                        }
-                    }
+                    persona per = db.persona.Where(x => x.correo == correo).FirstOrDefault();
 
                     if (per == null)
+                        return null;
+
+                    if ( ! DAL_Usuario.CompareHash(contrasenia, per.contrasenia))
                         return null;
 
                     //Persona personaRet = PersonaConverter.convert(per);
@@ -82,18 +78,17 @@ namespace DataAccesLayer.Implementations
         {
             DAL_Global DAL_G = new DAL_Global();
             var paradas = DAL_G.obtenerParadasDeLinea(idlinea).Select(x=> ParadaConverter.convert(x)).ToList();
-            parada ParadaAnterior = null;
-            foreach (var parada in paradas)
-            {
-                if (parada.id != idParada)
-                {
-                    return ParadaAnterior != null ? ParadaAnterior.id : 0;
-                } else
-                {
-                    ParadaAnterior = parada;
-                }
-            }
-            return ParadaAnterior != null ? ParadaAnterior.id : 0;
+
+            // obtengo laparada de referencia y luego obtengo su indice en la coleccion
+            parada paradaReferencia = paradas.Where(x => x.id == idParada).FirstOrDefault();
+            int indexParadaReferencia = paradas.IndexOf(paradaReferencia);
+
+            // si no se encuentra o si es la primera, devuelvo 0
+            // si se encuentra la ubico en la coleccion y devuelvo su ID
+            if (indexParadaReferencia <= 0)
+                return 0;
+            else
+                return paradas.ElementAt(indexParadaReferencia-1).id;
         }
         private bool ParadasOrdenadas(int idlinea, int idParadaOrigen, int idParadaDestino)
         {
@@ -280,6 +275,8 @@ namespace DataAccesLayer.Implementations
                     usuario usu = UsuarioConverter.convert(u);
                     persona per = PersonaConverter.convert(u.persona);
 
+                    per.contrasenia = DAL_Usuario.GetHash(per.contrasenia);
+
                     usu.persona = per;
                     per.usuario = usu;
 
@@ -432,10 +429,28 @@ namespace DataAccesLayer.Implementations
                 }
                 catch (Exception e)
                 {
-
                     throw e;
                 }
             }
+        }
+
+
+        // ***** ***** Funciones auxiliares***** ***** ***** ***** ***** ***** ***** *****  ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+        public static string GetHash(string password)
+        {
+            // Funcion basada en: https://stackoverflow.com/questions/8890902/c-comparing-the-password-hash-with-the-user-input-different-sizes-when-authe
+            byte[] unhashedBytes = Encoding.Unicode.GetBytes(String.Concat("panqueque secreto", password));
+            SHA256Managed sha256 = new SHA256Managed();
+            byte[] hashedBytes = sha256.ComputeHash(unhashedBytes);
+            string BytesInBase64 = Convert.ToBase64String(hashedBytes);
+            return BytesInBase64;
+        }
+
+        public static bool CompareHash(string attemptedPassword, string base64Hash)
+        {
+            // Funcion basada en: https://stackoverflow.com/questions/8890902/c-comparing-the-password-hash-with-the-user-input-different-sizes-when-authe
+            string base64AttemptedHash = GetHash(attemptedPassword);
+            return base64Hash == base64AttemptedHash;
         }
     }
 }

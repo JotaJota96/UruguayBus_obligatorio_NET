@@ -166,7 +166,6 @@
     <Compile Include="Models\CrearHorariosModel.cs" />
     <Compile Include="Models\CrearLineaModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\ModificarLinea.cs" />
     <Compile Include="Models\ModificarLineaModel.cs" />
     <Compile Include="Models\ModificarLineaPrecioModel.cs" />
     <Compile Include="Models\ModificarLineaTiempoModel.cs" />

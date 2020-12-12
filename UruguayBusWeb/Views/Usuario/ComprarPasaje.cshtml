@@ -136,7 +136,7 @@
                     </tbody>
                 </table>
                 
-                @Html.HiddenFor(model => model.idViaje);
+                @Html.HiddenFor(model => model.idViaje)
 
                 <!-- botones atras / siguiente -->
                 <div class="form-group row">
@@ -217,7 +217,7 @@
     <script type="text/javascript">
         const navTabs = "#nav-tabs";
 
-        const precioElegirAsiento = @Html.Raw(Model == null ? "0" : Model.precioElegirAsiento.ToString ("0.##") ); // imprimo dentro del script el valor de la variable;
+        const precioElegirAsiento = @Html.Raw(Model == null ? "0" : Model.precioElegirAsiento.ToString("0.##")); // imprimo dentro del script el valor de la variable;
         const txtFecha = "#fecha";
         const hdnIdViaje = "#idViaje";
         const cmbLinea = "#idLinea";

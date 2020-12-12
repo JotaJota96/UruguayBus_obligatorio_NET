@@ -14,6 +14,9 @@
         <th>
             @Html.DisplayNameFor(model => model.hora)
         </th>
+        <th>
+            Linea
+        </th>
         <th></th>
     </tr>
 
@@ -21,6 +24,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.hora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.linea.nombre)
         </td>
         <td>
             @Html.ActionLink("Modificar", "ModificarHorario", new { id = item.id })

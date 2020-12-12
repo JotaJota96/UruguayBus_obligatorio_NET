@@ -632,20 +632,23 @@ namespace UruguayBusWeb.Controllers
         // GET: Admin/ModificarLinea/5
         public async Task<ActionResult> ModificarLinea(int id)
         {
-            // obtiene el elemento a modificar y carga la vista de edicion
-
-            Linea l = await gp.obtenerLinea(id);
-            ICollection<Parada> lstParada = new List<Parada>();
-
-            foreach (var item in l.tramos)
+            try
             {
-                lstParada.Add(item.parada);
-            }
+                // obtiene el elemento a modificar y carga la vista de edicion
 
-            ViewBag.listaParada = lstParada;
+                Linea l = await gp.obtenerLinea(id);
+                ICollection<Parada> lstParada = new List<Parada>();
 
-            if (l != null)
-            {
+                if (l == null)
+                    return HttpNotFound();
+
+                foreach (var item in l.tramos)
+                {
+                    lstParada.Add(item.parada);
+                }
+
+                ViewBag.listaParada = lstParada;
+
                 // carga la vista y pasandole el modelo
                 ModificarLinea ml = new ModificarLinea()
                 {
@@ -653,10 +656,9 @@ namespace UruguayBusWeb.Controllers
                 };
                 return View("Linea/ModificarLinea", ml);
             }
-            else
+            catch (Exception)
             {
-                // Llama a la funcion de este controlador (no es una ruta)
-                return HttpNotFound();
+                return RedirectToAction("ListarLineas");
             }
         }
 
@@ -686,12 +688,13 @@ namespace UruguayBusWeb.Controllers
                         if (item.parada.id == dto.idParada)
                         {
                             aModificar = item;
+                            break;
                         }
                     }
 
                     if (aModificar == null)
                     {
-
+                        // salida por error
                         Linea lin = await gp.obtenerLinea(id);
                         ICollection<Parada> lstParada = new List<Parada>();
 
@@ -728,7 +731,7 @@ namespace UruguayBusWeb.Controllers
                     }
                     else
                     {
-
+                        // salida por error
                         Linea lin = await gp.obtenerLinea(id);
                         ICollection<Parada> lstParada = new List<Parada>();
 

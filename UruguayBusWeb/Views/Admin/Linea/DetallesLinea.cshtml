@@ -11,47 +11,47 @@
     ICollection<Share.Entities.Tramo> lst = (ICollection<Share.Entities.Tramo>)ViewBag.listaTramos;
 }
 
-<h2 class="mt-3">DetallesLinea</h2>
+<h2 class="mt-3">Detalle de la línea</h2>
 
 <div>
     <h4>Linea</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-        <hr />
-
-        @foreach (var item in lst)
-        {
-            <div class="form-group row">
-                @Html.LabelFor(model => item.parada.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => item.parada.nombre, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control" } })
-                </div>
+    <div class="dl-horizontal">
+        <div class="form-group row">
+            @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @readonly="readonly", @class = "form-control" } })
             </div>
+        </div>
 
-            <div class="form-group row">
-                @Html.LabelFor(model => item.tiempo, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => item.tiempo, new { htmlAttributes = new { @disabled = "disabled", @type = "time", @class = "form-control" } })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                @Html.LabelFor(model => item.numero, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => item.numero, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control" } })
-                </div>
-            </div>
-            <hr />
-        }
-    </dl>
+        <h4 class="mt-5">Paradas</h4>
+
+        <table class="table">
+            <tr>
+                <th>Orden</th>
+                <th>Nombre de la parada</th>
+                <th>Tiempo desde la anterior</th>
+            </tr>
+
+            @foreach (var item in lst)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.numero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.parada.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.tiempo)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 </div>
+
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>

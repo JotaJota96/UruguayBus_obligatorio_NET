@@ -178,7 +178,7 @@ namespace UruguayBusWeb.ApiClient
                 throw e;
             }
         }
-        public async Task<Linea> obtenerLinea(int idVehiculo)
+        public async Task<Linea> obtenerLinea(int idLinea)
         {
             try
             {
@@ -187,9 +187,10 @@ namespace UruguayBusWeb.ApiClient
 
                 foreach (var item in lst)
                 {
-                    if (item.id == idVehiculo)
+                    if (item.id == idLinea)
                     {
                         ret = item;
+                        break;
                     }
                 }
 

@@ -629,44 +629,82 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
-        // GET: Admin/ModificarLinea/5
+
+        // GET: Admin/ModificarLinea/5/precio
         public async Task<ActionResult> ModificarLinea(int id)
         {
-            // obtiene el elemento a modificar y carga la vista de edicion
-
-            Linea l = await gp.obtenerLinea(id);
-            ICollection<Parada> lstParada = new List<Parada>();
-
-            foreach (var item in l.tramos)
+            try
             {
-                lstParada.Add(item.parada);
-            }
+                // obtiene el elemento a modificar y carga la vista de edicion
 
-            ViewBag.listaParada = lstParada;
+                Linea l = await gp.obtenerLinea(id);
 
-            if (l != null)
-            {
+                if (l == null)
+                    return HttpNotFound();
+
                 // carga la vista y pasandole el modelo
-                ModificarLinea ml = new ModificarLinea()
+                ModificarLineaModel ml = new ModificarLineaModel()
                 {
                     nombre = l.nombre
                 };
                 return View("Linea/ModificarLinea", ml);
             }
-            else
+            catch (Exception)
             {
-                // Llama a la funcion de este controlador (no es una ruta)
-                return HttpNotFound();
+                return RedirectToAction("ListarLineas");
             }
         }
 
-        // POST: Admin/ModificarHorario/5
-        [HttpPost]
-        public async Task<ActionResult> ModificarLinea(int id, ModificarLinea dto)
+        // GET: Admin/ModificaModificarLineaPreciorLinea/5/precio
+        public async Task<ActionResult> ModificarLineaPrecio(int id)
         {
-            // recibe los datos del elemento a modificar y redirige al listado
             try
             {
+                Linea l = await gp.obtenerLinea(id);
+
+                if (l == null) return HttpNotFound();
+
+                await CargarViewBagParaModificarLinea(id);
+
+                return View("Linea/ModificarLineaPrecio");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ListarLineas");
+            }
+        }
+
+        // GET: Admin/ModificarLineaTiempo/5/precio
+        public async Task<ActionResult> ModificarLineaTiempo(int id)
+        {
+            try
+            {
+                Linea l = await gp.obtenerLinea(id);
+
+                if (l == null) return HttpNotFound();
+
+                await CargarViewBagParaModificarLinea(id);
+
+                return View("Linea/ModificarLineaTiempo");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ListarLineas");
+            }
+        }
+
+
+        // POST: Admin/ModificarLinea/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarLinea(int id, ModificarLineaModel dto)
+        {
+            try
+            {
+                if (!TryValidateModel(dto, nameof(ModificarLineaModel)))
+                {
+                    await CargarViewBagParaModificarLinea(id);
+                    return View("Linea/ModificarLinea", dto);
+                }
 
                 Linea l = new Linea()
                 {
@@ -676,81 +714,96 @@ namespace UruguayBusWeb.Controllers
 
                 l = await ap.ModificarLinea(l);
 
-                if(dto.idParada != null)
-                {
-                    Linea modificada = await gp.obtenerLinea(id);
-                    Tramo aModificar = null;
-
-                    foreach (var item in modificada.tramos)
-                    {
-                        if (item.parada.id == dto.idParada)
-                        {
-                            aModificar = item;
-                        }
-                    }
-
-                    if (aModificar == null)
-                    {
-
-                        Linea lin = await gp.obtenerLinea(id);
-                        ICollection<Parada> lstParada = new List<Parada>();
-
-                        foreach (var item in lin.tramos)
-                        {
-                            lstParada.Add(item.parada);
-                        }
-
-                        ViewBag.listaParada = lstParada;
-
-                        return View("Linea/ModificarLinea", dto);
-                    }
-
-                    aModificar.linea = modificada;
-
-                    if(dto.tiempo != null)
-                    {
-                        aModificar.tiempo = (TimeSpan) dto.tiempo;
-                    }                   
-
-                    if (dto.precio != null && dto.fecha_valides != null)
-                    {
-                        Precio p = new Precio()
-                        {
-                            tramo = aModificar,
-                            valor = (int) dto.precio,
-                            fecha_validez = (DateTime) dto.fecha_valides
-                        };
-                        p.tramo.parada.tramos = null;
-                        p.tramo.linea.tramos = null;
-                        p.tramo.precio = null;
-
-                        await ap.ModificarTramo(p);
-                    }
-                    else
-                    {
-
-                        Linea lin = await gp.obtenerLinea(id);
-                        ICollection<Parada> lstParada = new List<Parada>();
-
-                        foreach (var item in lin.tramos)
-                        {
-                            lstParada.Add(item.parada);
-                        }
-
-                        ViewBag.listaParada = lstParada;
-
-                        return View("Linea/ModificarLinea", dto);
-                    }
-                }
-                // Llama a la funcion de este controlador (no es una ruta)
                 return RedirectToAction("ListarLineas");
             }
-            catch
+            catch (Exception)
             {
-                // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("ListarLineas");
+                return RedirectToAction("ModificarLinea");
             }
         }
+
+        // POST: Admin/ModificarLineaPrecioModel/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarLineaPrecio(int id, ModificarLineaPrecioModel dto)
+        {
+            try
+            {
+                if (!TryValidateModel(dto, nameof(ModificarLineaPrecioModel)))
+                {
+                    await CargarViewBagParaModificarLinea(id);
+                    return View("Linea/ModificarLineaPrecio", dto);
+                }
+
+                Linea l = await gp.obtenerLinea(id);
+                Tramo tramoModificar = l.tramos.Where(x => x.parada.id == dto.idParada).FirstOrDefault();
+
+                if (tramoModificar == null)
+                {
+                    // Error
+                    return View("Linea/ModificarLinea", dto);
+                }
+                tramoModificar.linea = l;
+
+                Precio p = new Precio()
+                {
+                    tramo = tramoModificar,
+                    valor = dto.precio,
+                    fecha_validez = dto.fecha_valides
+                };
+                p.tramo.parada.tramos = null;
+                p.tramo.linea.tramos = null;
+                p.tramo.precio = null;
+
+                await ap.ModificarTramo(p);
+
+                return RedirectToAction("ListarLineas");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ModificarLineaPrecio");
+            }
+        }
+
+        // POST: Admin/ModificarLineaPrecioModel/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarLineaTiempo(int id, ModificarLineaTiempoModel dto)
+        {
+            try
+            {
+                if (!TryValidateModel(dto, nameof(ModificarLineaTiempoModel)))
+                {
+                    await CargarViewBagParaModificarLinea(id);
+                    return View("Linea/ModificarLineaTiempo", dto);
+                }
+
+                Linea l = await gp.obtenerLinea(id);
+                Tramo tramoModificar = l.tramos.Where(x => x.parada.id == dto.idParada).FirstOrDefault();
+
+                if (tramoModificar == null)
+                {
+                    // Error
+                    return View("Linea/ModificarLineaTiempo", dto);
+                }
+                tramoModificar.linea = l;
+                tramoModificar.tiempo = dto.tiempo;
+
+                Precio p = new Precio();
+                p.tramo = tramoModificar;
+                p.tramo.parada.tramos = null;
+                p.tramo.linea.tramos = null;
+                p.tramo.precio = null;
+                p.valor = -1;
+
+                await ap.ModificarTramo(p);
+
+                return RedirectToAction("ListarLineas");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ModificarLineaTiempo");
+            }
+        }
+
 
         // GET: Admin/DetalleLinea/5
         public async Task<ActionResult> DetalleLinea(int id)
@@ -771,5 +824,12 @@ namespace UruguayBusWeb.Controllers
         }
         // **** **** Fin de seccion de Lucas **** ****
 
+
+        private async Task CargarViewBagParaModificarLinea(int id)
+        {
+            Linea l = await gp.obtenerLinea(id);
+            if (l == null) return;
+            ViewBag.listaParada = l.tramos.Select(x => x.parada).ToList();
+        }
     }
 }

@@ -453,8 +453,8 @@ namespace DataAccesLayer.Implementations
                         throw new Exception("Se deve enviar el objeto que deceas modificar");
                     }
 
-                    
                     TramMod.tiempo = p.tramo.tiempo;
+                    
                     if (p.valor >= 0)
                     {
                         precio pre = new precio() {

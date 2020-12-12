@@ -12,7 +12,7 @@ namespace Share.Entities
     {
         public int id { get; set; }
 
-        [DisplayName("Fecha vencimiento de la libreta")]
+        [DisplayName("Vencimiento de libreta")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime vencimiento_libreta { get; set; }

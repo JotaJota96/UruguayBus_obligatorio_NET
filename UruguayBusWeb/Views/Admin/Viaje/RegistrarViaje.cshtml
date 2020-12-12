@@ -1,7 +1,7 @@
 ﻿@model UruguayBusWeb.Models.RegistrarViajeModel
 
 @{
-    ViewBag.Title = "RegistrarViaje";
+    ViewBag.Title = "Registrar Viaje";
     // creo la lista de lineas para ser mostradas en el DropDown
     List<SelectListItem> lstLineas= new List<SelectListItem>();
     foreach (var item in (ICollection<Share.Entities.Linea>) ViewBag.lstLineas)
@@ -14,14 +14,13 @@
     }
 }
 
-<h2 class="mt-3">RegistrarViaje</h2>
+<h2 class="mt-3">Registrar Viaje</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>RegistrarViajeModel</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

@@ -155,8 +155,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AsignarRolModel.cs" />
-    <Compile Include="Models\ComprarPasajeModel.cs" />
     <Compile Include="Helpers\AuthorizeRoles.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\PdfHelper.cs" />
@@ -169,6 +167,9 @@
     <Compile Include="Models\CrearLineaModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ModificarLinea.cs" />
+    <Compile Include="Models\ModificarLineaModel.cs" />
+    <Compile Include="Models\ModificarLineaPrecioModel.cs" />
+    <Compile Include="Models\ModificarLineaTiempoModel.cs" />
     <Compile Include="Models\PasoParadaModel.cs" />
     <Compile Include="Models\ProximoVehiculoModel.cs" />
     <Compile Include="Models\Proxy\AsignarRolDTO.cs" />
@@ -302,6 +303,8 @@
     <Content Include="Views\Superadmin\Index.cshtml" />
     <Content Include="Views\Superadmin\Roles\ListarUsuario.cshtml" />
     <Content Include="Views\Superadmin\Roles\AsignarRol.cshtml" />
+    <Content Include="Views\Admin\Linea\ModificarLineaPrecio.cshtml" />
+    <Content Include="Views\Admin\Linea\ModificarLineaTiempo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

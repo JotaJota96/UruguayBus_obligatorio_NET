@@ -629,8 +629,99 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
-        // GET: Admin/ModificarLinea/5
+
+        // GET: Admin/ModificarLinea/5/precio
         public async Task<ActionResult> ModificarLinea(int id)
+        {
+            try
+            {
+                // obtiene el elemento a modificar y carga la vista de edicion
+
+                Linea l = await gp.obtenerLinea(id);
+                ICollection<Parada> lstParada = new List<Parada>();
+
+                if (l == null)
+                    return HttpNotFound();
+
+                // carga la vista y pasandole el modelo
+                ModificarLineaModel ml = new ModificarLineaModel()
+                {
+                    nombre = l.nombre
+                };
+                return View("Linea/ModificarLinea", ml);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ListarLineas");
+            }
+        }
+
+        // GET: Admin/ModificaModificarLineaPreciorLinea/5/precio
+        public async Task<ActionResult> ModificarLineaPrecio(int id)
+        {
+            try
+            {
+                // obtiene el elemento a modificar y carga la vista de edicion
+
+                Linea l = await gp.obtenerLinea(id);
+                ICollection<Parada> lstParada = new List<Parada>();
+
+                if (l == null)
+                    return HttpNotFound();
+
+                foreach (var item in l.tramos)
+                {
+                    lstParada.Add(item.parada);
+                }
+
+                ViewBag.listaParada = lstParada;
+
+                // carga la vista y pasandole el modelo
+                ModificarLineaPrecioModel ml = new ModificarLineaPrecioModel();
+                return View("Linea/ModificarLineaPrecio", ml);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ListarLineas");
+            }
+        }
+
+        // GET: Admin/ModificarLineaTiempo/5/precio
+        public async Task<ActionResult> ModificarLineaTiempo(int id)
+        {
+            try
+            {
+                // obtiene el elemento a modificar y carga la vista de edicion
+
+                Linea l = await gp.obtenerLinea(id);
+                ICollection<Parada> lstParada = new List<Parada>();
+
+                if (l == null)
+                    return HttpNotFound();
+
+                foreach (var item in l.tramos)
+                {
+                    lstParada.Add(item.parada);
+                }
+
+                ViewBag.listaParada = lstParada;
+
+                // carga la vista y pasandole el modelo
+                ModificarLineaTiempoModel ml = new ModificarLineaTiempoModel();
+                return View("Linea/ModificarLineaTiempo", ml);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ListarLineas");
+            }
+        }
+
+
+
+
+
+
+        private async Task<ActionResult> RedirigirAModificarLinea(int id, string redirigirA)
         {
             try
             {
@@ -654,7 +745,7 @@ namespace UruguayBusWeb.Controllers
                 {
                     nombre = l.nombre
                 };
-                return View("Linea/ModificarLinea", ml);
+                return View(redirigirA, ml);
             }
             catch (Exception)
             {
@@ -662,13 +753,18 @@ namespace UruguayBusWeb.Controllers
             }
         }
 
-        // POST: Admin/ModificarHorario/5
+
+
+
+        // POST: Admin/ModificarLinea/5
         [HttpPost]
-        public async Task<ActionResult> ModificarLinea(int id, ModificarLinea dto)
+        public async Task<ActionResult> ModificarLinea(int id, ModificarLineaModel dto)
         {
-            // recibe los datos del elemento a modificar y redirige al listado
             try
             {
+
+                if (!TryValidateModel(dto, nameof(ModificarLineaModel)))
+                    return View("Linea/ModificarLinea", dto);
 
                 Linea l = new Linea()
                 {
@@ -678,7 +774,83 @@ namespace UruguayBusWeb.Controllers
 
                 l = await ap.ModificarLinea(l);
 
-                if(dto.idParada != null)
+                return RedirectToAction("ListarLineas");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ListarLineas");
+            }
+        }
+
+        // POST: Admin/ModificarLineaPrecioModel/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarLineaPrecio(int id, ModificarLineaPrecioModel dto)
+        {
+            ModificarLinea ml = new ModificarLinea()
+            {
+                nombre = null,
+                precio = dto.precio,
+                fecha_valides = dto.fecha_valides,
+                idParada = dto.idParada,
+            };
+            return await ModificarLineaAuz(id, ml);
+        }
+
+        // POST: Admin/ModificarLineaPrecioModel/5
+        [HttpPost]
+        public async Task<ActionResult> ModificarLineaTiempo(int id, ModificarLineaTiempoModel dto)
+        {
+            ModificarLinea ml = new ModificarLinea()
+            {
+                nombre = null,
+                tiempo = dto.tiempo,
+                idParada = dto.idParada,
+            };
+            return await ModificarLineaAuz(id, ml);
+        }
+
+
+
+
+
+
+        // GET: Admin/DetalleLinea/5
+        public async Task<ActionResult> DetalleLinea(int id)
+        {
+
+            Linea l = await gp.obtenerLinea(id);
+
+            if (l != null)
+            {
+                // carga la vista y pasandole el modelo
+                ViewBag.listaTramos = l.tramos;
+                return View("Linea/DetallesLinea", l);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+        // **** **** Fin de seccion de Lucas **** ****
+
+
+        private async Task<ActionResult> ModificarLineaAuz(int id, ModificarLinea dto)
+        {
+            // recibe los datos del elemento a modificar y redirige al listado
+            try
+            {
+                if (dto.nombre != null)
+                {
+                    Linea l = new Linea()
+                    {
+                        id = id,
+                        nombre = dto.nombre
+                    };
+
+                    l = await ap.ModificarLinea(l);
+                }
+
+                if (dto.idParada != null)
                 {
                     Linea modificada = await gp.obtenerLinea(id);
                     Tramo aModificar = null;
@@ -710,18 +882,18 @@ namespace UruguayBusWeb.Controllers
 
                     aModificar.linea = modificada;
 
-                    if(dto.tiempo != null)
+                    if (dto.tiempo != null)
                     {
-                        aModificar.tiempo = (TimeSpan) dto.tiempo;
-                    }                   
+                        aModificar.tiempo = (TimeSpan)dto.tiempo;
+                    }
 
                     if (dto.precio != null && dto.fecha_valides != null)
                     {
                         Precio p = new Precio()
                         {
                             tramo = aModificar,
-                            valor = (int) dto.precio,
-                            fecha_validez = (DateTime) dto.fecha_valides
+                            valor = (int)dto.precio,
+                            fecha_validez = (DateTime)dto.fecha_valides
                         };
                         p.tramo.parada.tramos = null;
                         p.tramo.linea.tramos = null;
@@ -754,25 +926,6 @@ namespace UruguayBusWeb.Controllers
                 return RedirectToAction("ListarLineas");
             }
         }
-
-        // GET: Admin/DetalleLinea/5
-        public async Task<ActionResult> DetalleLinea(int id)
-        {
-
-            Linea l = await gp.obtenerLinea(id);
-
-            if (l != null)
-            {
-                // carga la vista y pasandole el modelo
-                ViewBag.listaTramos = l.tramos;
-                return View("Linea/DetallesLinea", l);
-            }
-            else
-            {
-                return HttpNotFound();
-            }
-        }
-        // **** **** Fin de seccion de Lucas **** ****
 
     }
 }

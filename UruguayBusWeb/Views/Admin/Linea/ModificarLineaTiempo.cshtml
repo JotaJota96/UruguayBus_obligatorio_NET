@@ -1,0 +1,55 @@
+﻿@model UruguayBusWeb.Models.ModificarLineaTiempoModel
+
+@{
+    ViewBag.Title = "ModificarLineaTiempo";
+
+    List<SelectListItem> listaParadas = new List<SelectListItem>();
+    foreach (var item in (ICollection<Share.Entities.Parada>)ViewBag.listaParada)
+    {
+        listaParadas.Add(new SelectListItem()
+        {
+            Text = item.nombre,
+            Value = "" + item.id,
+        });
+    }
+}
+
+
+<h2 class="mt-3">ModificarLinea</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>ModificarLinea</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idParada, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.idParada, listaParadas, "Seleccione una parada", new { @class = "custom-select" })
+                @Html.ValidationMessageFor(model => model.idParada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tiempo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tiempo, new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tiempo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

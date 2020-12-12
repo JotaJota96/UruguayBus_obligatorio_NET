@@ -186,8 +186,8 @@ namespace DataAccesLayer.Implementations
 
                     parada par = db.parada.Find(p.id);
                     par.nombre = p.nombre;
-                    par.latitud = p.latitud;
-                    par.longitud = p.longitud;
+                    //par.latitud = p.latitud;
+                    //par.longitud = p.longitud;
                     db.SaveChanges();
                     return ParadaConverter.convert(par);
                 }
@@ -205,6 +205,8 @@ namespace DataAccesLayer.Implementations
                 try
                 {
                     vehiculo veh = VehiculoConverter.convert(v);
+                    veh.latitud = (decimal) -34.34;
+                    veh.longitud = (decimal) -56.71;
 
                     db.vehiculo.Add(veh);
                     db.SaveChanges();

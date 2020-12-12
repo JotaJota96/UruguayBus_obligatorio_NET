@@ -245,18 +245,19 @@ namespace UruguayBusWeb.Controllers
             // recibe los datos del elemento a modificar y redirige al listado
             try
             {
+
                 Parada P = new Parada()
                 {
                     id = id,
-                    latitud = int.Parse(collection["latitud"]),
-                    longitud = int.Parse(collection["longitud"]),
+                    //latitud = decimal.Parse(collection["latitud"]),
+                    //longitud = decimal.Parse(collection["longitud"]),
                     nombre = collection["nombre"],
                 };
 
                 P = await ap.ModificarParada(P);
 
                 // Llama a la funcion de este controlador (no es una ruta)
-                return RedirectToAction("ListarVehiculos");
+                return RedirectToAction("ListarParadas");
             }
             catch
             {
@@ -284,8 +285,8 @@ namespace UruguayBusWeb.Controllers
             {
                 Parada P = new Parada()
                 {
-                    latitud = int.Parse(collection["latitud"]),
-                    longitud = int.Parse(collection["longitud"]),
+                    latitud = decimal.Parse(collection["latitud"]),
+                    longitud = decimal.Parse(collection["longitud"]),
                     nombre = collection["nombre"],
                 };
 

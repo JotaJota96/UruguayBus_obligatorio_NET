@@ -28,23 +28,31 @@ namespace DataAccesLayer.Implementations
                         if (fechaVencLibreta == null)
                             throw new Exception("Se deve ingresar la fecha de vencimiento de la libreta.");
 
-                        conductor con = new conductor();
-                        con.persona = per;
-                        con.vencimiento_libreta = (DateTime) fechaVencLibreta;
-                       
-                        db.conductor.Add(con);
+                        if (!db.conductor.Any(x => x.id == per.id))
+                        {
+                            conductor con = new conductor();
+                            con.persona = per;
+                            con.vencimiento_libreta = (DateTime) fechaVencLibreta;
+                            db.conductor.Add(con);
+                        }
                     }
                     else if (rol.Equals(Rol.ADMIN))
                     {
-                        admin adm = new admin();
-                        adm.persona = per;
-                        db.admin.Add(adm);
+                        if (!db.admin.Any(x=>x.id == per.id))
+                        {
+                            admin adm = new admin();
+                            adm.persona = per;
+                            db.admin.Add(adm);
+                        }
                     }
                     else if (rol.Equals(Rol.SUPERADMIN))
                     {
-                        superadmin spm = new superadmin();
-                        spm.persona = per;
-                        db.superadmin.Add(spm);
+                        if (!db.superadmin.Any(x => x.id == per.id))
+                        {
+                            superadmin spm = new superadmin();
+                            spm.persona = per;
+                            db.superadmin.Add(spm);
+                        }
                     }
 
                     db.SaveChanges();

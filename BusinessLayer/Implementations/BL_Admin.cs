@@ -179,13 +179,13 @@ namespace BusinessLayer.Implementations
             try
             {
                 if (fInicio == null || fFin == null)
-                    throw new Exception("Las fechas de inicio y fin no pueden ser NUÑÑ");
+                    throw new Exception("Las fechas de inicio y fin no pueden ser NULL");
 
                 if (DateTime.Today.CompareTo(fInicio) > 0)
                     throw new Exception("La fecha de inicio debe ser igual o posterior a la fecha actual");
 
-                if (fInicio.CompareTo(fFin) >= 0)
-                    throw new Exception("La fecha de inicio debe ser anterior que la de fin");
+                if (fInicio.CompareTo(fFin) > 0)
+                    throw new Exception("La fecha de inicio debe ser anterior o igual que la de fin");
                 
                 if (dias == null || dias.Count < 1)
                     throw new Exception("Se debe especificar al menos un dia de la semana");

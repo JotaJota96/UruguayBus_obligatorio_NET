@@ -762,7 +762,6 @@ namespace UruguayBusWeb.Controllers
         {
             try
             {
-
                 if (!TryValidateModel(dto, nameof(ModificarLineaModel)))
                     return View("Linea/ModificarLinea", dto);
 
@@ -778,7 +777,7 @@ namespace UruguayBusWeb.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("ListarLineas");
+                return RedirectToAction("ModificarLinea");
             }
         }
 
@@ -786,27 +785,76 @@ namespace UruguayBusWeb.Controllers
         [HttpPost]
         public async Task<ActionResult> ModificarLineaPrecio(int id, ModificarLineaPrecioModel dto)
         {
-            ModificarLinea ml = new ModificarLinea()
+            try
             {
-                nombre = null,
-                precio = dto.precio,
-                fecha_valides = dto.fecha_valides,
-                idParada = dto.idParada,
-            };
-            return await ModificarLineaAuz(id, ml);
+                if (!TryValidateModel(dto, nameof(ModificarLineaPrecioModel)))
+                    return View("Linea/ModificarLineaPrecio", dto);
+
+                Linea l = await gp.obtenerLinea(id);
+                Tramo tramoModificar = l.tramos.Where(x => x.parada.id == dto.idParada).FirstOrDefault();
+
+                if (tramoModificar == null)
+                {
+                    // Error
+                    return View("Linea/ModificarLinea", dto);
+                }
+                tramoModificar.linea = l;
+
+                Precio p = new Precio()
+                {
+                    tramo = tramoModificar,
+                    valor = dto.precio,
+                    fecha_validez = dto.fecha_valides
+                };
+                p.tramo.parada.tramos = null;
+                p.tramo.linea.tramos = null;
+                p.tramo.precio = null;
+
+                await ap.ModificarTramo(p);
+
+                return RedirectToAction("ListarLineas");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ModificarLineaPrecio");
+            }
         }
 
         // POST: Admin/ModificarLineaPrecioModel/5
         [HttpPost]
         public async Task<ActionResult> ModificarLineaTiempo(int id, ModificarLineaTiempoModel dto)
         {
-            ModificarLinea ml = new ModificarLinea()
+            try
             {
-                nombre = null,
-                tiempo = dto.tiempo,
-                idParada = dto.idParada,
-            };
-            return await ModificarLineaAuz(id, ml);
+                if (!TryValidateModel(dto, nameof(ModificarLineaTiempoModel)))
+                    return View("Linea/ModificarLineaTiempo", dto);
+
+                Linea l = await gp.obtenerLinea(id);
+                Tramo tramoModificar = l.tramos.Where(x => x.parada.id == dto.idParada).FirstOrDefault();
+
+                if (tramoModificar == null)
+                {
+                    // Error
+                    return View("Linea/ModificarLineaTiempo", dto);
+                }
+                tramoModificar.linea = l;
+                tramoModificar.tiempo = dto.tiempo;
+
+                Precio p = new Precio();
+                p.tramo = tramoModificar;
+                p.tramo.parada.tramos = null;
+                p.tramo.linea.tramos = null;
+                p.tramo.precio = null;
+                p.valor = -1;
+
+                await ap.ModificarTramo(p);
+
+                return RedirectToAction("ListarLineas");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ModificarLineaTiempo");
+            }
         }
 
 
@@ -839,17 +887,6 @@ namespace UruguayBusWeb.Controllers
             // recibe los datos del elemento a modificar y redirige al listado
             try
             {
-                if (dto.nombre != null)
-                {
-                    Linea l = new Linea()
-                    {
-                        id = id,
-                        nombre = dto.nombre
-                    };
-
-                    l = await ap.ModificarLinea(l);
-                }
-
                 if (dto.idParada != null)
                 {
                     Linea modificada = await gp.obtenerLinea(id);

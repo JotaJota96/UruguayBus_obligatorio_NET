@@ -22,7 +22,7 @@ namespace TerminalAutogestion.Ventanas
     /// </summary>
     public partial class WinSeleccionarViaje : Window
     {
-        SL_SoapClient serv = new SL_SoapClient();
+        SL_SoapClient serv = new SL_SoapClient(Constantes.SOAP_SERVICE_URL);
         decimal precioParaElegirAsiento;
         bool permitirElegirAsiento = false;
         int paradaOrigen = 0;

@@ -24,7 +24,7 @@ namespace TerminalAutogestion.Ventanas
     /// </summary>
     public partial class WinIngresarDatosViaje : Window
     {
-        SL_SoapClient serv = new SL_SoapClient();
+        SL_SoapClient serv = new SL_SoapClient(Constantes.SOAP_SERVICE_URL);
 
         public WinIngresarDatosViaje()
         {

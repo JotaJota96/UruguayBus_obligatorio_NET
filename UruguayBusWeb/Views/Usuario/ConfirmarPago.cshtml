@@ -1,7 +1,7 @@
 ﻿@model UruguayBusWeb.Models.ConfirmarPagoModel
 
 @{
-    ViewBag.Title = "ConfirmarPago";
+    ViewBag.Title = "Confirmar Pago";
     String keyMP = System.Configuration.ConfigurationManager.AppSettings["MercadoPagoPublicKey"];
     String textAsiento = Model.asiento == 0 ? "Sin asiento" : Model.asiento.ToString();
 }

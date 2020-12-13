@@ -83,10 +83,10 @@ INSERT INTO superadmin (id) VALUES (10);
 -- **** tabla vehiculo *********************************************************
 --
 INSERT INTO vehiculo (matricula, marca, modelo, cant_asientos, latitud, longitud) VALUES
-    ('MAB 5024', 'Mercedes', '1318', 25,NULL,NULL),
-    ('MBB 3243', 'Volvo', 'B430R', 35,NULL,NULL),
-    ('MAF 5344', 'Mercedes', '7 Ma', 30,NULL,NULL),
-    ('MDF 6543', 'MARCOPOLO', 'VIAGGIO 1050', 20,NULL,NULL)
+    ('MAB 5024', 'Mercedes', '1318', 25, -34.34006741034748, -56.714420781150324),
+    ('MBB 3243', 'Volvo', 'B430R', 35, -34.34006741034748, -56.714420781150324),
+    ('MAF 5344', 'Mercedes', '7 Ma', 30, -34.34006741034748, -56.714420781150324),
+    ('MDF 6543', 'MARCOPOLO', 'VIAGGIO 1050', 20, -34.34006741034748, -56.714420781150324)
 ;
 
 --
@@ -251,7 +251,7 @@ INSERT INTO paso_por_parada (viaje_id, parada_id, fecha_hora) VALUES
     (4, 3, '2020-09-12 07:36:08'),
     (4, 5, '2020-09-12 07:56:17'),
 	
-    (5, 2, '2020-08-14 11:02:12')
+    (5, 2, '2020-08-12 11:02:12')
 ;
 
 --

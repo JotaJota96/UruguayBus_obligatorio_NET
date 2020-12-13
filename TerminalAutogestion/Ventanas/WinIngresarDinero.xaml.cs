@@ -21,7 +21,7 @@ namespace TerminalAutogestion.Ventanas
     /// </summary>
     public partial class WinIngresarDinero : Window
     {
-        SL_SoapClient serv = new SL_SoapClient();
+        SL_SoapClient serv = new SL_SoapClient(Constantes.SOAP_SERVICE_URL);
 
         private int viaje_id;
         private int paradaOrigen;

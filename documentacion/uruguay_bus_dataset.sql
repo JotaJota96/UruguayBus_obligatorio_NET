@@ -34,20 +34,28 @@ BEGIN TRAN t;
     DBCC CHECKIDENT ('persona',  RESEED, 0);
 COMMIT TRAN t;
 
+
+--
+-- tablINTO *********************************************************
+--a parametro
+INSERT INTO parametro (nombre, valor) VALUES 
+	('PrecioMinimo', 100)
+;
+
 --
 -- tablINTO *********************************************************
 --a persona
 INSERT INTO persona (nombre, apellido, correo, contrasenia, tipo_documento, documento) VALUES 
-    ('Luis', 'Garsia', 'LuisGarcia@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58745487'),
-    ('Federico', 'Perez', 'fperez@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '57986532'),
-    ('Belen', 'Curbelo', 'BeluCur@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '37879887'),
-    ('Juan', 'Rodriguez', 'LuC31@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 2, 'A1458'),
-    ('Rodrigo', 'Guitierres', 'GuRodrigo@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '25468795'),
-    ('Florencia', 'Noguera', 'FNog@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58635474'),
-    ('Christian', 'Perez', 'CHPerez@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58635474'),
-    ('Agustina', 'Diaz', 'AguDiaz2010@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58635474'),
-    ('Lucia', 'Perez', 'LuPerez@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 2, 'B1587'),
-    ('Karen', 'Garcia', 'KGarcia@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58635474')
+    ('Luis',      'Garsia',    'LuisGarcia@gmail.com',  'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58745487'),
+    ('Federico',  'Perez',     'fperez@gmail.com',      'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '57986532'),
+    ('Belen',     'Curbelo',   'BeluCur@gmail.com',     'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '37879887'),
+    ('Juan',      'Rodriguez', 'LuC31@gmail.com',       'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 2, 'A1458'),
+    ('Rodrigo',   'Guitierres','GuRodrigo@gmail.com',   'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '25468795'),
+    ('Florencia', 'Noguera',   'FNog@gmail.com',        'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58635474'),
+    ('Christian', 'Perez',     'CHPerez@gmail.com',     'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58635474'),
+    ('Agustina',  'Diaz',      'AguDiaz2010@gmail.com', 'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58635474'),
+    ('Lucia',     'Perez',     'LuPerez@gmail.com',     'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 2, 'B1587'),
+    ('Karen',     'Garcia',    'KGarcia@gmail.com',     'vGbuG8B2/xmmTRAxOyMiE35kGOkGtHR2sPn43Na1dl8=', 1, '58635474')
 ;
 
 --
@@ -83,104 +91,119 @@ INSERT INTO superadmin (id) VALUES (10);
 -- **** tabla vehiculo *********************************************************
 --
 INSERT INTO vehiculo (matricula, marca, modelo, cant_asientos, latitud, longitud) VALUES
-    ('MAB 5024', 'Mercedes', '1318', 25, -34.34006741034748, -56.714420781150324),
-    ('MBB 3243', 'Volvo', 'B430R', 35, -34.34006741034748, -56.714420781150324),
-    ('MAF 5344', 'Mercedes', '7 Ma', 30, -34.34006741034748, -56.714420781150324),
-    ('MDF 6543', 'MARCOPOLO', 'VIAGGIO 1050', 20, -34.34006741034748, -56.714420781150324)
+    ('MAB 5024', 'Mercedes',  '1318',         25, -34.333686, -56.715778),
+    ('MBB 3243', 'Volvo',     'B430R',        35, -34.333686, -56.715778),
+    ('MAF 5344', 'Mercedes',  '7 Ma',         30, -34.333686, -56.715778),
+    ('MAB 2450', 'Mercedes',  '1318',         25, -34.333686, -56.715778),
+    ('MBB 4332', 'Volvo',     'B430R',        35, -34.333686, -56.715778),
+    ('MAF 4453', 'Mercedes',  '7 Ma',         30, -34.333686, -56.715778),
+    ('MDF 6543', 'MARCOPOLO', 'VIAGGIO 1050', 20, -34.333686, -56.715778)
 ;
 
 --
 -- **** tabla linea *********************************************************
 --
 INSERT INTO linea (nombre) VALUES
-    ('San José - Montevidoe Directo'),
-    ('San José - Montevidoe Semi Directo'),
-    ('San José - Montevidoe Directisimo'),
-    ('San José - Canelones Directo'),
-    ('San José - Canelones Directisimo')
+    (/* 1*/ 'San José - Montevideo (Directo)'),
+    (/* 2*/ 'San José - Montevideo (Semi-directo)'),
+    (/* 3*/ 'San José - Montevideo (Directísimo)'),
+    (/* 4*/ 'San José - Canelones (Directo)'),
+    (/* 5*/ 'San José - Canelones (Directísimo)'),
+    (/* 6*/ 'Montevideo - San José (Directo)'),
+    (/* 7*/ 'Montevideo - San José (Directísimo)')
 ;
 
 --
 -- **** tabla parada *********************************************************
 --
 INSERT INTO parada (nombre, latitud, longitud) VALUES 
-    ('Terminal de Ómnibus San José de Mayo', -34.34006741034748, -56.714420781150324),
-    ('Parada de Rivera San José de Mayo', -34.34546638998191, -56.71956039944203),
-    ('Parada Libertad San José', -34.63780304762206, -56.61987469894831),
-    ('Plaza Cuba Montevideo', -34.8721766, -56.2027395),
-    ('Tres Cruces Montevideo', -34.893951222229404, -56.166246689410954),
-    ('Terminal de Ómnibus Santa Lucía', -34.4550929, -56.3893012),
-    ('Terminal de Ómnibus Canelones',  -34.622248, -55.99038)
+    (/* 1*/ 'San José de Mayo - Terminal de Ómnibus', -34.333686,          -56.715778),
+    (/* 2*/ 'San José de Mayo - Parada de Rivera',    -34.34546638998191,  -56.71956039944203),
+    (/* 3*/ 'Libertad - Parada de la plaza',          -34.63780304762206,  -56.61987469894831),
+    (/* 4*/ 'Montevideo - Plaza Cuba',                -34.8721766,         -56.2027395),
+    (/* 5*/ 'Montevideo - Tres Cruces',               -34.893951222229404, -56.166246689410954),
+    (/* 6*/ 'Santa Lucía - Terminal de Ómnibus',      -34.4550929,         -56.3893012),
+    (/* 7*/ 'Canelones - Terminal de Ómnibus',        -34.622248,          -55.99038)
 ;
 
 --
 -- **** tabla tramo *********************************************************
 --
 INSERT INTO tramo (parada_id,linea_id,numero,tiempo) VALUES 
+    /* 1- San José - Montevideo (Directo)*/
     (1,1,1,'00:00:00'),
     (2,1,2,'00:05:00'),
     (3,1,3,'00:20:00'),
     (4,1,4,'00:20:00'),
     (5,1,5,'00:10:00'),
-
+    /* 2- San José - Montevideo (Semi-directo)*/
     (1,2,1,'00:00:00'),
     (3,2,2,'00:35:00'),
     (5,2,3,'00:25:00'),
-
+    /* 3- San José - Montevideo (Directísimo)*/
     (1,3,1,'00:00:00'),
     (5,3,2,'00:50:00'),
-
+    /* 4- San José - Canelones (Directo)*/
     (1,4,1,'00:00:00'),
     (6,4,2,'00:35:00'),
     (7,4,3,'00:25:00'),
-
+    /* 5- San José - Canelones (Directísimo)*/
     (1,5,1,'00:00:00'),
-    (7,5,2,'00:55:00')
+    (7,5,2,'00:55:00'),
+    /* 6- Montevideo - San José (Directo)*/
+    (5,6,1,'00:00:00'),
+    (4,6,2,'00:10:00'),
+    (3,6,3,'00:20:00'),
+    (2,6,4,'00:20:00'),
+    (1,6,5,'00:05:00'),
+    /* 7- Montevideo - San José (Directísimo)*/
+    (5,7,1,'00:00:00'),
+    (1,7,2,'00:55:00')
 ;
 
 --
 -- **** tabla precio *********************************************************
 --
 INSERT INTO precio (valor, fecha_validez, parada_id, linea_id) VALUES 
-    (0, '2020-10-09',1,1),
-
-    (60, '2020-10-09',2,1),
-    (50, '2020-06-09',2,1),
-
+    /*San José - Montevideo (Directo)*/
+    (0,   '2020-10-09',1,1),
+    (60,  '2020-10-09',2,1),
+    (50,  '2020-06-09',2,1),
     (140, '2020-10-19',3,1),
     (100, '2020-04-19',3,1),
-
     (230, '2020-10-19',4,1),
     (127, '2020-02-01',4,1),
-
-    (80, '2020-10-19',5,1),
-    (60, '2020-04-30',5,1),
-
-    (0, '2020-09-10',1,2),
-
+    (80,  '2020-10-19',5,1),
+    (60,  '2020-04-30',5,1),
+    /*San José - Montevideo (Semi-directo)*/
+    (0,   '2020-09-10',1,2),
     (200, '2020-09-10',3,2),
     (150, '2020-05-01',3,2),
-
     (250, '2020-09-10',5,2),
     (200, '2020-04-25',5,2),
-
-    (0, '2020-10-10',1,3),
-
+    /*San José - Montevideo (Directísimo)*/
+    (0,   '2020-10-10',1,3),
     (550, '2020-10-10',5,3),
     (350, '2020-03-25',5,3),
-
-    (0, '2020-09-10',1,4),
-
+    /*San José - Canelones (Directo)*/
+    (0,   '2020-09-10',1,4),
     (300, '2020-09-10',6,4),
     (200, '2020-04-11',6,4),
-
     (250, '2020-09-10',7,4),
     (100, '2020-05-25',7,4),
-
-    (0, '2020-10-10',1,5),
-
+    /*San José - Canelones (Directísimo)*/
+    (0,   '2020-10-10',1,5),
     (600, '2020-10-10',7,5),
-    (500, '2020-11-13',7,5)
+    (500, '2020-11-13',7,5),
+    /*Montevideo - San José (Directo)*/
+    (0,   '2020-10-09',5,6),
+    (60,  '2020-06-09',4,6),
+    (127, '2020-04-19',3,6),
+    (100, '2020-02-01',2,6),
+    (50,  '2020-04-30',1,6),
+    /*Montevideo - San José (Directísimo)*/
+    (0,   '2020-10-10',5,7),
+    (550, '2020-10-10',1,7)
 ;
  
 --p Horario conductores:6,7,8,9 -Veiculos: 1,2,3,4 -linea: 1,2,3,4,5
@@ -188,19 +211,33 @@ INSERT INTO precio (valor, fecha_validez, parada_id, linea_id) VALUES
 -- **** tabla horario *********************************************************
 --
 INSERT INTO horario (hora, conductor_id, vehiculo_id, linea_id) VALUES 
-    ('05:00:00',6,1,1),
-    ('09:00:00',6,1,2),
-    ('14:00:00',6,1,3),
+    /* 1- San José - Montevideo (Directo)*/
+    ('09:00:00',6,1,1),
+    ('15:00:00',8,2,1),
 
-    ('07:00:00',7,2,4),
-    ('10:30:00',7,2,5),
+    /* 2- San José - Montevideo (Semi-directo)*/
+    ('10:00:00',6,5,2),
+    ('14:00:00',8,6,2),
 
-    ('15:00:00',8,3,1),
-    ('19:00:00',8,3,2),
-    ('20:00:00',8,3,3),
+    /* 3- San José - Montevideo (Directísimo)*/
+    ('11:00:00',6,3,3),
+    ('17:00:00',8,4,3),
 
-    ('12:00:00',9,4,4),
-    ('18:00:00',9,4,5)
+    /* 4- San José - Canelones (Directo)*/
+    ('08:00:00',7,6,4),
+    ('12:00:00',9,7,4),
+
+    /* 5- San José - Canelones (Directísimo)*/
+    ('10:30:00',7,5,5),
+    ('18:00:00',9,7,5),
+
+    /* 6- Montevideo - San José (Directo)*/
+    ('09:00:00',6,1,6),
+    ('15:00:00',8,2,6),
+
+    /* 7- Montevideo - San José (Directísimo)*/
+    ('11:00:00',6,3,7),
+    ('17:00:00',8,4,7)
 ;
 
 --
@@ -208,14 +245,14 @@ INSERT INTO horario (hora, conductor_id, vehiculo_id, linea_id) VALUES
 --
 INSERT INTO viaje (fecha,finalizado,horario_id) VALUES 
     ('2020-10-10', 1, 1),
-    ('2020-09-11', 0, 2),
-    ('2020-10-09', 1, 3),
-    ('2020-09-12', 1, 4),
-    ('2020-08-14', 1, 5),
-    ('2020-10-20', 0, 6),
-    ('2020-05-01', 1, 7),
-    ('2020-10-10', 1, 8),
-    ('2020-08-19', 1, 9),
+    ('2020-09-11', 0, 3),
+    ('2020-10-09', 1, 5),
+    ('2020-09-12', 1, 7),
+    ('2020-08-14', 1, 9),
+    ('2020-10-20', 0, 2),
+    ('2020-05-01', 1, 4),
+    ('2020-10-10', 1, 6),
+    ('2020-08-19', 1, 8),
     ('2020-11-10', 0, 10)
 ;
 

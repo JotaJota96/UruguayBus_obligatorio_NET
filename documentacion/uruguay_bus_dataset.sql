@@ -34,6 +34,14 @@ BEGIN TRAN t;
     DBCC CHECKIDENT ('persona',  RESEED, 0);
 COMMIT TRAN t;
 
+
+--
+-- tablINTO *********************************************************
+--a parametro
+INSERT INTO parametro (nombre, valor) VALUES 
+	('PrecioMinimo', 100)
+;
+
 --
 -- tablINTO *********************************************************
 --a persona

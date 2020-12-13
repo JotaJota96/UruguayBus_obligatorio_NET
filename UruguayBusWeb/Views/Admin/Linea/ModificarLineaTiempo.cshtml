@@ -1,7 +1,7 @@
 ﻿@model UruguayBusWeb.Models.ModificarLineaTiempoModel
 
 @{
-    ViewBag.Title = "Modificar Linea";
+    ViewBag.Title = "Modificar línea";
 
     List<SelectListItem> listaParadas = new List<SelectListItem>();
     foreach (var item in (ICollection<Share.Entities.Parada>)ViewBag.listaParada)
@@ -15,7 +15,7 @@
 }
 
 
-<h2 class="mt-3">Modificar Linea</h2>
+<h2 class="mt-3">Modificar línea</h2>
 
 @using (Html.BeginForm())
 {

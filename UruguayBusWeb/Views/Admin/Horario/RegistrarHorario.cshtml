@@ -55,7 +55,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.idLinea, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.idLinea, lstLineas, "Seleccione una linea", new { @class = "custom-select" })
+            @Html.DropDownListFor(model => model.idLinea, lstLineas, "Seleccione una línea", new { @class = "custom-select" })
             @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -71,7 +71,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.idVehiculo, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.idVehiculo, lstVehiculo, "Seleccione un vehiculo", new { @class = "custom-select" })
+            @Html.DropDownListFor(model => model.idVehiculo, lstVehiculo, "Seleccione un vehículo", new { @class = "custom-select" })
             @Html.ValidationMessageFor(model => model.idVehiculo, "", new { @class = "text-danger" })
         </div>
     </div>

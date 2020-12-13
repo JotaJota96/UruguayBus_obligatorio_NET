@@ -15,15 +15,15 @@ namespace UruguayBusWeb.Models
         public TimeSpan hora { get; set; }
 
         [Required]
-        [DisplayName("Conductores")]
+        [DisplayName("Conductor")]
         public int idConductor { get; set; }
 
         [Required]
-        [DisplayName("Lineas")]
+        [DisplayName("Línea")]
         public int idLinea { get; set; }
 
         [Required]
-        [DisplayName("Vehiculo")]
+        [DisplayName("Vehículo")]
         public int idVehiculo { get; set; }
     }
 }

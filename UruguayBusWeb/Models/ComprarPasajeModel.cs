@@ -22,7 +22,7 @@ namespace UruguayBusWeb.Models
         public int idViaje { get; set; }
 
         [Required]
-        [DisplayName("Linea")]
+        [DisplayName("Línea")]
         public int idLinea { get; set; }
 
         [Required]

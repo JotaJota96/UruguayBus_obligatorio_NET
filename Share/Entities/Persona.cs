@@ -17,7 +17,9 @@ namespace Share.Entities
 
         [DisplayName("Apellido")]
         public string apellido { get; set; }
+        [DisplayName("Correo")]
         public string correo { get; set; }
+        [DisplayName("Contraseña")]
         public string contrasenia { get; set; }
 
         [DisplayName("Tipo de documento")]

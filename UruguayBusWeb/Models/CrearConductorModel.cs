@@ -14,7 +14,7 @@ namespace UruguayBusWeb.Models
         public DateTime vencimiento_libreta { get; set; }
 
         [Required]
-        [DisplayName("Conductores")]
+        [DisplayName("Conductor")]
         public string documento { get; set; }
     }
 }

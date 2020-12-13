@@ -11,7 +11,7 @@ namespace Share.Entities
     {
         public int id { get; set; }
 
-        [DisplayName("Matricula")]
+        [DisplayName("Matrícula")]
         public string matricula { get; set; }
 
         [DisplayName("Marca")]

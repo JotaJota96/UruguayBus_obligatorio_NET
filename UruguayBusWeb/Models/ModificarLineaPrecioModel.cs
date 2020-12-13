@@ -17,7 +17,7 @@ namespace UruguayBusWeb.Models
         [Required]
         public int precio { get; set; }
 
-        [DisplayName("Fecha de valides")]
+        [DisplayName("Fecha de validez")]
         [Required]
         public DateTime fecha_valides { get; set; }
     }

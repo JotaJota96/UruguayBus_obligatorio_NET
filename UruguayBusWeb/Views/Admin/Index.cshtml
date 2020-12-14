@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Panel de administración";
+}
+
+<h2 class="mt-3">Panel de administración</h2>
+
+<div class="list-group">
+    @Html.ActionLink("Gestión de viajes", "ListarViajes", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+    @Html.ActionLink("Gestión de líneas", "ListarLineas", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+    @Html.ActionLink("Gestión de horarios", "ListarHorarios", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+    @Html.ActionLink("Gestión de paradas", "ListarParadas", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+    @Html.ActionLink("Gestión de conductores", "ListarConductores", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+    @Html.ActionLink("Gestión de vehículos", "ListarVehiculos", "Admin", new { area = "" }, new { @class = "list-group-item list-group-item-action" })
+</div>
+

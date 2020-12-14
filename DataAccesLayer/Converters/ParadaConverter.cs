@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace DataAccesLayer.Converters
 {
-    class ParadaConverter
+    public class ParadaConverter
     {
         /** Conversion de objetos simples *************************************/
         public static Parada convert(parada p)
         {
+            if (p == null) return null;
+
             Parada ret = new Parada()
             {
                 id = p.id,
@@ -24,6 +26,8 @@ namespace DataAccesLayer.Converters
 
         public static parada convert(Parada p)
         {
+            if (p == null) return null;
+
             parada ret = new parada()
             {
                 id = p.id,
@@ -37,6 +41,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Parada> convert(ICollection<parada> p)
         {
+            if (p == null) return null;
+
             List<Parada> ret = new List<Parada>();
             foreach (var item in p)
             {
@@ -46,6 +52,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<parada> convert(ICollection<Parada> p)
         {
+            if (p == null) return null;
+
             List<parada> ret = new List<parada>();
             foreach (var item in p)
             {
@@ -67,9 +75,9 @@ namespace DataAccesLayer.Converters
         {
             foreach (var item in po)
             {
-                item.parada = p;
+                item.parada_origen = p;
                 item.parada_id_origen = p.id;
-                p.pasaje.Add(item);
+                p.pasajes_origen.Add(item);
             }
         }
 
@@ -85,9 +93,9 @@ namespace DataAccesLayer.Converters
         {
             foreach (var item in pd)
             {
-                item.parada = p;
+                item.parada_destino = p;
                 item.parada_id_destino = p.id;
-                p.pasaje1.Add(item);
+                p.pasajes_destino.Add(item);
             }
         }
 

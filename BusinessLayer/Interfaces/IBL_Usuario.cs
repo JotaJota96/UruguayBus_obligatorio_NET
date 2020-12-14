@@ -26,7 +26,6 @@ namespace BusinessLayer.Interfaces
         /// <returns>Devuelve el usuario o null si los datos no son correctos</returns>
         Usuario IniciarSesion(string correo, string contrasenia);
 
-
         /// <summary>
         /// Devuelve informacion sobre los viajes disponibles en una fecha, que pasan por el origen y destino especificado
         /// Para cada viaje que cumpla la conducion se devuelve los ID de viaje, parada de origen y destino, la hora, el precio y la lista de asientos disponibles
@@ -60,8 +59,16 @@ namespace BusinessLayer.Interfaces
         /// <returns></returns>
         Pasaje ReservarPasaje(int idViaje, int idParadaOrigen, int idParadaDestino, string documento, TipoDocumento tipoDocumento, int? asiento = null);
 
+
         /// <summary>
-        /// Devuelve el costo minimo a partir del cual el uuario puede elegir asiento
+        /// Cancela la reservacion de un pasaje
+        /// </summary>
+        /// <param name="idPasaje">ID del pasaje a cancelar</param>
+        /// <returns></returns>
+        Pasaje CancelarPasaje(int idPasaje);
+
+        /// <summary>
+        /// Devuelve el costo minimo a partir del cual el usuario puede elegir asiento
         /// </summary>
         /// <returns></returns>
         decimal PrecioParaElegirAsiento();
@@ -75,6 +82,7 @@ namespace BusinessLayer.Interfaces
         /// <returns></returns>
         ICollection<VehiculoCercanoDTO> ListarVehiculosCercanos(int idParada, int? idUsuario = null);
 
+        bool CorreoExiste(string correo);
 
     }
 }

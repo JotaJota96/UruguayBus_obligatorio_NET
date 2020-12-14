@@ -1,0 +1,46 @@
+﻿@model UruguayBusWeb.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal mt-3">
+        <div class="col-12 col-sm-9 col-md-6 col-lg-4 mx-auto">
+            <h2>Login</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.correo, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @type = "email", @class = "form-control col-12" } })
+                    @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.contrasenia, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.contrasenia, new { htmlAttributes = new { @type = "password", @class = "form-control col-12" } })
+                    @Html.ValidationMessageFor(model => model.contrasenia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            @if (Model != null && Model.loginOk == false)
+            {
+                <div class="form-group">
+                    <span class="text-danger">El correo o la contraseña son incorrectos</span>
+                </div>
+            }
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-12 d-flex justify-content-end">
+                    <input type="submit" value="Iniciar sesión" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+ }

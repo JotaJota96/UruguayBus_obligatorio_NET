@@ -12,6 +12,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static PasoPorParada convert(paso_por_parada ppp)
         {
+            if (ppp == null) return null;
+
             PasoPorParada ret = new PasoPorParada()
             {
                 fechaHora = (DateTime) ppp.fecha_hora,
@@ -21,6 +23,8 @@ namespace DataAccesLayer.Converters
 
         public static paso_por_parada convert(PasoPorParada ppp)
         {
+            if (ppp == null) return null;
+
             paso_por_parada ret = new paso_por_parada()
             {
                 fecha_hora = ppp.fechaHora,
@@ -31,6 +35,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<PasoPorParada> convert(ICollection<paso_por_parada> ppp)
         {
+            if (ppp == null) return null;
+
             List<PasoPorParada> ret = new List<PasoPorParada>();
             foreach (var item in ppp)
             {
@@ -40,6 +46,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<paso_por_parada> convert(ICollection<PasoPorParada> ppp)
         {
+            if (ppp == null) return null;
+
             List<paso_por_parada> ret = new List<paso_por_parada>();
             foreach (var item in ppp)
             {

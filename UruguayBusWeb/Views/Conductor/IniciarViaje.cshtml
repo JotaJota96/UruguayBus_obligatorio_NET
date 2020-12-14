@@ -1,0 +1,49 @@
+﻿@model Share.Entities.Viaje
+
+@{
+    ViewBag.Title = "Iniciar Viaje";
+
+    List<SelectListItem> listaViajes = new List<SelectListItem>();
+    if (ViewBag.listaViaje != null)
+    {
+        foreach (var item in (ICollection<Share.Entities.Viaje>)ViewBag.listaViaje)
+        {
+            listaViajes.Add(new SelectListItem()
+            {
+                Text = "" + item.horario.linea.nombre + " (" + item.horario.hora + ") ",
+                Value = "" + item.id,
+            });
+        }
+    }
+}
+
+<h2 class="mt-3">Iniciar viaje</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <label class="control-label" for="id">Viajes del día:</label>
+        <div class="row">
+            <div class="form-group col-md-10">
+                <div>
+                    @Html.DropDownListFor(model => model.id, listaViajes, "Seleccione un viaje", new { @class = "col-12 custom-select" })
+                    @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-2">
+                <div>
+                    <input type="submit" value="Iniciar" class="btn btn-primary col-12" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Volver al menú", "Index")
+</div>

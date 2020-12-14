@@ -48,5 +48,6 @@ namespace BusinessLayer.Interfaces
         /// <returns></returns>
         ICollection<Usuario> RegistrarPasoPorParada(int idParada, int idViaje);
 
+        Viaje ObtenerViajeActual(int idConductor);
     }
 }

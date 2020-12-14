@@ -13,6 +13,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de objetos simples *************************************/
         public static Usuario convert(usuario u)
         {
+            if (u == null) return null;
+
             Usuario ret = new Usuario()
             {
                 id = u.id
@@ -22,6 +24,8 @@ namespace DataAccesLayer.Converters
 
         public static usuario convert(Usuario u)
         {
+            if (u == null) return null;
+
             usuario ret = new usuario()
             {
                 id = u.id
@@ -32,6 +36,8 @@ namespace DataAccesLayer.Converters
         /** Conversion de colecciones *****************************************/
         public static ICollection<Usuario> convert(ICollection<usuario> u)
         {
+            if (u == null) return null;
+
             List<Usuario> ret = new List<Usuario>();
             foreach (var item in u)
             {
@@ -41,6 +47,8 @@ namespace DataAccesLayer.Converters
         }
         public static ICollection<usuario> convert(ICollection<Usuario> u)
         {
+            if (u == null) return null;
+
             List<usuario> ret = new List<usuario>();
             foreach (var item in u)
             {

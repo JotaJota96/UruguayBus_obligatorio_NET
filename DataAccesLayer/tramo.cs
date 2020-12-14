@@ -23,7 +23,7 @@ namespace DataAccesLayer
         public int parada_id { get; set; }
         public int linea_id { get; set; }
         public int numero { get; set; }
-        public Nullable<System.TimeSpan> tiempo { get; set; }
+        public System.TimeSpan tiempo { get; set; }
     
         public virtual linea linea { get; set; }
         public virtual parada parada { get; set; }

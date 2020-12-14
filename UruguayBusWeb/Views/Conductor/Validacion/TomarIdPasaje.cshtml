@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Validar pasaje";
+}
+
+<h2 class="mt-3">Validar pasaje</h2>
+<div class="row">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.Label("Número del pasaje", htmlAttributes: new { @class = "control-label" })
+            <div class="row">
+                <div class="col-12 col-md-8 form-group">
+                    <div class="">
+                        @Html.Editor("ID", new { htmlAttributes = new { @class = "form-control col-12" } })
+                        @Html.ValidationMessage("ID", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 form-group">
+                    <div>
+                        <input type="submit" value="Validar" class="btn btn-primary col-12" />
+                    </div>
+                </div>
+
+            </div>
+        }
+
+        @if (ViewBag.PasajeValido != null)
+        {
+            if (ViewBag.PasajeValido)
+            {
+                <h3 class="text-success">@ViewBag.mensaje</h3>
+            }
+            else
+            {
+                <h3 class="text-danger">@ViewBag.mensaje</h3>
+            }
+        }
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Volver al menú", "Index")
+</div>

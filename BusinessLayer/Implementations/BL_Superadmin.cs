@@ -23,12 +23,31 @@ namespace BusinessLayer.Implementations
 
         public void AsignarRol(int idUsuario, Rol rol, DateTime? fechaVencLibreta = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (rol == Rol.CONDUCTOR)
+                {
+                    if (fechaVencLibreta == null)
+                        throw new Exception("Se debe especificar una fecha de vencimiento para la libreta");
+                }
+                else
+                {
+                    fechaVencLibreta = null;
+                }
+
+                dal.AsignarRol(idUsuario, rol, fechaVencLibreta);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo asignar el rol: " + e.Message);
+            }
         }
 
         public ICollection<Vehiculo> ListarVehiculos()
         {
-            throw new NotImplementedException();
+            // tendria que haberse movido al BL_Global pero se deja aca por compatibilidad
+            // (entiendase compatibilidad como "no tengo ganas de modificar todo lo que ya estaba hecho")
+            return dalg.ListarVehiculos();
         }
     }
 }

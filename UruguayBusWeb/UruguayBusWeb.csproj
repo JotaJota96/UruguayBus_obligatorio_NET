@@ -193,6 +193,7 @@
     <Content Include="Content\img\bus.png" />
     <Content Include="Content\img\fondo.jpg" />
     <Content Include="Content\img\Parada.png" />
+    <Content Include="Content\img\UruguayBus_icon.png" />
     <Content Include="Content\img\UruguayBus_logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

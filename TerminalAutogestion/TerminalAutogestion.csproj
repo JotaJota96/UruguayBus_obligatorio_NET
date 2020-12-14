@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>UruguayBus_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -164,6 +167,12 @@
   <ItemGroup>
     <Resource Include="Multimedia\dinero.png" />
     <Resource Include="Multimedia\pasaje.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Multimedia\UruguayBus_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UruguayBus_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
